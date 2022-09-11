@@ -109,7 +109,7 @@ bool init()
 		}
 		else
 		{
-			// SDL TTF
+			// SDL TTF wow
 #ifdef UNICODE
 			pTempSurface = TTF_RenderUNICODE_Shaded(g_pFont, (Uint16*)L"한글 텍스쳐",
 				SDL_Color{ 0, 0, 255 }, SDL_Color{ 255, 255, 255 });
