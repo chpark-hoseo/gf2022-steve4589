@@ -109,9 +109,9 @@ bool init()
 		}
 		else
 		{
-			// SDL TTF wowwow
+			// SDL TTF
 #ifdef UNICODE
-			pTempSurface = TTF_RenderUNICODE_Shaded(g_pFont, (Uint16*)L"한글 텍스쳐",
+			pTempSurface = TTF_RenderUNICODE_Shaded(g_pFont, (Uint16*)L"한글 텍스쳐", //TTF_RenderUNICODE_Shaded(TTF_Font* gFont, Uint16* texture, SDL_Color* 꺼진 상태표현?, SDL_Color* 켜진상태 표현?)
 				SDL_Color{ 0, 0, 255 }, SDL_Color{ 255, 255, 255 });
 #else
 			pTempSurface = TTF_RenderUTF8_Shaded(g_pFont, "한글 텍스쳐",
