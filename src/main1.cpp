@@ -6,9 +6,9 @@ SDL_Renderer* g_pRenderer = 0;
 
 int main(int argc, char* argv[])
 {
-	if (SDL_Init(SDL_INIT_EVERYTHING) >= 0) // SDL_INIT_EVERYTHING --> ëª¨ë“  ?˜ìœ„?œìŠ¤??
+	if (SDL_Init(SDL_INIT_EVERYTHING) >= 0) // SDL_INIT_EVERYTHING --> ¸ğµç ÇÏÀ§ ½Ã½ºÅÛ 
 	{
-		g_pWindow = SDL_CreateWindow("Setting up SDL", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_SHOWN);//?”ë©´ ?ì„± 
+		g_pWindow = SDL_CreateWindow("Game FrameWork", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1024, 768, SDL_WINDOW_SHOWN);//Ãß°¡ ½Ç½À 
 		//SDL_WINDOW* SDL_CreateWindow(const Char* title, int x, int y, int w, int y, Uint32 flags);
 
 		if (g_pWindow != 0)
@@ -22,13 +22,13 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
-	SDL_SetRenderDrawColor(g_pRenderer, 0, 0, 0, 255); //?‘ë„???‰ìƒ??ì§€?•í•˜???¨ìˆ˜
-	SDL_RenderClear(g_pRenderer); // ?”ë©´??ì§€?°ëŠ” ?¨ìˆ˜, SDL_SetRenderDrawColor???í–¥??ë°›ìœ¼ë¯€ë¡??´ë‹¹ ?¨ìˆ˜ê°€ ì§€?•í•œ ?‰ìœ¼ë¡?ì§€?Œì§ 
-	SDL_RenderPresent(g_pRenderer);// ?ìŠ¤ì³ê? ?Œë”ë§????íƒœë¡?ê³„ì† ?…ë°?´íŠ¸ ?œì¼œì¤?
+	SDL_SetRenderDrawColor(g_pRenderer, 0, 0, 0, 255); //·»µ¥·¯ »ö»ó °ª ¼³Á¤ 
+	SDL_RenderClear(g_pRenderer); // È­¸éÀ» SDL_SetRenderDrawColor°ªÀ» Åä´ë·Î ¹Ù²ãÁÜ 
+	SDL_RenderPresent(g_pRenderer);// ¼³Á¤ÇÑ °ªÀ» Åä´ë·Î °è¼Ó ¾÷µ¥ÀÌÆ®
 
-	SDL_Delay(5000); //5ì´??™ì•ˆ ?•ë¦¬ Sleep();?€ ê¸°ëŠ¥ ë¹„ìŠ· 
-	//SDL_GetTicks --> SDL??êµ¬ë™?˜ê³  ?¼ë§ˆ???œê°„(ms)???˜ë??”ì? ë³´ì—¬ì¤?
-	SDL_Quit(); //ëª¨ë“  ?œë¸Œ ?œìŠ¤?œì´ ?ë‚œ??ë¬´ì¡°ê±?ì¢…ë£Œ?´ì•¼??
+	SDL_Delay(5000); //5ÃÊ°£ µô·¹ÀÌ
+	//SDL_GetTicks --> SDLÀÌ ½ÃÀÛÇÏ°í Áö±İ±îÁö ¾ó¸¶³ª µÆ´ÂÁö ½Ã°£ Ç¥½Ã 
+	SDL_Quit(); //³¡³¾¶§ ¹«Á¶°Ç Àû±â 
 
 	return 0;
 }
