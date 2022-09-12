@@ -5,7 +5,59 @@
 
 #include "main.h"
 
+SDL_Window* g_pWindow = 0;
+SDL_Renderer* g_pRenderer = 0;
 
+int main(int argc, char* argv[])
+{
+	if (SDL_Init(SDL_INIT_EVERYTHING) >= 0)
+	{
+		g_pWindow = SDL_CreateWindow("Unrealnity", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1920, 900, SDL_WINDOW_MAXIMIZED | SDL_WINDOW_RESIZABLE); //과제 2. 윈도우 생성 다르게 해보기  
+		//화면 비율 1920, 900, 화면 크기를 최대로, 화면 사이즈를 조절할 수 있게 
+		if (g_pWindow != 0)
+		{
+			g_pRenderer = SDL_CreateRenderer(g_pWindow, -1, 0);//)(window* window, int index, Uint32 flags)
+			//Renderer flags 모음
+			// 0 --> 없음
+			//SDL_RENDERER_SOFTWARE ->
+			//SDL_RENDERER_ACCELERATED -> 하드웨어를 빠르게 가속 -> 빨리 보여줌
+			//SDL_RENDERER_PRESENTVSYNC -> 프레임 속도에 맞춰서 (대부분 1초에 60번)
+			//SDL_RENDERER_TARGETTEXTURE -> 텍스쳐 렌더링
+		}
+	}
+	else
+	{
+		return 1;
+	}
+
+	SDL_SetRenderDrawColor(g_pRenderer, 0, 0, 255, 255); //과제1. 화면 파란색으로 바꾸기   (r, g, b, a)
+	SDL_RenderClear(g_pRenderer);
+	SDL_RenderPresent(g_pRenderer);
+
+	SDL_Delay(10000); //과제3. 10초뒤 프로그램 종료하기 
+	SDL_Quit();
+
+	return 0;
+}
+//노트 ::
+// //SDL_WINDOWPOS_CENTERED --> 
+/*
+SDL_WINDOW_FULLSCREEN   전체화면 창
+SDL_WINDOW_FULLSCREEN_DESKTOP   데스크탑 해상도의 전체 화면 창
+SDL_WINDOW_OPENGL   OpenGL 컨텍스트로 사용가능한 창
+SDL_WINDOW_VULKAN   Vulkan 과 함께 사용 가능한 창
+SDL_WINDOW_HIDDEN   보이지 않는 창
+SDL_WINDOW_BORDERLESS   데코레이션이 없는 창
+SDL_WINDOW_RESIZABLE   크기를 조정 가능
+SDL_WINDOW_MINIMIZED   최소화 창
+SDL_WINDOW_MAXIMIZED   최대화 창
+SDL_WINDOW_INPUT_GRABBED   입력 포커스를 얻음
+SDL_WINDOW_ALLOW_HIGHDPI   지원되는 경우 높은 DPI 모드에서 창 (>= SDL 2.0.1)
+
+//SDL_GetTicks --> SDL이 시작하고 지금까지 얼마나 됐는지 시간 표시 
+//void SDL_DestroyRenderer(SDL_Renderer * renderer); Destroy --> 대부분 해제한다는 뜻 
+//SDL_WINDOW* SDL_CreateWindow(const Char* title, int x, int y, int w, int y, Uint32 flags);
+/*
 SDL_Window*		g_pWindow = 0;
 SDL_Renderer*	g_pRenderer = 0;
 
@@ -93,7 +145,7 @@ bool init()
 		}
 	}
 
-	// SDL TTF 
+	// SDL TTF
 	if (TTF_Init() < 0)
 	{
 		SDL_Log("TTF_Init Error: %s\n", TTF_GetError());
@@ -132,7 +184,7 @@ bool init()
 
 	}
 
-	// SDL Mixer 
+	// SDL Mixer
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
 	{
 		SDL_Log("Mix_OpenAudio Error: %s\n", Mix_GetError());
@@ -205,3 +257,4 @@ void render()
 
 	SDL_RenderPresent(g_pRenderer);
 }
+*/
