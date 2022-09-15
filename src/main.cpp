@@ -1,43 +1,71 @@
 ﻿// SDL 
 //
 // written by changhoonpark@gmail.com
-
-
 #include "main.h"
 
 SDL_Window* g_pWindow = 0;
 SDL_Renderer* g_pRenderer = 0;
 
-int main(int argc, char* argv[])
+bool g_bRunning = false;
+
+bool init(const char*, int, int, int, int, int);
+void Render();
+void RandomRender();
+bool Exit();
+
+bool init(const char* title, int xpos, int ypos, int heigh, int width, int flags)
 {
 	if (SDL_Init(SDL_INIT_EVERYTHING) >= 0)
 	{
-		g_pWindow = SDL_CreateWindow("Unrealnity", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1920, 900, SDL_WINDOW_MAXIMIZED | SDL_WINDOW_RESIZABLE); //과제 2. 윈도우 생성 다르게 해보기  
-		//화면 비율 1920, 900, 화면 크기를 최대로, 화면 사이즈를 조절할 수 있게 
-		if (g_pWindow != 0)
+		g_pWindow = SDL_CreateWindow(title, xpos, ypos, heigh, width, flags);
+		if (g_pRenderer != 0)
 		{
-			g_pRenderer = SDL_CreateRenderer(g_pWindow, -1, 0);//)(window* window, int index, Uint32 flags)
-			//Renderer flags 모음
-			// 0 --> 없음
-			//SDL_RENDERER_SOFTWARE ->
-			//SDL_RENDERER_ACCELERATED -> 하드웨어를 빠르게 가속 -> 빨리 보여줌
-			//SDL_RENDERER_PRESENTVSYNC -> 프레임 속도에 맞춰서 (대부분 1초에 60번)
-			//SDL_RENDERER_TARGETTEXTURE -> 텍스쳐 렌더링
+			g_pRenderer = SDL_CreateRenderer(g_pWindow, -1, 0);
 		}
+	}
+	else
+	{
+		return false;
+	}
+	SDL_SetRenderDrawColor(g_pRenderer, 0, 0, 0, 255);
+
+	return true;
+}
+
+int main(int argc, char* argv[])
+{
+	if (init("Breaking Up HelloSDL", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_SHOWN))
+	{
+		g_bRunning = true;
 	}
 	else
 	{
 		return 1;
 	}
 
-	SDL_SetRenderDrawColor(g_pRenderer, 0, 0, 255, 255); //과제1. 화면 파란색으로 바꾸기   (r, g, b, a)
-	SDL_RenderClear(g_pRenderer);
-	SDL_RenderPresent(g_pRenderer);
+	while (g_bRunning)
+	{
+		Render();
+	}
 
-	SDL_Delay(10000); //과제3. 10초뒤 프로그램 종료하기 
 	SDL_Quit();
-
 	return 0;
+}
+
+void Render()
+{
+	SDL_RenderClear(g_pRenderer);
+	SDL_RenderPresent(g_pRenderer);		
+}
+void RandomRender()
+{
+	SDL_SetRenderDrawColor(g_pRenderer, rand() % 256, rand() % 256, rand() % 256, 255);
+	SDL_Delay(1000);
+}
+bool Exit()
+{
+	SDL_Delay(10000);
+	return false;
 }
 //노트 ::
 // //SDL_WINDOWPOS_CENTERED --> 
@@ -77,6 +105,33 @@ bool init();
 void handleInput();
 void update();
 void render();
+
+if (SDL_Init(SDL_INIT_EVERYTHING) >= 0)
+	{
+		g_pWindow = SDL_CreateWindow("Unrealnity", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1920, 900, SDL_WINDOW_MAXIMIZED | SDL_WINDOW_RESIZABLE); //과제 2. 윈도우 생성 다르게 해보기
+		//화면 비율 1920, 900, 화면 크기를 최대로, 화면 사이즈를 조절할 수 있게
+		if (g_pWindow != 0)
+		{
+			g_pRenderer = SDL_CreateRenderer(g_pWindow, -1, 0);//)(window* window, int index, Uint32 flags)
+			//Renderer flags 모음
+			// 0 --> 없음
+			//SDL_RENDERER_SOFTWARE ->
+			//SDL_RENDERER_ACCELERATED -> 하드웨어를 빠르게 가속 -> 빨리 보여줌
+			//SDL_RENDERER_PRESENTVSYNC -> 프레임 속도에 맞춰서 (대부분 1초에 60번)
+			//SDL_RENDERER_TARGETTEXTURE -> 텍스쳐 렌더링
+		}
+	}
+	else
+	{
+		return 1;
+	}
+
+	SDL_SetRenderDrawColor(g_pRenderer, 0, 0, 255, 255); //과제1. 화면 파란색으로 바꾸기   (r, g, b, a)
+	SDL_RenderClear(g_pRenderer);
+	SDL_RenderPresent(g_pRenderer);
+
+	SDL_Delay(10000); //과제3. 10초뒤 프로그램 종료하기
+	SDL_Quit();
 
 int main(int argc, char* argv[])
 {

@@ -23,5 +23,11 @@
     <ClInclude Include="include\main.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="include\game.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
   </ItemGroup>
 </Project>
