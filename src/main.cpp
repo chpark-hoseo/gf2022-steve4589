@@ -13,6 +13,28 @@ void Render();
 void RandomRender();
 bool Exit();
 
+int main(int argc, char* argv[])
+{
+	g_bRunning = Exit();
+	if (init("Breaking Up HelloSDL", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_SHOWN))
+	{
+		g_bRunning = true;
+	}
+	else
+	{
+		return 1;
+	}
+
+	while (g_bRunning)
+	{
+		Render();
+		RandomRender();
+	}
+
+	SDL_Quit();
+	return 0;
+}
+
 bool init(const char* title, int xpos, int ypos, int heigh, int width, int flags)
 {
 	if (SDL_Init(SDL_INIT_EVERYTHING) >= 0)
@@ -28,28 +50,7 @@ bool init(const char* title, int xpos, int ypos, int heigh, int width, int flags
 		return false;
 	}
 	SDL_SetRenderDrawColor(g_pRenderer, 0, 0, 0, 255);
-
 	return true;
-}
-
-int main(int argc, char* argv[])
-{
-	if (init("Breaking Up HelloSDL", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_SHOWN))
-	{
-		g_bRunning = true;
-	}
-	else
-	{
-		return 1;
-	}
-
-	while (g_bRunning)
-	{
-		Render();
-	}
-
-	SDL_Quit();
-	return 0;
 }
 
 void Render()
