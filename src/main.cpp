@@ -13,26 +13,9 @@ void Render();
 void RandomRender();
 bool Exit();
 
-bool init(const char* title, int xpos, int ypos, int heigh, int width, int flags)
+int main(int argc, char* argv[]) //main함수를 앞으로 빼기 
 {
-	if (SDL_Init(SDL_INIT_EVERYTHING) >= 0)
-	{
-		g_pWindow = SDL_CreateWindow(title, xpos, ypos, heigh, width, flags);
-		if (g_pRenderer != 0)
-		{
-			g_pRenderer = SDL_CreateRenderer(g_pWindow, -1, 0);
-		}
-	}
-	else
-	{
-		return false;
-	}
-	SDL_SetRenderDrawColor(g_pRenderer, 0, 0, 0, 255);
-	return true;
-}
-
-int main(int argc, char* argv[])
-{
+	g_bRunning = Exit(); //10초 후 무한루프 탈출
 	if (init("Breaking Up HelloSDL", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_SHOWN))
 	{
 		g_bRunning = true;
@@ -50,6 +33,24 @@ int main(int argc, char* argv[])
 
 	SDL_Quit();
 	return 0;
+}
+
+bool init(const char* title, int xpos, int ypos, int heigh, int width, int flags)
+{
+	if (SDL_Init(SDL_INIT_EVERYTHING) >= 0)
+	{
+		g_pWindow = SDL_CreateWindow(title, xpos, ypos, heigh, width, flags);
+		if (g_pRenderer != 0)
+		{
+			g_pRenderer = SDL_CreateRenderer(g_pWindow, -1, 0);
+		}
+	}
+	else
+	{
+		return false;
+	}
+	SDL_SetRenderDrawColor(g_pRenderer, 0, 0, 0, 255);
+	return true;
 }
 
 void Render()
