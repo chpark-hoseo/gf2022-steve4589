@@ -7,40 +7,20 @@ SDL_Window* g_pWindow = 0;
 SDL_Renderer* g_pRenderer = 0;
 
 bool g_bRunning = false;
+bool g_bLeftMousePressed = false; //마우스가 눌리거나 뗀 상태를 전달해주기 위함
 
 bool init(const char*, int, int, int, int, int);
 void Render();
-void RandomRender();
-bool Exit();
+void HandleInput();
+bool Update();
 
-int main(int argc, char* argv[]) //main함수를 앞으로 빼기 
-{
-	g_bRunning = Exit(); //10초 후 무한루프 탈출
-	if (init("Breaking Up HelloSDL", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_SHOWN))
-	{
-		g_bRunning = true;
-	}
-	else
-	{
-		return 1;
-	}
-
-	while (g_bRunning)
-	{
-		Render();
-		RandomRender();
-	}
-
-	SDL_Quit();
-	return 0;
-}
 
 bool init(const char* title, int xpos, int ypos, int heigh, int width, int flags)
 {
 	if (SDL_Init(SDL_INIT_EVERYTHING) >= 0)
 	{
 		g_pWindow = SDL_CreateWindow(title, xpos, ypos, heigh, width, flags);
-		if (g_pRenderer != 0)
+		if (g_pWindow != 0)
 		{
 			g_pRenderer = SDL_CreateRenderer(g_pWindow, -1, 0);
 		}
@@ -53,21 +33,53 @@ bool init(const char* title, int xpos, int ypos, int heigh, int width, int flags
 	return true;
 }
 
+bool Update() //함수들은 여기서 호출
+{
+	if (g_bLeftMousePressed) //눌렸을때 -> true 
+	{
+		return false;
+	}
+	else return true;
+}
+void HandleInput() //키보드나 마우스 입력 
+{
+	SDL_Event event; //마우스나 키보드 등등.. 이벤트 모음 
+	while (SDL_PollEvent(&event))
+	{
+		if (event.type == SDL_MOUSEBUTTONDOWN)
+		{
+			{
+				g_bLeftMousePressed = true;
+			}
+		}
+	}
+}
 void Render()
 {
 	SDL_RenderClear(g_pRenderer); //화면을 지워줘야 다음 장면을 표현할 수 있음
 	SDL_RenderPresent(g_pRenderer); //
 }
-void RandomRender()
+
+int main(int argc, char* argv[]) //main함수를 앞으로 빼기 
 {
-	SDL_SetRenderDrawColor(g_pRenderer, rand() % 256, rand() % 256, rand() % 256, 255);
-	SDL_Delay(1000);
+	if (init("Breaking Up HelloSDL", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_SHOWN))
+	{
+		g_bRunning = true;
+	}
+	else
+	{
+		return 1;
+	}
+
+	while (g_bRunning)
+	{
+		Render(); //레이어를 쏘는 순서를 다르게 함으로써 레이어를 다르게 할 수 있다
+	}
+	SDL_Quit();
+	return 0;
 }
-bool Exit()
-{
-	SDL_Delay(10000);
-	return false;
-}
+
+
 //노트 ::
 // //SDL_WINDOWPOS_CENTERED --> 
 /*
@@ -83,8 +95,8 @@ SDL_WINDOW_MAXIMIZED   최대화 창
 SDL_WINDOW_INPUT_GRABBED   입력 포커스를 얻음
 SDL_WINDOW_ALLOW_HIGHDPI   지원되는 경우 높은 DPI 모드에서 창 (>= SDL 2.0.1)
 
-//SDL_GetTicks --> SDL이 시작하고 지금까지 얼마나 됐는지 시간 표시 
-//void SDL_DestroyRenderer(SDL_Renderer * renderer); Destroy --> 대부분 해제한다는 뜻 
+//SDL_GetTicks --> SDL이 시작하고 지금까지 얼마나 됐는지 시간 표시
+//void SDL_DestroyRenderer(SDL_Renderer * renderer); Destroy --> 대부분 해제한다는 뜻
 //SDL_WINDOW* SDL_CreateWindow(const Char* title, int x, int y, int w, int y, Uint32 flags);
 /*
 SDL_Window*		g_pWindow = 0;
