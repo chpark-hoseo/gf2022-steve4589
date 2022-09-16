@@ -14,6 +14,27 @@ void Render();
 void HandleInput();
 bool Update();
 
+int main(int argc, char* argv[]) //main함수를 앞으로 빼기 
+{
+	if (init("Breaking Up HelloSDL", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_SHOWN))
+	{
+		g_bRunning = true;
+	}
+	else
+	{
+		return 1;
+	}
+
+	while (g_bRunning)
+	{
+		Render(); //레이어를 쏘는 순서를 다르게 함으로써 레이어를 다르게 할 수 있다
+
+		g_bRunning = Update(); //== Unity의 업데이트 함수
+		HandleInput(); //마우스, 키보드 입력
+	}
+	SDL_Quit();
+	return 0;
+}
 
 bool init(const char* title, int xpos, int ypos, int heigh, int width, int flags)
 {
@@ -43,8 +64,8 @@ bool Update() //함수들은 여기서 호출
 }
 void HandleInput() //키보드나 마우스 입력 
 {
-	SDL_Event event; //마우스나 키보드 등등.. 이벤트 모음 
-	while (SDL_PollEvent(&event))
+	SDL_Event event; 
+	while (SDL_PollEvent(&event)) //임시로, 마우스 좌클릭만 인식
 	{
 		if (event.type == SDL_MOUSEBUTTONDOWN)
 		{
@@ -56,27 +77,11 @@ void HandleInput() //키보드나 마우스 입력
 }
 void Render()
 {
+	SDL_SetRenderDrawColor(g_pRenderer, rand() % 256, rand() % 256, rand() % 256, 255);
+	SDL_Delay(1000);
+
 	SDL_RenderClear(g_pRenderer); //화면을 지워줘야 다음 장면을 표현할 수 있음
 	SDL_RenderPresent(g_pRenderer); //
-}
-
-int main(int argc, char* argv[]) //main함수를 앞으로 빼기 
-{
-	if (init("Breaking Up HelloSDL", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_SHOWN))
-	{
-		g_bRunning = true;
-	}
-	else
-	{
-		return 1;
-	}
-
-	while (g_bRunning)
-	{
-		Render(); //레이어를 쏘는 순서를 다르게 함으로써 레이어를 다르게 할 수 있다
-	}
-	SDL_Quit();
-	return 0;
 }
 
 
