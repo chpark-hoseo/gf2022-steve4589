@@ -40,11 +40,11 @@ bool Game::running()
 void Game::handleEvents()
 {
 	SDL_Event event;
-	if (SDL_PollEvent(&event))
-	{
-		switch (event.type)
+	while (SDL_PollEvent(&event)) //작동중 이벤트를 계속 인식하기 위해서라고 생각합니다,  
+	{                             //사실 이미 main의 while내에서 작동하기 때문에 여기서 반복할 필요는 없다고 생각되지만, 
+		switch (event.type)       //그래도 추측한다면 입력에 더 빨리 반응할 수 있을것 같다고 생각합니다
 		{
-		case SDL_QUIT:
+		case SDL_MOUSEBUTTONDOWN:
 			m_bRunning = false;
 			break;
 		default:
