@@ -39,15 +39,12 @@ Sprite* Game::GetSprite(const char* file) //Sprite¿« texture∏¶ π›»Ø«œµµ∑œ ∫Ø∞Ê
 
 void Game::MoveSprite(int width)
 {
-<<<<<<< HEAD
 	//sprite1->m_destinationRectangle.x = sprite1->m_destinationRectangle.x == 0 ? width : 0;
 	//SDL_QueryTexture(sprite1->texture, NULL, NULL, &sprite1->m_sourceRectangle.w, &sprite1->m_sourceRectangle.h);
 
 	if ((sprite1->m_destinationRectangle.x > SCREEN_WIDTH - sprite1->m_destinationRectangle.w) || sprite1->m_destinationRectangle.x < 0) { xInterval = -xInterval;}
 	sprite1->m_destinationRectangle.x += xInterval;
-=======
-	sprite1->m_destinationRectangle.x = sprite1->m_destinationRectangle.x == 0 ? width - 123 : 0;  
->>>>>>> parent of 7366ba4 (SDLÍ∏∞Î≥∏Í∑∏Î¶¨Í∏∞-Í≥ºÏ†ú(ÏµúÏ¢Ö ÏàòÏ†ï))
+	sprite1->m_destinationRectangle.x = sprite1->m_destinationRectangle.x == 0 ? SCREEN_WIDTH : 0;
 	SDL_QueryTexture(sprite1->texture, NULL, NULL, &sprite1->m_sourceRectangle.w, &sprite1->m_sourceRectangle.h);
 	/*
 	int xInterval = 1;
@@ -120,10 +117,7 @@ void Game::render()
 {
 	SDL_RenderClear(m_pRenderer);
 
-<<<<<<< HEAD
 	//DhrowBorder();
-=======
->>>>>>> parent of 7366ba4 (SDLÍ∏∞Î≥∏Í∑∏Î¶¨Í∏∞-Í≥ºÏ†ú(ÏµúÏ¢Ö ÏàòÏ†ï))
 	SDL_RenderCopy(m_pRenderer, sprite->texture, &sprite->m_sourceRectangle, &sprite->m_destinationRectangle);
 	SDL_RenderCopy(m_pRenderer, sprite1->texture, &sprite1->m_sourceRectangle, &sprite1->m_destinationRectangle);
 	SDL_RenderPresent(m_pRenderer);
