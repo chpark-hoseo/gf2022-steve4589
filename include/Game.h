@@ -1,6 +1,14 @@
-#pragma once
+ï»¿#pragma once
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL.h>
+
+typedef struct Sprite 
+{
+	SDL_Surface* surface;
+	SDL_Texture* texture;
+	SDL_Rect m_sourceRectangle; //ì›ë³¸ ì‚¬ê°í˜•
+	SDL_Rect m_destinationRectangle; //ëŒ€ìƒ ì‚¬ê°í˜•
+}sprite;
 
 class Game
 {
@@ -14,7 +22,8 @@ public:
 	bool running();
 	void handleEvents();
 	void clean();
-	void ImgTexture();
+	Sprite* GetSprite(const char*);
+	void MoveSprite(int width);
 
 private:
 	SDL_Window* m_pWindow;
@@ -23,6 +32,9 @@ private:
 
 	SDL_Texture* m_pTexture;
 	SDL_Texture* ui_pTexture;
-	SDL_Rect m_sourceRectangle; //¿øº» »ç°¢Çü
-	SDL_Rect m_destinationRectangle; //´ë»ó »ç°¢Çü
+	SDL_Rect m_sourceRectangle; //ì›ë³¸ ì‚¬ê°í˜•
+	SDL_Rect m_destinationRectangle; //ëŒ€ìƒ ì‚¬ê°í˜•
+
+	Sprite* sprite;
+	Sprite* sprite1;
 };
