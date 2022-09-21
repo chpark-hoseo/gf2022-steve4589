@@ -42,9 +42,32 @@ void Game::MoveSprite()
 	//sprite1->m_destinationRectangle.x = sprite1->m_destinationRectangle.x == 0 ? width : 0;
 	//SDL_QueryTexture(sprite1->texture, NULL, NULL, &sprite1->m_sourceRectangle.w, &sprite1->m_sourceRectangle.h);
 
-	if ((sprite1->m_destinationRectangle.x > SCREEN_WIDTH - 123) || sprite1->m_destinationRectangle.x < 0) { xInterval = -xInterval;}
+	if ((sprite1->m_destinationRectangle.x > SCREEN_WIDTH - sprite1->m_destinationRectangle.w) || sprite1->m_destinationRectangle.x < 0) { xInterval = -xInterval;}
 	sprite1->m_destinationRectangle.x += xInterval;
 	SDL_QueryTexture(sprite1->texture, NULL, NULL, &sprite1->m_sourceRectangle.w, &sprite1->m_sourceRectangle.h);
+}
+
+void Game::DhrowBorder()
+{
+	SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 255, 255);
+	//SDL_RenderClear(m_pRenderer);
+
+	SDL_Rect fillRect = { SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 }; //x, y, w, h
+	SDL_SetRenderDrawColor(m_pRenderer, 255, 0, 0, 255);
+	SDL_RenderFillRect(m_pRenderer, &fillRect); //속이 꽉찬 사각형
+
+	SDL_Rect outlineRect = { SCREEN_WIDTH / 6, SCREEN_HEIGHT / 6, SCREEN_WIDTH * 2 / 3, SCREEN_HEIGHT * 2 / 3 };
+	SDL_SetRenderDrawColor(m_pRenderer, 0, 255, 0, 255);
+	SDL_RenderDrawRect(m_pRenderer, &outlineRect); //속이 빈 사각형
+
+	SDL_SetRenderDrawColor(m_pRenderer, 0, 0, 255, 255);
+	SDL_RenderDrawLine(m_pRenderer, 0, SCREEN_HEIGHT / 2, SCREEN_WIDTH, SCREEN_HEIGHT / 2); //선
+
+	SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 0, 255);
+	for (int i = 0; i < SCREEN_HEIGHT; i += 4)
+	{
+		SDL_RenderDrawPoint(m_pRenderer, SCREEN_WIDTH / 2, i); //점선 
+	}
 }
 
 bool Game::init(const char* title, int xpos, int ypos, int width, int height, int flags)
@@ -86,7 +109,7 @@ void Game::render()
 {
 	SDL_RenderClear(m_pRenderer);
 
-	DhrowBorder();
+	//DhrowBorder();
 	SDL_RenderCopy(m_pRenderer, sprite->texture, &sprite->m_sourceRectangle, &sprite->m_destinationRectangle);
 	SDL_RenderCopy(m_pRenderer, sprite1->texture, &sprite1->m_sourceRectangle, &sprite1->m_destinationRectangle);
 	SDL_RenderPresent(m_pRenderer);

@@ -27,28 +27,7 @@ public:
 	void clean();
 	Sprite* GetSprite(const char*);
 	void MoveSprite();
-	void DhrowBorder()
-	{
-		SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 255, 255);
-		//SDL_RenderClear(m_pRenderer);
-
-		SDL_Rect fillRect = { SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 };
-		SDL_SetRenderDrawColor(m_pRenderer, 255, 0, 0, 255);
-		SDL_RenderFillRect(m_pRenderer, &fillRect);
-
-		SDL_Rect outlineRect = { SCREEN_WIDTH / 6, SCREEN_HEIGHT / 6, SCREEN_WIDTH * 2 / 3, SCREEN_HEIGHT * 2 / 3 };
-		SDL_SetRenderDrawColor(m_pRenderer, 0, 255, 0, 255);
-		SDL_RenderDrawRect(m_pRenderer, &outlineRect);
-
-		SDL_SetRenderDrawColor(m_pRenderer, 0, 0, 255, 255);
-		SDL_RenderDrawLine(m_pRenderer, 0, SCREEN_HEIGHT / 2, SCREEN_WIDTH, SCREEN_HEIGHT / 2);
-
-		SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 0, 255);
-		for (int i = 0; i < SCREEN_HEIGHT; i += 4)
-		{
-			SDL_RenderDrawPoint(m_pRenderer, SCREEN_WIDTH / 2, i);
-		}
-	}
+	void DhrowBorder();
 
 private:
 	SDL_Window* m_pWindow;
