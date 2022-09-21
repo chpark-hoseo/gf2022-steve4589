@@ -16,7 +16,7 @@ Sprite* Game::GetSprite(const char* file) //Sprite¿« texture∏¶ π›»Ø«œµµ∑œ ∫Ø∞Ê
 		printf("øÕøÏ");
 	} //Assets/asdf21.png 
 
-	getSprite->texture = SDL_CreateTextureFromSurface(m_pRenderer, getSprite->surface);
+	getSprite->texture = SDL_CreateTextureFromSurface(m_pRenderer, getSprite->surface); //≈ÿΩ∫√ƒ «ÿ¡¶ « ºˆ
 	SDL_FreeSurface(getSprite->surface);
 
 	SDL_QueryTexture(getSprite->texture, NULL, NULL, &m_sourceRectangle.w, &m_sourceRectangle.h);
@@ -37,14 +37,25 @@ Sprite* Game::GetSprite(const char* file) //Sprite¿« texture∏¶ π›»Ø«œµµ∑œ ∫Ø∞Ê
 	return getSprite;
 }
 
-void Game::MoveSprite()
+void Game::MoveSprite(int width)
 {
+<<<<<<< HEAD
 	//sprite1->m_destinationRectangle.x = sprite1->m_destinationRectangle.x == 0 ? width : 0;
 	//SDL_QueryTexture(sprite1->texture, NULL, NULL, &sprite1->m_sourceRectangle.w, &sprite1->m_sourceRectangle.h);
 
 	if ((sprite1->m_destinationRectangle.x > SCREEN_WIDTH - sprite1->m_destinationRectangle.w) || sprite1->m_destinationRectangle.x < 0) { xInterval = -xInterval;}
 	sprite1->m_destinationRectangle.x += xInterval;
+=======
+	sprite1->m_destinationRectangle.x = sprite1->m_destinationRectangle.x == 0 ? width - 123 : 0;  
+>>>>>>> parent of 7366ba4 (SDLÍ∏∞Î≥∏Í∑∏Î¶¨Í∏∞-Í≥ºÏ†ú(ÏµúÏ¢Ö ÏàòÏ†ï))
 	SDL_QueryTexture(sprite1->texture, NULL, NULL, &sprite1->m_sourceRectangle.w, &sprite1->m_sourceRectangle.h);
+	/*
+	int xInterval = 1;
+	sprite->m_destinationRectangle.x += xInterval;
+	if ((sprite->m_destinationRectangle.x < 0 && xInterval < 0) || sprite->m_destinationRectangle.x > width - 15 && xInterval > 0) {
+		xInterval = -xInterval;
+		SDL_Delay(30);
+	}*/
 }
 
 void Game::DhrowBorder()
@@ -103,13 +114,16 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 }
 void Game::update()
 {
-	MoveSprite();
+	MoveSprite(640);
 }
 void Game::render()
 {
 	SDL_RenderClear(m_pRenderer);
 
+<<<<<<< HEAD
 	//DhrowBorder();
+=======
+>>>>>>> parent of 7366ba4 (SDLÍ∏∞Î≥∏Í∑∏Î¶¨Í∏∞-Í≥ºÏ†ú(ÏµúÏ¢Ö ÏàòÏ†ï))
 	SDL_RenderCopy(m_pRenderer, sprite->texture, &sprite->m_sourceRectangle, &sprite->m_destinationRectangle);
 	SDL_RenderCopy(m_pRenderer, sprite1->texture, &sprite1->m_sourceRectangle, &sprite1->m_destinationRectangle);
 	SDL_RenderPresent(m_pRenderer);

@@ -2,9 +2,6 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL.h>
 
-#define SCREEN_WIDTH 640
-#define SCREEN_HEIGHT 480
-
 typedef struct Sprite 
 {
 	SDL_Surface* surface;
@@ -26,8 +23,12 @@ public:
 	void handleEvents();
 	void clean();
 	Sprite* GetSprite(const char*);
+<<<<<<< HEAD
 	void MoveSprite();
 	void DhrowBorder();
+=======
+	void MoveSprite(int width);
+>>>>>>> parent of 7366ba4 (SDL기본그리기-과제(최종 수정))
 
 private:
 	SDL_Window* m_pWindow;
@@ -41,6 +42,4 @@ private:
 
 	Sprite* sprite;
 	Sprite* sprite1;
-
-	int xInterval = 1;
 };
