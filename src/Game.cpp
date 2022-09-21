@@ -22,6 +22,9 @@ Sprite* Game::GetSprite(const char* file) //Sprite의 texture를 반환하도록 변경
 	SDL_QueryTexture(getSprite->texture, NULL, NULL, &m_sourceRectangle.w, &m_sourceRectangle.h);
 	//SDL_QueryTexture(SDL_Texture textur, Uint32* format, int* access, int* x, int* y)
 
+	m_sourceRectangle.w = 50;
+	m_sourceRectangle.h = 20;
+
 	getSprite->m_sourceRectangle.w = m_sourceRectangle.w;
 	getSprite->m_sourceRectangle.h = m_sourceRectangle.h;
 
@@ -101,14 +104,14 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 }
 void Game::update()
 {
-	MoveSprite();
+	//MoveSprite();
 }
 void Game::render()
 {
 	SDL_RenderClear(m_pRenderer);
 
 	//DhrowBorder();
-	SDL_RenderCopy(m_pRenderer, sprite->texture, &sprite->m_sourceRectangle, &sprite->m_destinationRectangle);
+	//SDL_RenderCopy(m_pRenderer, sprite->texture, &sprite->m_sourceRectangle, &sprite->m_destinationRectangle);
 	SDL_RenderCopy(m_pRenderer, sprite1->texture, &sprite1->m_sourceRectangle, &sprite1->m_destinationRectangle);
 	SDL_RenderPresent(m_pRenderer);
 }
