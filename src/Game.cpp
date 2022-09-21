@@ -16,7 +16,7 @@ Sprite* Game::GetSprite(const char* file) //Sprite의 texture를 반환하도록 변경
 		printf("와우");
 	} //Assets/asdf21.png 
 
-	getSprite->texture = SDL_CreateTextureFromSurface(m_pRenderer, getSprite->surface); //텍스쳐 해제 필수
+	getSprite->texture = SDL_CreateTextureFromSurface(m_pRenderer, getSprite->surface);
 	SDL_FreeSurface(getSprite->surface);
 
 	SDL_QueryTexture(getSprite->texture, NULL, NULL, &m_sourceRectangle.w, &m_sourceRectangle.h);
@@ -37,17 +37,14 @@ Sprite* Game::GetSprite(const char* file) //Sprite의 texture를 반환하도록 변경
 	return getSprite;
 }
 
-void Game::MoveSprite(int width)
+void Game::MoveSprite()
 {
-	sprite1->m_destinationRectangle.x = sprite1->m_destinationRectangle.x == 0 ? width - 123 : 0;  
+	//sprite1->m_destinationRectangle.x = sprite1->m_destinationRectangle.x == 0 ? width : 0;
+	//SDL_QueryTexture(sprite1->texture, NULL, NULL, &sprite1->m_sourceRectangle.w, &sprite1->m_sourceRectangle.h);
+
+	if ((sprite1->m_destinationRectangle.x > SCREEN_WIDTH - 123) || sprite1->m_destinationRectangle.x < 0) { xInterval = -xInterval;}
+	sprite1->m_destinationRectangle.x += xInterval;
 	SDL_QueryTexture(sprite1->texture, NULL, NULL, &sprite1->m_sourceRectangle.w, &sprite1->m_sourceRectangle.h);
-	/*
-	int xInterval = 1;
-	sprite->m_destinationRectangle.x += xInterval;
-	if ((sprite->m_destinationRectangle.x < 0 && xInterval < 0) || sprite->m_destinationRectangle.x > width - 15 && xInterval > 0) {
-		xInterval = -xInterval;
-		SDL_Delay(30);
-	}*/
 }
 
 bool Game::init(const char* title, int xpos, int ypos, int width, int height, int flags)
@@ -83,12 +80,13 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 }
 void Game::update()
 {
-	MoveSprite(640);
+	MoveSprite();
 }
 void Game::render()
 {
 	SDL_RenderClear(m_pRenderer);
 
+	DhrowBorder();
 	SDL_RenderCopy(m_pRenderer, sprite->texture, &sprite->m_sourceRectangle, &sprite->m_destinationRectangle);
 	SDL_RenderCopy(m_pRenderer, sprite1->texture, &sprite1->m_sourceRectangle, &sprite1->m_destinationRectangle);
 	SDL_RenderPresent(m_pRenderer);
