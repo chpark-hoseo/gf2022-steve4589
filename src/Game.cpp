@@ -39,9 +39,6 @@ Sprite* Game::GetSprite(const char* file) //Sprite의 texture를 반환하도록 변경
 
 void Game::MoveSprite()
 {
-	//sprite1->m_destinationRectangle.x = sprite1->m_destinationRectangle.x == 0 ? width : 0;
-	//SDL_QueryTexture(sprite1->texture, NULL, NULL, &sprite1->m_sourceRectangle.w, &sprite1->m_sourceRectangle.h);
-
 	if ((sprite1->m_destinationRectangle.x > SCREEN_WIDTH - sprite1->m_destinationRectangle.w) || sprite1->m_destinationRectangle.x < 0) { xInterval = -xInterval; }
 	sprite1->m_destinationRectangle.x += xInterval;
 
