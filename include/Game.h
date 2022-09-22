@@ -39,9 +39,12 @@ private:
 	SDL_Texture* ui_pTexture;
 	SDL_Rect m_sourceRectangle; //원본 사각형
 	SDL_Rect m_destinationRectangle; //대상 사각형
-
+	//실제 게임 만들땐 꼭 동적 생성하기 
 	Sprite* sprite;
 	Sprite* sprite1;
+	Sprite* sprite2;
+	Sprite* sprite3;
+	Sprite* sprite4;
 
 	int xInterval = 1;
 };

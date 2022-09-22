@@ -19,11 +19,7 @@ Sprite* Game::GetSprite(const char* file) //Sprite의 texture를 반환하도록 변경
 	getSprite->texture = SDL_CreateTextureFromSurface(m_pRenderer, getSprite->surface); //텍스쳐 해제 필수
 	SDL_FreeSurface(getSprite->surface);
 
-	SDL_QueryTexture(getSprite->texture, NULL, NULL, &m_sourceRectangle.w, &m_sourceRectangle.h);
-	//SDL_QueryTexture(SDL_Texture textur, Uint32* format, int* access, int* x, int* y)
-
-	m_sourceRectangle.w = 50;
-	m_sourceRectangle.h = 20;
+	SDL_QueryTexture(getSprite->texture, NULL, NULL, &m_sourceRectangle.w, &m_destinationRectangle.h); //SDL_QueryTexture(SDL_Texture textur, Uint32* format, int* access, int* x, int* y)
 
 	getSprite->m_sourceRectangle.w = m_sourceRectangle.w;
 	getSprite->m_sourceRectangle.h = m_sourceRectangle.h;
@@ -81,8 +77,11 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 
 			if (m_pRenderer != 0) {
 				//Textture 생성
-				sprite = GetSprite("Assets/asdf21.png");
+				sprite = GetSprite("Assets/rider.bmp");
 				sprite1 = GetSprite("Assets/rider.bmp");
+				sprite2 = GetSprite("Assets/rider.bmp");
+				sprite3 = GetSprite("Assets/rider.bmp");
+				sprite4 = GetSprite("Assets/rider.bmp");
 
 				SDL_SetRenderDrawColor(
 					m_pRenderer, 255, 255, 255, 255);
@@ -106,13 +105,28 @@ void Game::update()
 {
 	//MoveSprite();
 }
-void Game::render()
+void Game::render() //스프라이트, 배경, 애니메이션 등등 따로 나눠서 관리 해보기
 {
 	SDL_RenderClear(m_pRenderer);
 
 	//DhrowBorder();
+	// 추가 실습 :: 현재 위치에서 일부분만 보이게
+	sprite->m_destinationRectangle.x = 10;
+	sprite->m_destinationRectangle.y = -20;
 	//SDL_RenderCopy(m_pRenderer, sprite->texture, &sprite->m_sourceRectangle, &sprite->m_destinationRectangle);
-	SDL_RenderCopy(m_pRenderer, sprite1->texture, &sprite1->m_sourceRectangle, &sprite1->m_destinationRectangle);
+	//과제 1 :: 
+	sprite1->m_destinationRectangle.x = 300;
+	sprite1->m_destinationRectangle.y = -230;
+	SDL_QueryTexture(sprite1->texture, NULL, NULL, &m_sourceRectangle.w, &m_destinationRectangle.h);
+	sprite1->m_destinationRectangle.x = 30;
+	sprite1->m_destinationRectangle.y = -50;
+	SDL_RenderCopy(m_pRenderer, sprite1->texture, &sprite->m_sourceRectangle, &sprite->m_destinationRectangle);
+	//과제 2 ::
+	sprite2->m_destinationRectangle.x = 70;
+	sprite2->m_destinationRectangle.y = -50;
+	//SDL_RenderCopy(m_pRenderer, sprite2->texture, &sprite2->m_sourceRectangle, &sprite2->m_destinationRectangle);
+	//과제 3 ::
+	//SDL_RenderCopy(m_pRenderer, sprite3->texture, &sprite->m_sourceRectangle, &sprite->m_destinationRectangle);
 	SDL_RenderPresent(m_pRenderer);
 }
 bool Game::running()
@@ -140,7 +154,10 @@ void Game::clean()
 
 	SDL_DestroyRenderer(m_pRenderer);
 	SDL_DestroyTexture(sprite->texture);
-	SDL_DestroyTexture(sprite->texture);
+	SDL_DestroyTexture(sprite1->texture);
+	SDL_DestroyTexture(sprite2->texture);
+	SDL_DestroyTexture(sprite3->texture);
+	SDL_DestroyTexture(sprite4->texture);
 
 	SDL_Quit();
 }
