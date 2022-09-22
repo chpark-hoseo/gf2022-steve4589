@@ -45,7 +45,7 @@ private:
 	Sprite* sprite2;
 	Sprite* sprite3;
 	Sprite* sprite4;
-	SDL_RendererFlip curFlip;
 
+	SDL_RendererFlip curFlip;
 	int xInterval = 1;
 };
