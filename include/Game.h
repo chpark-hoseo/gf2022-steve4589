@@ -25,7 +25,7 @@ public:
 	bool running();
 	void handleEvents();
 	void clean();
-	Sprite* GetSprite(const char*);
+	Sprite* GetSprite(const char*, int x, int y, int w, int h);
 	void MoveSprite();
 	void DhrowBorder();
 	void MoveSprite(int width);
@@ -45,6 +45,7 @@ private:
 	Sprite* sprite2;
 	Sprite* sprite3;
 	Sprite* sprite4;
+	SDL_RendererFlip curFlip;
 
 	int xInterval = 1;
 };
