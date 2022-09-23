@@ -89,7 +89,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 
 			if (m_pRenderer != 0) {
 				//Textture 생성
-				sprite = GetSprite("Assets/animate.bmp", NULL, NULL, NULL, NULL);
+				sprite = GetSprite("Assets/animate.bmp", NULL, NULL, 128, 78);
 
 				SDL_SetRenderDrawColor(
 					m_pRenderer, 255, 255, 255, 255);
@@ -111,7 +111,22 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 }
 void Game::update()
 {
-	//MoveSprite();
+	int calTick = tick;
+	tick = 128 * ((SDL_GetTicks() / 100) % 6);
+	sprite->m_sourceRectangle.x = tick;
+	if (tick != calTick)
+	{
+		std::cout << sprite->m_sourceRectangle.x << "\n";
+		std::cout << sprite->m_sourceRectangle.y << "\n";
+		std::cout << sprite->m_sourceRectangle.w << "\n";
+		std::cout << sprite->m_sourceRectangle.h << "\n";
+		std::cout << "\n\n\n\n\n";
+		std::cout << sprite->m_destinationRectangle.x << "\n";
+		std::cout << sprite->m_destinationRectangle.y << "\n";
+		std::cout << sprite->m_destinationRectangle.w << "\n";
+		std::cout << sprite->m_destinationRectangle.h << "\n";
+		std::cout << "\n\n\n";
+	}
 }
 void Game::render() //스프라이트, 배경, 애니메이션 등등 따로 나눠서 관리 해보기
 {

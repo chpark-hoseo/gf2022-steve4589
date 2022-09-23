@@ -48,4 +48,5 @@ private:
 
 	SDL_RendererFlip curFlip;
 	int xInterval = 1;
+	int tick = 0;;
 };
