@@ -14,7 +14,8 @@ Sprite* Game::GetSprite(const char* file, int x, int y, int w, int h) //Sprite의
 		getSprite->surface = IMG_Load(file);
 	} //Assets/asdf21.png 
 
-	getSprite->texture = SDL_CreateTextureFromSurface(m_pRenderer, getSprite->surface); //텍스쳐 해제 필수
+	SDL_Surface* convert_surface = SDL_ConvertSurfaceFormat(getSprite->surface, SDL_PIXELFORMAT_ARGB8888, 0);
+	getSprite->texture = SDL_CreateTextureFromSurface(m_pRenderer, convert_surface);
 	SDL_FreeSurface(getSprite->surface);
 
 	SDL_QueryTexture(getSprite->texture, NULL, NULL, &m_sourceRectangle.w, &m_sourceRectangle.h); //SDL_QueryTexture(SDL_Texture textur, Uint32* format, int* access, int* x, int* y)
@@ -88,11 +89,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 
 			if (m_pRenderer != 0) {
 				//Textture 생성
-				sprite = GetSprite("Assets/rider.bmp", NULL, NULL, 40, 40);
-				sprite1 = GetSprite("Assets/rider.bmp", NULL, NULL, 40, 40);
-				sprite2 = GetSprite("Assets/rider.bmp", 50, 50, 40, 40);
-				sprite3 = GetSprite("Assets/rider.bmp", NULL, NULL, SCREEN_WIDTH, SCREEN_HEIGHT);
-				sprite4 = GetSprite("Assets/rider.bmp", NULL, NULL, NULL, NULL);
+				sprite = GetSprite("Assets/animate.bmp", NULL, NULL, NULL, NULL);
 
 				SDL_SetRenderDrawColor(
 					m_pRenderer, 255, 255, 255, 255);
@@ -114,45 +111,13 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 }
 void Game::update()
 {
-	MoveSprite();
+	//MoveSprite();
 }
 void Game::render() //스프라이트, 배경, 애니메이션 등등 따로 나눠서 관리 해보기
 {
 	SDL_RenderClear(m_pRenderer);
-
 	//DhrowBorder();
-	// //과제 3 (전체 화면)::
-	SDL_RenderCopy(m_pRenderer, sprite3->texture, &sprite3->m_sourceRectangle, &sprite3->m_destinationRectangle);
-
-	// 추가 실습 :: 현재 위치에서 일부분만 보이게
 	SDL_RenderCopy(m_pRenderer, sprite->texture, &sprite->m_sourceRectangle, &sprite->m_destinationRectangle);
-
-	//과제 1 :: 
-	sprite1->m_destinationRectangle.x = 100;
-	sprite1->m_destinationRectangle.y = 100;
-	SDL_RenderCopy(m_pRenderer, sprite1->texture, &sprite1->m_sourceRectangle, &sprite1->m_destinationRectangle);
-
-	//과제 2 ::
-	sprite2->m_destinationRectangle.x = 60;
-	sprite2->m_destinationRectangle.y = 120;
-	SDL_RenderCopy(m_pRenderer, sprite2->texture, &sprite2->m_sourceRectangle, &sprite2->m_destinationRectangle);
-	//과제 4 :: 
-	//SDL_RenderCopyEx :: flip / angle사용 예제 (바라보는 방향으로 방향 바꾸기)
-	sprite4->m_destinationRectangle.h = 100;
-	sprite4->m_destinationRectangle.w = 100;
-	SDL_RenderCopyEx(m_pRenderer, sprite4->texture, &sprite4->m_sourceRectangle, &sprite4->m_destinationRectangle, NULL, NULL, curFlip);
-	//해당 코드로 대체가능 (angle 사용)
-	/* MoveSprite() 수정 ->
-	   if ((sprite4->m_destinationRectangle.x > SCREEN_WIDTH - sprite4->m_destinationRectangle.w) || sprite4->m_destinationRectangle.x < 0) 
-	   {
-	     xInterval = -xInterval; 
-	     angle = -angle;
-	   }*
-	   SDL_RenderCopyEx(m_pRenderer, sprite4->texture, &sprite4->m_sourceRectangle, &sprite4->m_destinationRectangle, angle, NULL, SDL_FLIP_NONE);*/
-
-	//유니티에서 썼던것 처럼 atan을 사용, 대상과의 각도를 계산해, 실시간으로 마주보게 하기 가능 
-	//4번째 인자는 회전할 중심축을 지정, NULL이면 현재 이미지의 중심축을 기준으로 회전 
-	// 이를 활용해 철퇴같은 무기나 바이킹등을 만들 수 있을것 같습니다 
 
 	SDL_RenderPresent(m_pRenderer);
 
