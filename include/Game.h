@@ -1,10 +1,16 @@
 ﻿#pragma once
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_keyboard.h>
 
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
 
+enum State {    
+	idle = 0,   
+	walk,
+	run,
+};
 typedef struct Sprite 
 {
 	SDL_Surface* surface;
@@ -26,9 +32,9 @@ public:
 	void handleEvents();
 	void clean();
 	Sprite* GetSprite(const char*, int x, int y, int w, int h);
-	void MoveSprite();
+	void MainMove(State curState);
 	void DhrowBorder();
-	void MoveSprite(int width);
+	void MainAnimation(State state);
 
 private:
 	SDL_Window* m_pWindow;
@@ -47,6 +53,6 @@ private:
 	Sprite* sprite4;
 
 	SDL_RendererFlip curFlip;
+	State curState = idle;
 	int xInterval = 1;
-	int tick = 0;;
 };
