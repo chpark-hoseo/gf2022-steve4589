@@ -82,13 +82,10 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 
 			if (m_pRenderer != 0) {
 				//Textture 생성
-				sprite = GetSprite("Assets/5_test.png", NULL, NULL, 64, 64);
-				sprite1 = GetSprite("Assets/5_test.png", NULL, NULL, 64, 64);
-				sprite2 = GetSprite("Assets/5_test.png", NULL, NULL, 64, 64);
-				sprite3 = GetSprite("Assets/test_didle.png", NULL, NULL, 64, 64);
+				sprite = GetSprite("Assets/Dogge.png", NULL, NULL, NULL, NULL);
 
 				SDL_SetRenderDrawColor(
-					m_pRenderer, 255, 255, 255, 255);
+					m_pRenderer, 255, 0, 0, 255);
 			}
 			else {
 				return false; // 랜더러 생성 실패
@@ -105,29 +102,12 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 	m_bRunning = true;
 	return true;
 }
-void Game::update()
-{
-	sprite->m_sourceRectangle.x = 64 * ((SDL_GetTicks() / 100) % 6); //단거리 질주
-	sprite1->m_sourceRectangle.x = 64 * ((SDL_GetTicks() / 150) % 6); //동네 산보하는 느낌
-	sprite1->m_destinationRectangle.y = 64;
-
-	sprite2->m_sourceRectangle.x = 64 * ((SDL_GetTicks() / 150) % 6); //walk
-	sprite2->m_destinationRectangle.y = 128;
-	sprite3->m_sourceRectangle.x = 64 * ((SDL_GetTicks() / 150) % 4); //idle
-	sprite3->m_destinationRectangle.y = 128;
-
-	MainMove(curState);
-}
+void Game::update() {}
 
 void Game::render()
 {
 	SDL_RenderClear(m_pRenderer);
-	//과제1, 동일한 각각의 애니메이션 속도 다르게 하기 
 	SDL_RenderCopy(m_pRenderer, sprite->texture, &sprite->m_sourceRectangle, &sprite->m_destinationRectangle);
-	SDL_RenderCopy(m_pRenderer, sprite1->texture, &sprite1->m_sourceRectangle, &sprite1->m_destinationRectangle);
-	//과제2, github 커밋 작성란의 구글 드라이브 링크로 보시면 됩니다! 
-	//과제3. 자기만의 방식으로 과제 풀어보기 :: 좌우키를 누를때 캐릭터의 방향에 따라 애니메이션이 바뀌고, 키를 떼면 캐릭터가 멈춥니다.
-	MainAnimation(curState);
 	SDL_RenderPresent(m_pRenderer);
 }
 void Game::MainMove(State state)
