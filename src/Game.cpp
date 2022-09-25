@@ -82,10 +82,9 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 
 			if (m_pRenderer != 0) {
 				//Textture 생성
-				sprite = GetSprite("Assets/Dogge.png", NULL, NULL, NULL, NULL);
+				sprite = GetSprite("Assets/test.png", NULL, NULL, 64, 64);
 
-				SDL_SetRenderDrawColor(
-					m_pRenderer, 255, 0, 0, 255);
+				SDL_SetRenderDrawColor( m_pRenderer, 255, 0, 0, 255);
 			}
 			else {
 				return false; // 랜더러 생성 실패
