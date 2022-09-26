@@ -3,8 +3,8 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_keyboard.h>
 
-#define SCREEN_WIDTH 640
-#define SCREEN_HEIGHT 480
+#define SCREEN_WIDTH 512
+#define SCREEN_HEIGHT 640
 
 enum State {
 	idle = 0,
@@ -55,4 +55,7 @@ private:
 	SDL_RendererFlip curFlip;
 	State curState = idle;
 	int xInterval = 1;
+
+	int transform_x = SCREEN_WIDTH / 2;
+	int transform_y = 500;
 };

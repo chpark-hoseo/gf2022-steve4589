@@ -82,9 +82,19 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 
 			if (m_pRenderer != 0) {
 				//Textture 생성
-				sprite = GetSprite("Assets/test.png", NULL, NULL, 64, 64);
+				sprite = GetSprite("Assets/need for A+_stage1.png", NULL, NULL, SCREEN_WIDTH, SCREEN_HEIGHT);
+				//Character Anim
+				sprite1 = GetSprite("Assets/test_idle.png", NULL, NULL, 64, 64);
+				sprite2 = GetSprite("Assets/test_run.png", NULL, NULL, 64, 64);
+				sprite3 = GetSprite("Assets/test_run.png", NULL, NULL, 64, 64);
+				//transform, collider, sprite, animation, effect 
+				sprite1->m_destinationRectangle.x = transform_x;
+				sprite2->m_destinationRectangle.x = transform_x;
 
-				SDL_SetRenderDrawColor( m_pRenderer, 255, 0, 0, 255);
+				sprite1->m_destinationRectangle.y = transform_y;
+				sprite2->m_destinationRectangle.y = transform_y;
+
+				SDL_SetRenderDrawColor(m_pRenderer, 255, 0, 0, 255);
 			}
 			else {
 				return false; // 랜더러 생성 실패
@@ -101,12 +111,20 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 	m_bRunning = true;
 	return true;
 }
-void Game::update() {}
+void Game::update()
+{
+	sprite1->m_sourceRectangle.x = 64 * ((SDL_GetTicks() / 100) % 4);
+	sprite2->m_sourceRectangle.x = 64 * ((SDL_GetTicks() / 100) % 6);
+	sprite3->m_sourceRectangle.x = 64 * ((SDL_GetTicks() / 200) % 6);
+	MainMove(curState);
+}
 
 void Game::render()
 {
 	SDL_RenderClear(m_pRenderer);
 	SDL_RenderCopy(m_pRenderer, sprite->texture, &sprite->m_sourceRectangle, &sprite->m_destinationRectangle);
+	SDL_RenderCopy(m_pRenderer, sprite3->texture, &sprite3->m_sourceRectangle, &sprite3->m_destinationRectangle);
+	MainAnimation(curState);
 	SDL_RenderPresent(m_pRenderer);
 }
 void Game::MainMove(State state)
@@ -116,8 +134,8 @@ void Game::MainMove(State state)
 
 	if (SDL_GetTicks() % 8 == 0)
 	{
+		sprite1->m_destinationRectangle.x += speed;
 		sprite2->m_destinationRectangle.x += speed;
-		sprite3->m_destinationRectangle.x += speed;
 	}
 }
 void Game::MainAnimation(State state)
@@ -125,7 +143,7 @@ void Game::MainAnimation(State state)
 	switch (state)
 	{
 	case idle:
-		SDL_RenderCopyEx(m_pRenderer, sprite3->texture, &sprite3->m_sourceRectangle, &sprite3->m_destinationRectangle, NULL, NULL, curFlip);
+		SDL_RenderCopyEx(m_pRenderer, sprite1->texture, &sprite1->m_sourceRectangle, &sprite1->m_destinationRectangle, NULL, NULL, curFlip);
 		break;
 	case walk:
 		SDL_RenderCopyEx(m_pRenderer, sprite2->texture, &sprite2->m_sourceRectangle, &sprite2->m_destinationRectangle, NULL, NULL, curFlip);
