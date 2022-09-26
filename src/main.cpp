@@ -1,10 +1,23 @@
-﻿// SDL 
-//
-// written by changhoonpark@gmail.com
+﻿#pragma once
+#include "Game.h"
+Game* g_game = 0;
 
+int main(int argc, char* argv[])
+{
+	g_game = new Game();
 
-#include "main.h"
+	g_game->init("Game Class", 100, 100, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
+	while (g_game->running())
+	{
+		g_game->handleEvents();
+		g_game->update();
+		g_game->render();
+	}
+	g_game->clean();
+	return 0;
+}
 
+/*#include "main.h"
 
 SDL_Window*		g_pWindow = 0;
 SDL_Renderer*	g_pRenderer = 0;
@@ -204,4 +217,4 @@ void render()
 	filledCircleColor(g_pRenderer, 300, 300, 50, 0xFFFF0000);
 
 	SDL_RenderPresent(g_pRenderer);
-}
+}*/
