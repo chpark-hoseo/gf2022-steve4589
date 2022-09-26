@@ -93,6 +93,10 @@
 #define LONGINT_CONST(x) x##LL
 #define COMPOUNDFILE CompoundFile::
 
+#ifdef  _ITERATOR_DEBUG_LEVEL
+#endif  _ITERATOR_DEBUG_LEVEL
+
+
 #ifdef _DEBUG
 #define _ITERATOR_DEBUG_LEVEL 0	// speedup iterator operations while debugging
 #endif

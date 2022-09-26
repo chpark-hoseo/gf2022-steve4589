@@ -1,10 +1,14 @@
 #pragma once
+//Animation
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_keyboard.h>
 
 #define SCREEN_WIDTH 512
 #define SCREEN_HEIGHT 640
+
+//enum Menu { INPUT_MODE = 1, SEARCH_MODE, EXIT };
+//enum SearchMenu { PRINT_NAME = 1, PRINT_GRADE, PRINT_AVG, PRINT_TEL, PRINT_ALL };
 
 enum State {
 	idle = 0,
@@ -31,6 +35,7 @@ public:
 	bool running();
 	void handleEvents();
 	void clean();
+
 	Sprite* GetSprite(const char*, int x, int y, int w, int h);
 	void MainMove(State curState);
 	void DhrowBorder();
