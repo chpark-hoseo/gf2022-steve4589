@@ -3,52 +3,6 @@
 #include "iostream"
 #include "string.h"
 
-Sprite* Game::GetSprite(const char* file, int x, int y, int w, int h) //Sprite의 texture를 반환하도록 변경
-{
-	Sprite* getSprite = new Sprite();
-
-	if (strstr(file, ".bmp") != NULL) {
-		getSprite->surface = SDL_LoadBMP(file);
-	} //Assets/rider.bmp 
-	else {
-		getSprite->surface = IMG_Load(file);
-	} //Assets/asdf21.png 
-
-	SDL_Surface* convert_surface = SDL_ConvertSurfaceFormat(getSprite->surface, SDL_PIXELFORMAT_ARGB8888, 0);
-	getSprite->texture = SDL_CreateTextureFromSurface(m_pRenderer, convert_surface);
-	SDL_FreeSurface(getSprite->surface);
-
-	SDL_QueryTexture(getSprite->texture, NULL, NULL, &m_sourceRectangle.w, &m_sourceRectangle.h); //SDL_QueryTexture(SDL_Texture textur, Uint32* format, int* access, int* x, int* y)
-
-	if (w != NULL)
-	{
-		getSprite->m_sourceRectangle.w = w;
-		getSprite->m_sourceRectangle.h = h;
-	}
-	else
-	{
-		getSprite->m_sourceRectangle.w = m_sourceRectangle.w;
-		getSprite->m_sourceRectangle.h = m_sourceRectangle.h;
-	}
-	getSprite->m_destinationRectangle.w = getSprite->m_sourceRectangle.w;
-	getSprite->m_destinationRectangle.h = getSprite->m_sourceRectangle.h;
-
-	if (x != NULL)
-	{
-		getSprite->m_sourceRectangle.x = x;
-		getSprite->m_sourceRectangle.y = y;
-	}
-	else
-	{
-		getSprite->m_sourceRectangle.x = m_sourceRectangle.x;
-		getSprite->m_sourceRectangle.y = m_sourceRectangle.y;
-	}
-	getSprite->m_destinationRectangle.x = m_sourceRectangle.x;
-	getSprite->m_destinationRectangle.y = m_sourceRectangle.y;
-
-	return getSprite;
-}
-
 void Game::DhrowBorder()
 {
 	SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 255, 255);
@@ -81,14 +35,9 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 			m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, 0);
 
 			if (m_pRenderer != 0) {
-				//Textture 생성
-				sprite = GetSprite("Assets/5_test.png", NULL, NULL, 64, 64);
-				sprite1 = GetSprite("Assets/5_test.png", NULL, NULL, 64, 64);
-				sprite2 = GetSprite("Assets/5_test.png", NULL, NULL, 64, 64);
-				sprite3 = GetSprite("Assets/test_didle.png", NULL, NULL, 64, 64);
-
-				SDL_SetRenderDrawColor(
-					m_pRenderer, 255, 255, 255, 255);
+				SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 255, 255);
+				//texture
+				m_textureManager.load("Assets/animate-alpha.png", "animate", m_pRenderer);
 			}
 			else {
 				return false; // 랜더러 생성 실패
@@ -101,57 +50,22 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 	else {
 		return false; // SDL 초기화 실패
 	}
-
 	m_bRunning = true;
 	return true;
 }
 void Game::update()
 {
-	sprite->m_sourceRectangle.x = 64 * ((SDL_GetTicks() / 100) % 6); //단거리 질주
-	sprite1->m_sourceRectangle.x = 64 * ((SDL_GetTicks() / 150) % 6); //동네 산보하는 느낌
-	sprite1->m_destinationRectangle.y = 64;
-
-	sprite2->m_sourceRectangle.x = 64 * ((SDL_GetTicks() / 150) % 6); //walk
-	sprite2->m_destinationRectangle.y = 128;
-	sprite3->m_sourceRectangle.x = 64 * ((SDL_GetTicks() / 150) % 4); //idle
-	sprite3->m_destinationRectangle.y = 128;
-
-	MainMove(curState);
+	m_currentFrame = ((SDL_GetTicks() / 100) % 6);
 }
 
 void Game::render()
 {
 	SDL_RenderClear(m_pRenderer);
-	//과제1, 동일한 각각의 애니메이션 속도 다르게 하기 
-	SDL_RenderCopy(m_pRenderer, sprite->texture, &sprite->m_sourceRectangle, &sprite->m_destinationRectangle);
-	SDL_RenderCopy(m_pRenderer, sprite1->texture, &sprite1->m_sourceRectangle, &sprite1->m_destinationRectangle);
-	//과제2, github 커밋 작성란의 구글 드라이브 링크로 보시면 됩니다! 
-	//과제3. 자기만의 방식으로 과제 풀어보기 :: 좌우키를 누를때 캐릭터의 방향에 따라 애니메이션이 바뀌고, 키를 떼면 캐릭터가 멈춥니다.
-	MainAnimation(curState);
-	SDL_RenderPresent(m_pRenderer);
-}
-void Game::MainMove(State state)
-{
-	int speed = state;
-	speed = curFlip == SDL_FLIP_HORIZONTAL ? -speed : speed;
 
-	if (SDL_GetTicks() % 8 == 0)
-	{
-		sprite2->m_destinationRectangle.x += speed;
-		sprite3->m_destinationRectangle.x += speed;
-	}
-}
-void Game::MainAnimation(State state)
-{
-	switch (state)
-	{
-	case idle:
-		SDL_RenderCopyEx(m_pRenderer, sprite3->texture, &sprite3->m_sourceRectangle, &sprite3->m_destinationRectangle, NULL, NULL, curFlip);
-		break;
-	case walk:
-		SDL_RenderCopyEx(m_pRenderer, sprite2->texture, &sprite2->m_sourceRectangle, &sprite2->m_destinationRectangle, NULL, NULL, curFlip);
-		break;
-	}
+	m_textureManager.draw("animate", 0, 0, 128, 82, m_pRenderer);
+	m_textureManager.drawFrame("animate", 100, 100, 128, 82, 0, m_currentFrame, m_pRenderer);
+
+	SDL_RenderPresent(m_pRenderer);
 }
 bool Game::running()
 {
@@ -162,23 +76,6 @@ void Game::handleEvents()
 	SDL_Event event;
 	while (SDL_PollEvent(&event))
 	{
-		if (event.type == SDL_KEYDOWN) {
-			switch (event.key.keysym.sym)
-			{
-			case SDLK_LEFT:
-				curState = walk;
-				curFlip = SDL_FLIP_HORIZONTAL;
-				break;
-			case SDLK_RIGHT:
-				curState = walk;
-				curFlip = SDL_FLIP_NONE;
-				break;
-			default:
-				break;
-			}
-		}
-		else if (event.type == SDL_KEYUP) { curState = idle; }
-
 		switch (event.type)
 		{
 		case SDL_MOUSEBUTTONDOWN:
@@ -194,12 +91,5 @@ void Game::clean()
 	SDL_DestroyWindow(m_pWindow);
 
 	SDL_DestroyRenderer(m_pRenderer);
-	//스프라이트 텍스쳐 해제를 따로담당하는 함수 필요
-	SDL_DestroyTexture(sprite->texture);
-	SDL_DestroyTexture(sprite1->texture);
-	SDL_DestroyTexture(sprite2->texture);
-	SDL_DestroyTexture(sprite3->texture);
-	SDL_DestroyTexture(sprite4->texture);
-
 	SDL_Quit();
 }

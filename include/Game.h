@@ -2,6 +2,7 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_keyboard.h>
+#include <TextureManager.h>
 
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
@@ -31,28 +32,14 @@ public:
 	bool running();
 	void handleEvents();
 	void clean();
-	Sprite* GetSprite(const char*, int x, int y, int w, int h);
-	void MainMove(State curState);
+
 	void DhrowBorder();
-	void MainAnimation(State state);
 
 private:
 	SDL_Window* m_pWindow;
 	SDL_Renderer* m_pRenderer;
 	bool m_bRunning;
 
-	SDL_Texture* m_pTexture;
-	SDL_Texture* ui_pTexture;
-	SDL_Rect m_sourceRectangle; //원본 사각형
-	SDL_Rect m_destinationRectangle; //대상 사각형
-	//실제 게임 만들땐 꼭 동적 생성하기 
-	Sprite* sprite;
-	Sprite* sprite1;
-	Sprite* sprite2;
-	Sprite* sprite3;
-	Sprite* sprite4;
-
-	SDL_RendererFlip curFlip;
-	State curState = idle;
-	int xInterval = 1;
+	TextureManager m_textureManager;
+	int m_currentFrame;
 };
