@@ -1,9 +1,7 @@
 #pragma once
 #include "NoteManager.h"
-#include "json.h"
 
 using namespace std;
-using namespace Json;
 
 //GameManager -> static int curStage;
 void NoteManager::ReadLineToTxt(const char* dataPath)
@@ -21,8 +19,44 @@ void NoteManager::ReadLineToTxt(const char* dataPath)
 		spawnSheet.close();
 	}
 }
-queue<string> NoteManager::GetSpawnQueue() { return spawnQueue_test; }
+void NoteManager::SpawnNotes()
+{
+	string line;
+	stringstream readQueue(spawnQueue_test.front());
 
+	queue<string> datas;
+	while (getline(readQueue, line, '/'))
+	{
+		datas.push(line);
+	}
+	int limit = datas.size();
+	for (int i = 0; i < limit; i++) //한줄에 데이터 3개
+	{
+		switch (i)
+		{
+		case 0:
+			nextSpawnDelay = stof(datas.front());
+			break;
+		case 1:
+			type = datas.front();
+			break;
+		case 2:
+			point = stoi(datas.front());
+			break;
+		}
+		datas.pop();
+	}
+	spawnQueue_test.pop();
+}
+//nextSpawnDelay = stof(buffer);
+	/*
+	float startTime;
+	startTime = SDL_GetTicks();
+	do {
+		curSpawnDelay = SDL_GetTicks() - startTime;
+		nextSpawnDelay -= curSpawnDelay;
+	} while (curSpawnDelay < nextSpawnDelay);*/
+queue<string> NoteManager::GetSpawnQueue() { return spawnQueue_test; }
 //nextSpawnDelay = stof(buffer);
 	/*
 	float startTime;

@@ -119,7 +119,9 @@ void Game::Start_initialize()
 	n_noteMgr = new NoteManager();
 
 	n_noteMgr->ReadLineToTxt("Assets/SpawnSheet.txt");
+	n_noteMgr->SpawnNotes();
 	//스테이지 시작시 데이터 받아오기 
+	/*
 	queue<string> getstring = n_noteMgr->GetSpawnQueue();
 	//test
 	for (int i = 0; i < getstring.size(); i++)
@@ -127,7 +129,7 @@ void Game::Start_initialize()
 		string getthis = getstring.front();
 		getstring.pop();
 		cout << getthis << "\n\n";
-	}
+	}*/
 }
 void Game::update()
 {

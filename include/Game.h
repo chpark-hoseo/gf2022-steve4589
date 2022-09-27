@@ -29,16 +29,18 @@ class Game
 public:
 	Game() { }
 	~Game() { }
-	//프레임 
+	/* Main Frame */
 	bool init(const char* title, int, int, int, int, int flags);
 	void render();
 	void update();
 	bool running();
 	void handleEvents();
 	void clean();
-	//초기화 
+
+	/* Initialized */
 	void Start_initialize();
 
+	/* Sprite / Anim */
 	Sprite* GetSprite(const char*, int x, int y, int w, int h);
 	void MainMove(State curState);
 	void DhrowBorder();
@@ -53,7 +55,7 @@ private:
 	SDL_Texture* ui_pTexture;
 	SDL_Rect m_sourceRectangle; //원본 사각형
 	SDL_Rect m_destinationRectangle; //대상 사각형
-	//실제 게임 만들땐 꼭 동적 생성하기 
+	
 	Sprite* sprite;
 	Sprite* sprite1;
 	Sprite* sprite2;

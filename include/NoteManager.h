@@ -15,13 +15,15 @@ class NoteManager //노트 정보를 받아오고, 쏘는 역할
 {
 public:
 	void ReadLineToTxt(const char* dataPath);
+	void SpawnNotes();
 	queue<string> GetSpawnQueue();
 private:
+	string type = "M";
+	int point;
 	float nextSpawnDelay;
+
 	float curSpawnDelay;
 
 	queue<Spawn> spawnQueue;
 	queue<string> spawnQueue_test;
-
-	//BasicExcel xls;
 };
