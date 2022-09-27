@@ -1,42 +1,33 @@
 #pragma once
 #include "NoteManager.h"
+#include "json.h"
+
+using namespace std;
+using namespace Json;
 
 //GameManager -> static int curStage;
-void NoteManager::ReadLineToXls()
+void NoteManager::ReadLineToTxt(const char* dataPath)
 {
-	BasicExcelWorksheet* sheet = nullptr;
-	//xls.Load("Assets/NeedForA+_SpawnSheet.xls");
-	xls.New(1);
-	sheet = xls.GetWorksheet(0); //어차피 1개만 계속 쓰기 때문에
+	ifstream spawnSheet(dataPath, std::ifstream::in);
 
-	for (int i = 1; i < sheet->GetTotalCols(); i++)
+	string line;
+	if (spawnSheet.is_open())
 	{
-		string line = sheet->Cell(1, i)->GetString();
-		string buffer;
-
-		istringstream desline(line);
-		getline(desline, buffer, '/');
-
-		nextSpawnDelay = stof(buffer);
-		cout << "\n\n";
-		cout << nextSpawnDelay << "\n";
-
-		float startTime;
-		startTime = SDL_GetTicks();
-
-		do {
-			curSpawnDelay = SDL_GetTicks() - startTime;
-			nextSpawnDelay -= curSpawnDelay;
-		} while (curSpawnDelay < nextSpawnDelay);
+		while (!spawnSheet.eof())
+		{
+			getline(spawnSheet, line); //getline(desline, buffer, '/');
+			spawnQueue_test.push(line);
+		}
+		spawnSheet.close();
 	}
 }
+queue<string> NoteManager::GetSpawnQueue() { return spawnQueue_test; }
 
-void NoteManager::test()
-{
-	cout << "xlstest";
-}
-/*
-		while (getline(desline, buffer, ' '))
-		{
-
-		}*/
+//nextSpawnDelay = stof(buffer);
+	/*
+	float startTime;
+	startTime = SDL_GetTicks();
+	do {
+		curSpawnDelay = SDL_GetTicks() - startTime;
+		nextSpawnDelay -= curSpawnDelay;
+	} while (curSpawnDelay < nextSpawnDelay);*/

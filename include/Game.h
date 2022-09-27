@@ -3,6 +3,7 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_keyboard.h>
+#include "NoteManager.h"
 
 #define SCREEN_WIDTH 512
 #define SCREEN_HEIGHT 640
@@ -28,13 +29,15 @@ class Game
 public:
 	Game() { }
 	~Game() { }
-
+	//프레임 
 	bool init(const char* title, int, int, int, int, int flags);
 	void render();
 	void update();
 	bool running();
 	void handleEvents();
 	void clean();
+	//초기화 
+	void Start_initialize();
 
 	Sprite* GetSprite(const char*, int x, int y, int w, int h);
 	void MainMove(State curState);

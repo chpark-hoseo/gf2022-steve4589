@@ -2,23 +2,26 @@
 //NoteManager
 #include <iostream> 
 #include<sstream>
+#include <fstream> //json 입출력을 위한 파일 입출력 라이브러리
 #include <string>
-#include<list>
+#include <queue>; //한줄씩 가져온 데이터를 미리 저장한후, 한줄씩 빼내 다시 파싱합니다 (파싱 --> 딜레이, 노트 타입, 생성되는 위치)
 #include <SDL2/SDL_stdinc.h>
 #include <SDL2/SDL_timer.h>
-#include "ExcelFormat.h"
+#include <Spawn.h>
 
-using namespace ExcelFormat;
 using namespace std;
 
-class NoteManager
+class NoteManager //노트 정보를 받아오고, 쏘는 역할 
 {
 public:
-	void ReadLineToXls();
-	void test();
+	void ReadLineToTxt(const char* dataPath);
+	queue<string> GetSpawnQueue();
 private:
 	float nextSpawnDelay;
 	float curSpawnDelay;
 
-	BasicExcel xls;
+	queue<Spawn> spawnQueue;
+	queue<string> spawnQueue_test;
+
+	//BasicExcel xls;
 };

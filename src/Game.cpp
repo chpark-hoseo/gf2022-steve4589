@@ -1,9 +1,7 @@
 #pragma once
 #include "Game.h"
-#include <NoteManager.h>
 #include "iostream"
 #include "string.h"
-
 NoteManager* n_noteMgr = 0;
 
 Sprite* Game::GetSprite(const char* file, int x, int y, int w, int h) //Sprite의 texture를 반환하도록 변경
@@ -82,7 +80,9 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 			title, xpos, ypos, width, height, flags);
 		if (m_pWindow != 0) {
 			m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, 0);
-			//n_noteMgr->test();
+			/* initialized */
+			Start_initialize();
+
 			if (m_pRenderer != 0) {
 				//Textture 생성
 				sprite = GetSprite("Assets/need for A+_stage1.png", NULL, NULL, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -113,6 +113,21 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 
 	m_bRunning = true;
 	return true;
+}
+void Game::Start_initialize()
+{
+	n_noteMgr = new NoteManager();
+
+	n_noteMgr->ReadLineToTxt("Assets/SpawnSheet.txt");
+	//스테이지 시작시 데이터 받아오기 
+	queue<string> getstring = n_noteMgr->GetSpawnQueue();
+	//test
+	for (int i = 0; i < getstring.size(); i++)
+	{
+		string getthis = getstring.front();
+		getstring.pop();
+		cout << getthis << "\n\n";
+	}
 }
 void Game::update()
 {
