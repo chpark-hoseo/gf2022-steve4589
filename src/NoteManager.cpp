@@ -36,12 +36,15 @@ void NoteManager::SpawnNotes()
 		{
 		case 0:
 			nextSpawnDelay = stof(datas.front());
+			cout << "nextSpawnDelay =>" << nextSpawnDelay << "    ";
 			break;
 		case 1:
 			type = datas.front();
+			cout << "type" << type << "    ";
 			break;
 		case 2:
 			point = stoi(datas.front());
+			cout << "point" << point << "    ";
 			break;
 		}
 		datas.pop();

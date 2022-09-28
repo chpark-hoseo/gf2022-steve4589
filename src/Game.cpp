@@ -119,6 +119,7 @@ void Game::Start_initialize()
 	n_noteMgr = new NoteManager();
 
 	n_noteMgr->ReadLineToTxt("Assets/SpawnSheet.txt");
+	cout << "Start Initialized\n////////////////////////////////////\n\n";
 	n_noteMgr->SpawnNotes();
 	//스테이지 시작시 데이터 받아오기 
 	/*
