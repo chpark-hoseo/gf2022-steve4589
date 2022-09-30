@@ -144,14 +144,11 @@
   <ItemGroup>
     <ClCompile Include="src\TextureManager.cpp" />
     <ClCompile Include="src\Game.cpp" />
-    <ClCompile Include="src\jsoncpp.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\NoteManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Game.h" />
-    <ClInclude Include="include\json-forwards.h" />
-    <ClInclude Include="include\json.h" />
     <ClInclude Include="include\main.h" />
     <ClInclude Include="include\NoteManager.h" />
     <ClInclude Include="include\Spawn.h" />

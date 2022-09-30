@@ -42,5 +42,4 @@ private:
 	int transform_y = 500;
 
 	int m_curFrame = 0;
-	float m_curTime = 0;
 };
