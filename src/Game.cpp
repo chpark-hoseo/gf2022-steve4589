@@ -37,7 +37,11 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 			if (m_pRenderer != 0) {
 				SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 255, 255);
 				//texture
-				m_textureManager.load("Assets/animate-alpha.png", "animate", m_pRenderer);
+				m_textureManager.load("Assets/animate-alpha.png", "dog_animate", m_pRenderer);
+				m_textureManager.load("Assets/need for A+_stage1.png", "stage1_sprite", m_pRenderer);
+				m_textureManager.load("Assets/textureManager_test.png", "dog1_sprite", m_pRenderer);
+				m_textureManager.load("Assets/textureManager_test.png", "dogBack_sprite", m_pRenderer);
+				//need for A+_stage1
 			}
 			else {
 				return false; // 랜더러 생성 실패
@@ -62,8 +66,10 @@ void Game::render()
 {
 	SDL_RenderClear(m_pRenderer);
 
-	m_textureManager.draw("animate", 0, 0, 128, 82, m_pRenderer);
-	m_textureManager.drawFrame("animate", 100, 100, 128, 82, 0, m_currentFrame, m_pRenderer);
+	m_textureManager.draw("stage1_sprite", 0, 0, 1024, 720, m_pRenderer);
+	m_textureManager.drawFrame("dog_animate", 100, 100, 128, 82, 0, m_currentFrame, m_pRenderer);
+	m_textureManager.drawFrame("dogBack_sprite", 350, 120, 240, 400, 0, 0, m_pRenderer);
+	m_textureManager.drawFrame("dog1_sprite", 400, 300, 240, 400, 0, 1, m_pRenderer);
 
 	SDL_RenderPresent(m_pRenderer);
 }
