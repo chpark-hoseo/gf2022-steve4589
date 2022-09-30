@@ -85,7 +85,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 
 			if (m_pRenderer != 0) {
 				//Textture »ý¼º
-				sprite = GetSprite("Assets/need for A+_stage1.png", NULL, NULL, SCREEN_WIDTH, SCREEN_HEIGHT);
+				sprite = GetSprite("Assets/need for A+_stage1_test.png", NULL, NULL, SCREEN_WIDTH, SCREEN_HEIGHT);
 				//Character Anim
 				sprite1 = GetSprite("Assets/test_idle.png", NULL, NULL, 64, 64);
 				sprite2 = GetSprite("Assets/test_run.png", NULL, NULL, 64, 64);

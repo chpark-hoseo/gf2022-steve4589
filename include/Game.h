@@ -5,8 +5,8 @@
 #include <SDL2/SDL_keyboard.h>
 #include "NoteManager.h"
 
-#define SCREEN_WIDTH 512
-#define SCREEN_HEIGHT 640
+#define SCREEN_WIDTH 1024
+#define SCREEN_HEIGHT 720
 
 //enum Menu { INPUT_MODE = 1, SEARCH_MODE, EXIT };
 //enum SearchMenu { PRINT_NAME = 1, PRINT_GRADE, PRINT_AVG, PRINT_TEL, PRINT_ALL };
