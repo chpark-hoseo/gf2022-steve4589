@@ -6,7 +6,8 @@ TextureManager* TextureManager::s_pInstance = 0; //정적변수를 사용할 수 있게 하�
 
 bool TextureManager::load(string fileName, string id, SDL_Renderer* pRenderer)
 {
-	SDL_Surface* pTempSurface = IMG_Load(fileName.c_str());
+	string set_fileName = "Assets/" + fileName + ".png";
+	SDL_Surface* pTempSurface = IMG_Load(set_fileName.c_str());
 	if (pTempSurface == 0) {
 		return false;
 	}
@@ -18,10 +19,28 @@ bool TextureManager::load(string fileName, string id, SDL_Renderer* pRenderer)
 	}
 	return false;
 }
-
-void TextureManager::TextureClean()
+void TextureManager::TextureClean(string id) //사용하지 않는 텍스쳐를 삭제하는 코드 추가하기 
 {
-
+	m_textureMap.erase(id);
+}
+void TextureManager::TextureAllClean()
+{
+	m_textureMap.clear();
+	/*
+	//각각의 key의 value값에 직접 DestoryTexture적용
+	map<string, SDL_Texture*>::iterator iter;
+	for (iter = m_textureMap.begin(); iter != m_textureMap.end(); iter++) //auto --> var
+	{
+		SDL_DestroyTexture(m_textureMap["d"]->second);
+		cout << iter->second << endl;
+	}
+	//test
+	map<string, SDL_Texture*>::iterator iter1;
+	for (iter1 = m_textureMap.begin(); iter1 != m_textureMap.end(); iter1++) 
+	{
+		cout << iter1->second << endl;
+	}
+	m_textureMap.clear();*/
 }
 
 void TextureManager::draw(string id, int x, int y, int width, int height, SDL_Renderer* pRenderer, SDL_RendererFlip flip)
@@ -38,7 +57,6 @@ void TextureManager::draw(string id, int x, int y, int width, int height, SDL_Re
 	else
 	{
 		srcRect.w = destRect.w = width;
-		std::cout << srcRect.w;
 		srcRect.h = destRect.h = height;
 	}
 	srcRect.x = 0;

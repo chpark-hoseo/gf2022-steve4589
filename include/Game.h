@@ -22,7 +22,7 @@ public:
 	void handleEvents();
 	void clean();
 
-	void DhrowBorder();
+	//void DhrowBorder();
 
 private:
 	SDL_Window* m_pWindow;

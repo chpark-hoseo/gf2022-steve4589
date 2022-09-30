@@ -35,14 +35,16 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 			m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, 0);
 			if (m_pRenderer != 0) {
 				SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 255, 255);
-				if (!TheTextureManager::GetInstance()->load("Assets/animate-alpha.png", "dog_animate", m_pRenderer)) //test
+				if (!TheTextureManager::GetInstance()->load("animate-alpha", "dog_animate", m_pRenderer)) //test
 				{
 					return false; //싱글턴 생성 실패 
 				}
+				//과제 :: 사용하지 않는 텍스쳐 삭제 
+				TextureManager::GetInstance()->TextureClean("dog_animate"); 
 				//Load Texture
-				TheTextureManager::GetInstance()->load("Assets/need for A+_stage1.png", "stage1_sprite", m_pRenderer);
-				TheTextureManager::GetInstance()->load("Assets/textureManager_test.png", "dog1_sprite", m_pRenderer);
-				TheTextureManager::GetInstance()->load("Assets/textureManager_test.png", "dogBack_sprite", m_pRenderer);
+				TheTextureManager::GetInstance()->load("need for A+_stage1", "stage1_sprite", m_pRenderer);
+				TheTextureManager::GetInstance()->load("textureManager_test", "dog1_sprite", m_pRenderer);
+				TheTextureManager::GetInstance()->load("textureManager_test", "dogBack_sprite", m_pRenderer);
 			}
 			else {
 				return false; // 랜더러 생성 실패
@@ -69,7 +71,6 @@ void Game::render()
 	//Back (layer == 0)
 	TheTextureManager::GetInstance()->draw("stage1_sprite", 0, 0, 1024, 720, m_pRenderer);
 	//Sprites (layer == 1 ~ n)
-	//m_textureManager.drawFrame("dog_animate", 100, 100, 128, 82, 0, m_currentFrame, m_pRenderer);
 	TheTextureManager::GetInstance()->drawFrame("dogBack_sprite", 350, 120, 240, 400, 0, 0, m_pRenderer);
 	TheTextureManager::GetInstance()->drawFrame("dog1_sprite", 450, 300, 240, 400, 0, 1, m_pRenderer);
 
@@ -96,9 +97,9 @@ void Game::handleEvents()
 }
 void Game::clean()
 {
-	SDL_DestroyWindow(m_pWindow);
+	TextureManager::GetInstance()->TextureAllClean(); //텍스쳐 모두 삭제
 
-	//TextureManager::GetInstance()->TextureClean();
+	SDL_DestroyWindow(m_pWindow);
 	SDL_DestroyRenderer(m_pRenderer);
 	SDL_Quit();
 }

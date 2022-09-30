@@ -27,7 +27,8 @@ public:
         int currentRow, int currentFrame,
         SDL_Renderer* pRenderer, SDL_RendererFlip flip = SDL_FLIP_NONE);
 
-    void TextureClean();
+    void TextureAllClean();
+    void TextureClean(string id);
 
 private:
     TextureManager() {} // 생성자 private으로 선언
