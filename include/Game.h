@@ -7,7 +7,7 @@
 #define SCREEN_WIDTH 1024
 #define SCREEN_HEIGHT 720
 
-typedef TextureManager TheTextureManager; //자료형 별칭 생성
+typedef TextureManager TheTextureManager; //자료형 별칭 생성/
 
 class Game
 {
