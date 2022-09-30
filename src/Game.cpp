@@ -33,15 +33,16 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 			title, xpos, ypos, width, height, flags);
 		if (m_pWindow != 0) {
 			m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, 0);
-
 			if (m_pRenderer != 0) {
 				SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 255, 255);
-				//texture
-				m_textureManager.load("Assets/animate-alpha.png", "dog_animate", m_pRenderer);
-				m_textureManager.load("Assets/need for A+_stage1.png", "stage1_sprite", m_pRenderer);
-				m_textureManager.load("Assets/textureManager_test.png", "dog1_sprite", m_pRenderer);
-				m_textureManager.load("Assets/textureManager_test.png", "dogBack_sprite", m_pRenderer);
-				//need for A+_stage1
+				if (!TheTextureManager::GetInstance()->load("Assets/animate-alpha.png", "dog_animate", m_pRenderer)) //test
+				{
+					return false; //싱글턴 생성 실패 
+				}
+				//Load Texture
+				TheTextureManager::GetInstance()->load("Assets/need for A+_stage1.png", "stage1_sprite", m_pRenderer);
+				TheTextureManager::GetInstance()->load("Assets/textureManager_test.png", "dog1_sprite", m_pRenderer);
+				TheTextureManager::GetInstance()->load("Assets/textureManager_test.png", "dogBack_sprite", m_pRenderer);
 			}
 			else {
 				return false; // 랜더러 생성 실패
@@ -65,11 +66,12 @@ void Game::update()
 void Game::render()
 {
 	SDL_RenderClear(m_pRenderer);
-
-	m_textureManager.draw("stage1_sprite", 0, 0, 1024, 720, m_pRenderer);
-	m_textureManager.drawFrame("dog_animate", 100, 100, 128, 82, 0, m_currentFrame, m_pRenderer);
-	m_textureManager.drawFrame("dog1_sprite", 230, 200, 240, 400, 0, 1, m_pRenderer);
-	m_textureManager.drawFrame("dogBack_sprite", 350, 120, 240, 400, 0, 0, m_pRenderer);
+	//Back (layer == 0)
+	TheTextureManager::GetInstance()->draw("stage1_sprite", 0, 0, 1024, 720, m_pRenderer);
+	//Sprites (layer == 1 ~ n)
+	//m_textureManager.drawFrame("dog_animate", 100, 100, 128, 82, 0, m_currentFrame, m_pRenderer);
+	TheTextureManager::GetInstance()->drawFrame("dogBack_sprite", 350, 120, 240, 400, 0, 0, m_pRenderer);
+	TheTextureManager::GetInstance()->drawFrame("dog1_sprite", 450, 300, 240, 400, 0, 1, m_pRenderer);
 
 	SDL_RenderPresent(m_pRenderer);
 }
@@ -96,6 +98,7 @@ void Game::clean()
 {
 	SDL_DestroyWindow(m_pWindow);
 
+	//TextureManager::GetInstance()->TextureClean();
 	SDL_DestroyRenderer(m_pRenderer);
 	SDL_Quit();
 }

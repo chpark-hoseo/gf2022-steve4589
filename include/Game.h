@@ -7,18 +7,7 @@
 #define SCREEN_WIDTH 1024
 #define SCREEN_HEIGHT 720
 
-enum State {    
-	idle = 0,   
-	walk,
-	run,
-};
-typedef struct Sprite 
-{
-	SDL_Surface* surface;
-	SDL_Texture* texture;
-	SDL_Rect m_sourceRectangle; //원본 사각형
-	SDL_Rect m_destinationRectangle; //대상 사각형
-}sprite;
+typedef TextureManager TheTextureManager; //자료형 별칭 생성
 
 class Game
 {
@@ -40,6 +29,5 @@ private:
 	SDL_Renderer* m_pRenderer;
 	bool m_bRunning;
 
-	TextureManager m_textureManager;
 	int m_currentFrame;
 };

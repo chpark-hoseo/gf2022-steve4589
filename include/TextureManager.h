@@ -10,8 +10,13 @@ using namespace std;
 
 class TextureManager {
 public:
-    TextureManager() {}
-    ~TextureManager() {}
+    //정적 멤버함수
+    static TextureManager* GetInstance() //다이나믹 싱글턴. 전역변수로 초기화하지 않으므로, 메모리를 확보할 수 있다 
+    {
+        if (s_pInstance == 0)
+            s_pInstance = new TheTextureManager();
+        return s_pInstance;
+    }
 
     bool load(string fileName, string id, SDL_Renderer* pRenderer);
 
@@ -22,6 +27,10 @@ public:
         int currentRow, int currentFrame,
         SDL_Renderer* pRenderer, SDL_RendererFlip flip = SDL_FLIP_NONE);
 
+    void TextureClean() {};
+
 private:
+    TextureManager() {} // 생성자 private으로 선언
     map<string, SDL_Texture*> m_textureMap;
+    static TextureManager* s_pInstance; //정적 멤버변수 선언
 };

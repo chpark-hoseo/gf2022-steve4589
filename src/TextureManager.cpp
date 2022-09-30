@@ -2,6 +2,8 @@
 #include <TextureManager.h>
 #include <iostream>
 
+TextureManager* TextureManager::s_pInstance = 0; //정적변수를 사용할 수 있게 하기 위해서 
+
 bool TextureManager::load(string fileName, string id, SDL_Renderer* pRenderer)
 {
 	SDL_Surface* pTempSurface = IMG_Load(fileName.c_str());
@@ -15,6 +17,11 @@ bool TextureManager::load(string fileName, string id, SDL_Renderer* pRenderer)
 		return true;
 	}
 	return false;
+}
+
+void TextureManager::TextureClean()
+{
+
 }
 
 void TextureManager::draw(string id, int x, int y, int width, int height, SDL_Renderer* pRenderer, SDL_RendererFlip flip)
