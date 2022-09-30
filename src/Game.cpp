@@ -68,8 +68,8 @@ void Game::render()
 
 	m_textureManager.draw("stage1_sprite", 0, 0, 1024, 720, m_pRenderer);
 	m_textureManager.drawFrame("dog_animate", 100, 100, 128, 82, 0, m_currentFrame, m_pRenderer);
+	m_textureManager.drawFrame("dog1_sprite", 230, 200, 240, 400, 0, 1, m_pRenderer);
 	m_textureManager.drawFrame("dogBack_sprite", 350, 120, 240, 400, 0, 0, m_pRenderer);
-	m_textureManager.drawFrame("dog1_sprite", 400, 300, 240, 400, 0, 1, m_pRenderer);
 
 	SDL_RenderPresent(m_pRenderer);
 }
