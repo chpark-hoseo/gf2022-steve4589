@@ -3,7 +3,7 @@
 #include "iostream"
 #include "string.h"
 
-void Game::DhrowBorder()
+/*void Game::DhrowBorder()
 {
 	SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 255, 255);
 	//SDL_RenderClear(m_pRenderer);
@@ -24,7 +24,7 @@ void Game::DhrowBorder()
 	{
 		SDL_RenderDrawPoint(m_pRenderer, SCREEN_WIDTH / 2, i); //Á¡¼± 
 	}
-}
+}*/
 
 bool Game::init(const char* title, int xpos, int ypos, int width, int height, int flags)
 {
@@ -60,7 +60,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 }
 void Game::update()
 {
-	m_currentFrame = ((SDL_GetTicks() / 100) % 6);
+	//m_currentFrame = ((SDL_GetTicks() / 100) % 6);
 }
 
 void Game::render()
