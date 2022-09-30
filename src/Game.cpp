@@ -72,7 +72,7 @@ void Game::Start_initialize()
 }
 void Game::update()
 {
-	m_curTime = SDL_GetTicks() / 6;
+	//m_curTime = SDL_GetTicks() / 6;
 }
 
 void Game::render()
