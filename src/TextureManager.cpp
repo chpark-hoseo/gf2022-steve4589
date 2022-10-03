@@ -26,21 +26,6 @@ void TextureManager::TextureClean(string id) //사용하지 않는 텍스쳐를 삭제하는 �
 void TextureManager::TextureAllClean()
 {
 	m_textureMap.clear();
-	/*
-	//각각의 key의 value값에 직접 DestoryTexture적용
-	map<string, SDL_Texture*>::iterator iter;
-	for (iter = m_textureMap.begin(); iter != m_textureMap.end(); iter++) //auto --> var
-	{
-		SDL_DestroyTexture(m_textureMap["d"]->second);
-		cout << iter->second << endl;
-	}
-	//test
-	map<string, SDL_Texture*>::iterator iter1;
-	for (iter1 = m_textureMap.begin(); iter1 != m_textureMap.end(); iter1++)
-	{
-		cout << iter1->second << endl;
-	}
-	m_textureMap.clear();*/
 }
 
 void TextureManager::draw(string id, int x, int y, int width, int height, SDL_Renderer* pRenderer, SDL_RendererFlip flip)

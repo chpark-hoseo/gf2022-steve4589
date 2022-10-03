@@ -21,11 +21,13 @@ public:
 	~Game() { }
 	/* Main Frame */
 	bool init(const char* title, int, int, int, int, int flags);
+
 	void render();
 	void update();
 	bool running();
 	void handleEvents();
 	void clean();
+	void Prepare();
 
 	/* Initialized */
 	void Start_initialize();

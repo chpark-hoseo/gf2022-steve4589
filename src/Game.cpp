@@ -35,7 +35,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 			m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, 0);
 			if (m_pRenderer != 0) {
 				//Textture 생성
-				Start_initialize();
+				//Start_initialize();
 				SDL_SetRenderDrawColor(m_pRenderer, 255, 0, 0, 255);
 			}
 			else {
@@ -53,11 +53,16 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 	m_bRunning = true;
 	return true;
 }
-void Game::Start_initialize()
+void Game::update()
+{
+	//m_curTime = SDL_GetTicks() / 6;
+}
+
+void Game::Prepare()
 {
 	TheTextureManager::GetInstance()->load("need for A+_stage1", "stage1_sprite", m_pRenderer);
-	TheTextureManager::GetInstance()->load("textureManager_test", "dog1_sprite", m_pRenderer);
-	TheTextureManager::GetInstance()->load("textureManager_test", "dogBack_sprite", m_pRenderer);
+	TheTextureManager::GetInstance()->load("need for A+_notes", "notes_sprite", m_pRenderer);
+	TheTextureManager::GetInstance()->load("need for A+_selectMenu", "selectMenu_sprite", m_pRenderer);
 
 	//스테이지 시작시 데이터 받아오기 
 	/*
@@ -70,19 +75,17 @@ void Game::Start_initialize()
 		cout << getthis << "\n\n";
 	}*/
 }
-void Game::update()
-{
-	//m_curTime = SDL_GetTicks() / 6;
-}
 
 void Game::render()
 {
 	SDL_RenderClear(m_pRenderer);
 	// Back(layer == 0)
-		TheTextureManager::GetInstance()->draw("stage1_sprite", 0, 0, 1024, 720, m_pRenderer);
+    TheTextureManager::GetInstance()->draw("stage1_sprite", 0, 0, 1024, 720, m_pRenderer);
 	//Sprites (layer == 1 ~ n)
-	TheTextureManager::GetInstance()->drawFrame("dogBack_sprite", 350, 120, 240, 400, 0, 0, m_pRenderer);
-	TheTextureManager::GetInstance()->drawFrame("dog1_sprite", 450, 300, 240, 400, 0, 1, m_pRenderer);
+	TheTextureManager::GetInstance()->drawFrame("notes_sprite", 0, 0, 96, 96, 0, 0, m_pRenderer);
+	TheTextureManager::GetInstance()->draw("selectMenu_sprite", 535, 250, 0, 0, m_pRenderer);
+	//selectMenu_sprite
+	//TheTextureManager::GetInstance()->drawFrame("dog1_sprite", 450, 300, 240, 400, 0, 1, m_pRenderer);
 	SDL_RenderPresent(m_pRenderer);
 }
 /*
