@@ -49,13 +49,24 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 	else {
 		return false; // SDL 초기화 실패
 	}
-
 	m_bRunning = true;
 	return true;
 }
 void Game::update()
 {
-	//m_curTime = SDL_GetTicks() / 6;
+	//플레이 버튼 클릭시 
+	NoteManager::GetInstance()->ReadSpawnNotes();
+    /*
+	float curSpawnDelay = NoteManager::GetInstance()->GetSpawnDelay();
+	if (curSpawnDelay != NULL) // curSpawnDelay != NULL ==> 노트시트가 모두 비었을때 (게임오버하지않고 게임 클리어 시)
+	{
+		if (m_curTime > curSpawnDelay) //시트가 비지 않았고, 스폰 타이밍일때 스폰
+		{
+			NoteManager::GetInstance()->SpawnNotes(); //다음 한줄을 받아옵니다 
+			Timer::GetInstance()->StopTimer(); //timer 초기화
+		}
+		else { m_curTime = Timer::GetInstance()->StartTimer(); }
+	}*/
 }
 
 void Game::Prepare()
@@ -64,8 +75,7 @@ void Game::Prepare()
 	TextureManager::GetInstance()->load("need for A+_notes", "notes_sprite", m_pRenderer);
 	TextureManager::GetInstance()->load("need for A+_selectMenu", "selectMenu_sprite", m_pRenderer);
 
-	NoteManager::GetInstance()->ReadLineToTxt("SpawnSheet");
-	NoteManager::GetInstance()->SpawnNotes(); //이부분 고치기 
+	NoteManager::GetInstance()->ReadLineToTxt("stage1");
 
 	//스테이지 시작시 데이터 받아오기 
 	/*
@@ -83,7 +93,7 @@ void Game::render()
 {
 	SDL_RenderClear(m_pRenderer);
 	// Back(layer == 0)
-    TheTextureManager::GetInstance()->draw("stage1_sprite", 0, 0, 1024, 720, m_pRenderer);
+	TheTextureManager::GetInstance()->draw("stage1_sprite", 0, 0, 1024, 720, m_pRenderer);
 	//Sprites (layer == 1 ~ n)
 	TheTextureManager::GetInstance()->drawFrame("notes_sprite", 0, 0, 96, 96, 0, 0, m_pRenderer);
 	TheTextureManager::GetInstance()->draw("selectMenu_sprite", 535, 250, 0, 0, m_pRenderer);

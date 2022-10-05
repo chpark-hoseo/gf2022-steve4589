@@ -1,10 +1,12 @@
 #pragma once
-//Animation
+//SDL
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_keyboard.h>
-#include "NoteManager.h"
+//Custom
+#include <NoteManager.h>
 #include <TextureManager.h>
+#include <Timer.h>
 
 #define SCREEN_WIDTH 1024
 #define SCREEN_HEIGHT 720
@@ -44,5 +46,7 @@ private:
 	int transform_y = 500;
 
 	int m_curFrame = 0;
-	float m_curTime = 0;
+	double m_curTime = 0;
+	int startTimer;
+	bool isTimer = true;
 };
