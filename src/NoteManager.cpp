@@ -3,10 +3,12 @@
 
 using namespace std;
 
+NoteManager* NoteManager::s_pInstance = 0;
 //GameManager -> static int curStage;
-void NoteManager::ReadLineToTxt(const char* dataPath)
+void NoteManager::ReadLineToTxt(string data)
 {
-	ifstream spawnSheet(dataPath, std::ifstream::in);
+	string dataPath = "Assets/" + data + ".txt";
+	ifstream spawnSheet(dataPath.c_str(), std::ifstream::in);
 
 	string line;
 	if (spawnSheet.is_open())
@@ -17,39 +19,40 @@ void NoteManager::ReadLineToTxt(const char* dataPath)
 			spawnQueue_test.push(line);
 		}
 		spawnSheet.close();
+		cout << "SpawnSheet Size ==> " << spawnQueue_test.size() << "\n";
 	}
 }
 void NoteManager::SpawnNotes()
 {
 	string line;
-	stringstream readQueue(spawnQueue_test.front());
-
 	queue<string> datas;
-	while (getline(readQueue, line, '/'))
+	int limit = spawnQueue_test.size();
+
+	for (int i = 0; i < limit; i++)
 	{
-		datas.push(line);
-	}
-	int limit = datas.size();
-	for (int i = 0; i < limit; i++) //한줄에 데이터 3개
-	{
-		switch (i)
+		stringstream readQueue(spawnQueue_test.front());
+		while (getline(readQueue, line, '/')) //한줄
 		{
-		case 0:
-			nextSpawnDelay = stof(datas.front());
-			cout << "nextSpawnDelay =>" << nextSpawnDelay << "    ";
-			break;
-		case 1:
-			type = datas.front();
-			cout << "type" << type << "    ";
-			break;
-		case 2:
-			point = stoi(datas.front());
-			cout << "point" << point << "    ";
-			break;
+			datas.push(line);
 		}
+
+		nextSpawnDelay = stof(datas.front());
+		cout << "nextSpawnDelay => " << nextSpawnDelay << "    ";
 		datas.pop();
+
+		point = stoi(datas.front());
+		cout << "point => " << point << "    ";
+		datas.pop();
+
+		speed = stof(datas.front());
+		cout << "speed => " << speed << "    ";
+		datas.pop();
+
+		//delay만큼 쉬기
+
+		cout << "\n";
+		spawnQueue_test.pop();
 	}
-	spawnQueue_test.pop();
 }
 //nextSpawnDelay = stof(buffer);
 	/*

@@ -60,9 +60,12 @@ void Game::update()
 
 void Game::Prepare()
 {
-	TheTextureManager::GetInstance()->load("need for A+_stage1", "stage1_sprite", m_pRenderer);
-	TheTextureManager::GetInstance()->load("need for A+_notes", "notes_sprite", m_pRenderer);
-	TheTextureManager::GetInstance()->load("need for A+_selectMenu", "selectMenu_sprite", m_pRenderer);
+	TextureManager::GetInstance()->load("need for A+_stage1", "stage1_sprite", m_pRenderer);
+	TextureManager::GetInstance()->load("need for A+_notes", "notes_sprite", m_pRenderer);
+	TextureManager::GetInstance()->load("need for A+_selectMenu", "selectMenu_sprite", m_pRenderer);
+
+	NoteManager::GetInstance()->ReadLineToTxt("SpawnSheet");
+	NoteManager::GetInstance()->SpawnNotes(); //이부분 고치기 
 
 	//스테이지 시작시 데이터 받아오기 
 	/*
@@ -144,9 +147,8 @@ void Game::handleEvents()
 }
 void Game::clean()
 {
+	TheTextureManager::GetInstance()->TextureAllClean();
 	SDL_DestroyWindow(m_pWindow);
-
 	SDL_DestroyRenderer(m_pRenderer);
-
 	SDL_Quit();
 }

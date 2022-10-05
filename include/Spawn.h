@@ -4,10 +4,10 @@
 class Spawn
 {
 public:
-	Spawn(float getDelay, char* getType, int getPoint)
+	Spawn(float getDelay, float* getSpeed, int getPoint)
 	{
 		delay = getDelay;
-		type = getType;
+		speed = getSpeed;
 		point = getPoint;
 	};
 	float GetDelay() { return delay; }

@@ -14,16 +14,25 @@ using namespace std;
 class NoteManager //노트 정보를 받아오고, 쏘는 역할 
 {
 public:
-	void ReadLineToTxt(const char* dataPath);
+	static NoteManager* GetInstance() //다이나믹 싱글턴. 전역변수로 초기화하지 않으므로, 메모리를 확보할 수 있다 
+	{
+		if (s_pInstance == 0)
+			s_pInstance = new NoteManager();
+		return s_pInstance;
+	}
+
+	void ReadLineToTxt(string dataPath);
 	void SpawnNotes();
 	queue<string> GetSpawnQueue();
 private:
-	string type = "M";
 	int point;
 	float nextSpawnDelay;
+	float speed;
 
 	float curSpawnDelay;
 
 	queue<Spawn> spawnQueue;
 	queue<string> spawnQueue_test;
+
+	static NoteManager* s_pInstance; //정적 멤버변수 선언
 };
