@@ -1,7 +1,7 @@
 #pragma once
 #include "Game.h"
-#include "iostream"
-#include "string.h"
+
+Game* Game::s_pInstance = 0;
 
 void Game::DhrowBorder()
 {
@@ -54,51 +54,49 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 }
 void Game::update()
 {
-	//플레이 버튼 클릭시 
-	NoteManager::GetInstance()->ReadSpawnNotes();
-    /*
-	float curSpawnDelay = NoteManager::GetInstance()->GetSpawnDelay();
-	if (curSpawnDelay != NULL) // curSpawnDelay != NULL ==> 노트시트가 모두 비었을때 (게임오버하지않고 게임 클리어 시)
+	//플레이 버튼 클릭
+	NoteManager::GetInstance()->ReadSpawnNotes(); //추가 필요--> 1스테이지 버튼 => 1스테이지 시트, 2스테이지 버튼 => 2스테이지 시트 
+
+	for (int i = 0; i < m_gameObjects.size(); i++)
 	{
-		if (m_curTime > curSpawnDelay) //시트가 비지 않았고, 스폰 타이밍일때 스폰
-		{
-			NoteManager::GetInstance()->SpawnNotes(); //다음 한줄을 받아옵니다 
-			Timer::GetInstance()->StopTimer(); //timer 초기화
-		}
-		else { m_curTime = Timer::GetInstance()->StartTimer(); }
+		m_gameObjects[i]->update();
+	}
+	/*
+	for (GameObject* gameObj :  m_gameObjects) //중간에 중단 불가
+	{
+		gameObj->update();
 	}*/
 }
 
 void Game::Prepare()
 {
+	//가져다 쓸 사진
 	TextureManager::GetInstance()->load("need for A+_stage1", "stage1_sprite", m_pRenderer);
 	TextureManager::GetInstance()->load("need for A+_notes", "notes_sprite", m_pRenderer);
 	TextureManager::GetInstance()->load("need for A+_selectMenu", "selectMenu_sprite", m_pRenderer);
+	//initial GameObject (배경 등등..)
+	GameObject* m_go = new GameObject();
+	GameObject* m_note = new Note();
 
+	m_gameObjects.push_back(new Note(new LoaderParams(100, 100, 128, 82, "animate")));
+	m_gameObjects.push_back(new Enemy(new LoaderParams(100, 100, 128, 82, "animate")));
+
+	m_go->load(0, 0, 1024, 720, 0, 0, "stage1_sprite");
+	m_note->load(0, 0, 96, 96, 0, 0, "notes_sprite");
+	m_gameObjects.push_back(m_go);
+	m_gameObjects.push_back(m_note);
+	//Note
 	NoteManager::GetInstance()->ReadLineToTxt("stage1");
-
-	//스테이지 시작시 데이터 받아오기 
-	/*
-	queue<string> getstring = n_noteMgr->GetSpawnQueue();
-	//test
-	for (int i = 0; i < getstring.size(); i++)
-	{
-		string getthis = getstring.front();
-		getstring.pop();
-		cout << getthis << "\n\n";
-	}*/
 }
 
 void Game::render()
 {
 	SDL_RenderClear(m_pRenderer);
-	// Back(layer == 0)
-	TheTextureManager::GetInstance()->draw("stage1_sprite", 0, 0, 1024, 720, m_pRenderer);
-	//Sprites (layer == 1 ~ n)
-	TheTextureManager::GetInstance()->drawFrame("notes_sprite", 0, 0, 96, 96, 0, 0, m_pRenderer);
-	TheTextureManager::GetInstance()->draw("selectMenu_sprite", 535, 250, 0, 0, m_pRenderer);
-	//selectMenu_sprite
-	//TheTextureManager::GetInstance()->drawFrame("dog1_sprite", 450, 300, 240, 400, 0, 1, m_pRenderer);
+
+	for (int i = 0; i < m_gameObjects.size(); i++)
+	{
+		m_gameObjects[i]->draw(m_pRenderer);
+	}
 	SDL_RenderPresent(m_pRenderer);
 }
 /*

@@ -63,14 +63,6 @@ void NoteManager::SpawnNotes() //한줄씩 호출
 	datas.pop();
 
 	spawnQueue_test.pop();
-	if (spawnQueue_test.size() == 0) { nextSpawnDelay = NULL; } //게임 클리어  
+	if (spawnQueue_test.size() == 0) { nextSpawnDelay = NULL; } //게임 클리어 - 모든 노트 소모  
 }
 queue<string> NoteManager::GetSpawnQueue() { return spawnQueue_test; }
-//nextSpawnDelay = stof(buffer);
-	/*
-	float startTime;
-	startTime = SDL_GetTicks();
-	do {
-		curSpawnDelay = SDL_GetTicks() - startTime;
-		nextSpawnDelay -= curSpawnDelay;
-	} while (curSpawnDelay < nextSpawnDelay);*/

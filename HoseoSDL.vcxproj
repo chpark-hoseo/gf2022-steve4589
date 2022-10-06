@@ -142,23 +142,32 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Timer.cpp" />
-    <ClCompile Include="src\Transform.cpp" />
-    <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\GameObject\EnergyNote.cpp" />
+    <ClCompile Include="src\GameObject\GameObject.cpp" />
+    <ClCompile Include="src\GameObject\Note.cpp" />
+    <ClCompile Include="src\SDLGameObject.cpp" />
+    <ClCompile Include="src\timer\Timer.cpp" />
+    <ClCompile Include="src\physics\Transform.cpp" />
+    <ClCompile Include="src\manager\Game.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\NoteManager.cpp" />
-    <ClCompile Include="src\TextureManager.cpp" />
-    <ClCompile Include="src\Vector2D.cpp" />
+    <ClCompile Include="src\manager\NoteManager.cpp" />
+    <ClCompile Include="src\manager\TextureManager.cpp" />
+    <ClCompile Include="src\physics\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\EnergyNote.h" />
     <ClInclude Include="include\Game.h" />
+    <ClInclude Include="include\GameObject.h" />
+    <ClInclude Include="include\LoaderParams.h" />
     <ClInclude Include="include\main.h" />
     <ClInclude Include="include\NoteManager.h" />
+    <ClInclude Include="include\SDLGameObject.h" />
     <ClInclude Include="include\Spawn.h" />
     <ClInclude Include="include\TextureManager.h" />
     <ClInclude Include="include\Timer.h" />
     <ClInclude Include="include\Transform.h" />
     <ClInclude Include="include\Vector2D.h" />
+    <ClInclude Include="include\Note.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
