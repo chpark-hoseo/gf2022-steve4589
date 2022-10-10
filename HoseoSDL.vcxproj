@@ -143,9 +143,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\GameObject\EnergyNote.cpp" />
-    <ClCompile Include="src\GameObject\GameObject.cpp" />
     <ClCompile Include="src\GameObject\Note.cpp" />
-    <ClCompile Include="src\SDLGameObject.cpp" />
+    <ClCompile Include="src\GameObject\SDLGameObject.cpp" />
+    <ClCompile Include="src\manager\ObjManager.cpp" />
+    <ClCompile Include="src\Controller\PlayerController.cpp" />
     <ClCompile Include="src\timer\Timer.cpp" />
     <ClCompile Include="src\physics\Transform.cpp" />
     <ClCompile Include="src\manager\Game.cpp" />
@@ -161,6 +162,8 @@
     <ClInclude Include="include\LoaderParams.h" />
     <ClInclude Include="include\main.h" />
     <ClInclude Include="include\NoteManager.h" />
+    <ClInclude Include="include\ObjManager.h" />
+    <ClInclude Include="include\PlayerController.h" />
     <ClInclude Include="include\SDLGameObject.h" />
     <ClInclude Include="include\Spawn.h" />
     <ClInclude Include="include\TextureManager.h" />

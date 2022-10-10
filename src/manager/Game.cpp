@@ -1,5 +1,6 @@
 #pragma once
-#include "Game.h"
+#include <Game.h>
+#include <SDLGameObject.h>
 
 Game* Game::s_pInstance = 0;
 
@@ -34,7 +35,6 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 		if (m_pWindow != 0) {
 			m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, 0);
 			if (m_pRenderer != 0) {
-				//Textture 생성
 				//Start_initialize();
 				SDL_SetRenderDrawColor(m_pRenderer, 255, 0, 0, 255);
 			}
@@ -75,16 +75,10 @@ void Game::Prepare()
 	TextureManager::GetInstance()->load("need for A+_notes", "notes_sprite", m_pRenderer);
 	TextureManager::GetInstance()->load("need for A+_selectMenu", "selectMenu_sprite", m_pRenderer);
 	//initial GameObject (배경 등등..)
-	GameObject* m_go = new GameObject();
-	GameObject* m_note = new Note();
+	//m_gameObjects = ObjManager::GetInstance()->InitPool(); //나중에 Vector 내용물을 전달해주기 어려워서 먼저 ObjectPool의 내용물로 초기화 시켰습니다 
+	m_gameObjects.push_back(new Note(new LoaderParams(0, 0, 96, 96, 0, 0, "notes_sprite")));
+	//m_gameObjects.push_back(new GameObject(new LoaderParams(0, 0, 96, 96, 0, 0, "notes_sprite")));
 
-	m_gameObjects.push_back(new Note(new LoaderParams(100, 100, 128, 82, "animate")));
-	m_gameObjects.push_back(new Enemy(new LoaderParams(100, 100, 128, 82, "animate")));
-
-	m_go->load(0, 0, 1024, 720, 0, 0, "stage1_sprite");
-	m_note->load(0, 0, 96, 96, 0, 0, "notes_sprite");
-	m_gameObjects.push_back(m_go);
-	m_gameObjects.push_back(m_note);
 	//Note
 	NoteManager::GetInstance()->ReadLineToTxt("stage1");
 }
@@ -93,9 +87,8 @@ void Game::render()
 {
 	SDL_RenderClear(m_pRenderer);
 
-	for (int i = 0; i < m_gameObjects.size(); i++)
-	{
-		m_gameObjects[i]->draw(m_pRenderer);
+	for (int i = 0; i != m_gameObjects.size(); i++) {
+		m_gameObjects[i]->draw();
 	}
 	SDL_RenderPresent(m_pRenderer);
 }

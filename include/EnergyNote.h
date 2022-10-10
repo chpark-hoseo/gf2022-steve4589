@@ -1,14 +1,17 @@
+/*
 #pragma once
-#include "GameObject.h"
+#include "SDLGameObject.h"
 
-class EnergyNote : public GameObject  //, public INoteType
+class EnergyNote : public SDLGameObject  //, public INoteType
 {
 public:
+    EnergyNote(const LoaderParams* pParams);
+
     void load(int x, int y, int width, int height, int currentRow, int currentFrame, std::string textureID);
-    void draw(SDL_Renderer* pRenderer);
+    void draw();
     void update();
     void clean();
 
     //void move() override;
     //void crashEvent() override;
-};
+};*/

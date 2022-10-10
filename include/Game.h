@@ -10,8 +10,8 @@
 //Custom
 #include <NoteManager.h>
 #include <TextureManager.h>
+#include <ObjManager.h>
 #include <Timer.h>
-#include <GameObject.h>
 #include <Note.h>
 
 #define SCREEN_WIDTH 1024
@@ -19,12 +19,12 @@
 
 typedef TextureManager TheTextureManager; //자료형 별칭 생성
 
-//enum Menu { INPUT_MODE = 1, SEARCH_MODE, EXIT };
-//enum SearchMenu { PRINT_NAME = 1, PRINT_GRADE, PRINT_AVG, PRINT_TEL, PRINT_ALL };
-
+class SDLGameObject; //SDLGameObject.h와 교차포함이 되서 이렇게했습니다 
+class GameObject; //SDLGameObject.h와 교차포함이 되서 이렇게했습니다 
 class Game
 {
 public:
+	GameObject* gameObject;
 	Game() { }
 	~Game() { }
 
@@ -50,7 +50,7 @@ public:
 	//else
 	void DhrowBorder();
 private:
-	static Game* s_pInstance; 
+	static Game* s_pInstance;
 	SDL_Window* m_pWindow;
 	SDL_Renderer* m_pRenderer;
 	bool m_bRunning;
@@ -65,6 +65,5 @@ private:
 	int startTimer;
 	bool isTimer = true;
 
-	std::vector<GameObject*> m_gameObjects; //GameManager 배열 역할, main문에 객체를 일일이 소환하지 않기 위함?
-
+	std::vector<SDLGameObject*> m_gameObjects; //GameManager 배열 역할, main문에 객체를 일일이 소환하지 않기 위함?
 };

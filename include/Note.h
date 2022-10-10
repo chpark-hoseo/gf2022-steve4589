@@ -1,14 +1,23 @@
 #pragma once
-#include "GameObject.h"
 
-class Note : public GameObject, public INoteType
+class SDLGameObject; //SDLGameObject 정상 영업합니다 
+class Alive_SDLGameObject
+{
+	SDLGameObject * sdlGameObj; 
+};
+class Note : public SDLGameObject, public INoteType
 {
 public:
-    void load(int x, int y, int width, int height, int currentRow, int currentFrame, std::string textureID);
-    void draw(SDL_Renderer* pRenderer);
-    void update();
-    void clean();
+	Note(const LoaderParams* pParams);
+	virtual void draw();
+	virtual void update();
+	virtual void clean();
 
-    void move() override;
-    void crashEvent() override;
+	Vector2D startPos() override;
+	void move() override;
+	void crashEvent() override;
+
+	void OnEnable() override;
+private:
+	Type noteType = Left;
 };

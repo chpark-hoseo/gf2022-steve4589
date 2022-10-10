@@ -12,8 +12,6 @@
 #include <Spawn.h>
 #include <Timer.h>
 
-
-
 using namespace std;
 
 class NoteManager //노트 정보를 받아오고, 쏘는 역할 

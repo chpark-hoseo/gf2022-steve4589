@@ -1,15 +1,17 @@
+/*
+#pragma once
 #include <EnergyNote.h>
+
+EnergyNote::EnergyNote(const LoaderParams* pParams) : SDLGameObject(pParams) {}
 
 void EnergyNote::load(int x, int y, int width, int height, int currentRow, int currentFrame, std::string textureID)
 {
     GameObject::load(x, y, width, height, currentRow, currentFrame, textureID);
 }
-void EnergyNote::draw(SDL_Renderer* pRenderer)
+void EnergyNote::draw()
 {
-    GameObject::draw(pRenderer);
+   SDLGameObject::draw();
 }
-void EnergyNote::update() 
-{
-    //EnergyNote::move();
-    //EnergyNote::crashEvent();
-}
+void EnergyNote::update() {};
+void EnergyNote::clean() {};
+)*/

@@ -12,7 +12,7 @@ public:
 	void setY(float y) { m_y = y; }
 
 	//소인수분해
-	//sqrt(double x) ==> x의 루트, 제곱근
+	// sqrt(double x) ==> x의 루트, 제곱근
 	// sqrt(12.4) ==>  3.xxxx
 	
 	//pow(double base, double n) ==> base가 되는 숫자의 n 제곱, 즉 제곱을 구하는 함수 

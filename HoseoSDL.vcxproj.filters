@@ -36,16 +36,19 @@
     <ClCompile Include="src\timer\Timer.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObject\GameObject.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="src\GameObject\Note.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="src\GameObject\EnergyNote.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="src\SDLGameObject.cpp">
+    <ClCompile Include="src\GameObject\SDLGameObject.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="src\manager\ObjManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Controller\PlayerController.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -87,6 +90,12 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="include\SDLGameObject.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ObjManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PlayerController.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

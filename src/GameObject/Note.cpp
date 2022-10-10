@@ -1,24 +1,37 @@
+#pragma once
 #include <Note.h>
+Note::Note(const LoaderParams* pParams) : SDLGameObject(pParams) {}
 
-void Note::load(int x, int y, int width, int height, int currentRow, int currentFrame, std::string textureID)
+void Note::draw()
 {
-	GameObject::load(x, y, width, height, currentRow, currentFrame, textureID); //base코드 
+	SDLGameObject::draw();
 }
-void Note::draw(SDL_Renderer* pRenderer)
+Vector2D Note::startPos()
 {
-	//GameObject::draw(pRenderer);
+	Vector2D pos = Vector2D(1, 0);
+	return pos;
 }
 void Note::update() //아래로 
 {
+	if (!onOff) return;
 	move();
+	crashEvent();
 }
 void Note::clean() {}
 
 void Note::move()
 {
-	//m_y += 5;
+	//
+	//Vector2D vector = Vector2D(1, 0); 
+	//std::cout << vector.getX();
+	m_position.setY(m_position.getY() + 1);
 }
 void Note::crashEvent()
 {
 
+}
+void Note::OnEnable()
+{
+	//m_position.setX(0);
+	m_position.setY(0);
 }
