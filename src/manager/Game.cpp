@@ -76,7 +76,7 @@ void Game::Prepare()
 	TextureManager::GetInstance()->load("need for A+_selectMenu", "selectMenu_sprite", m_pRenderer);
 	//initial GameObject (배경 등등..)
 	//m_gameObjects = ObjManager::GetInstance()->InitPool(); //나중에 Vector 내용물을 전달해주기 어려워서 먼저 ObjectPool의 내용물로 초기화 시켰습니다 
-	m_gameObjects.push_back(new Note(new LoaderParams(0, 0, 96, 96, 0, 0, "notes_sprite")));
+	m_gameObjects.push_back(new Note(new LoaderParams(0, 0, 96, 96, 0, 0, "notes_sprite"))); //test
 	//m_gameObjects.push_back(new GameObject(new LoaderParams(0, 0, 96, 96, 0, 0, "notes_sprite")));
 
 	//Note

@@ -1,6 +1,5 @@
 #pragma once
 #include <GameObject.h>
-
 //interface
 class INoteType { 
 public:

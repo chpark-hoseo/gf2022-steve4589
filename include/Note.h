@@ -1,10 +1,6 @@
 #pragma once
+#include <SDLGameObject.h>
 
-class SDLGameObject; //SDLGameObject 정상 영업합니다 
-class Alive_SDLGameObject
-{
-	SDLGameObject * sdlGameObj; 
-};
 class Note : public SDLGameObject, public INoteType
 {
 public:
