@@ -1,6 +1,7 @@
 #pragma once
 #include <Game.h>
 #include <SDLGameObject.h>
+#include <ObjManager.h>
 
 Game* Game::s_pInstance = 0;
 
@@ -57,15 +58,9 @@ void Game::update()
 	//플레이 버튼 클릭
 	NoteManager::GetInstance()->ReadSpawnNotes(); //추가 필요--> 1스테이지 버튼 => 1스테이지 시트, 2스테이지 버튼 => 2스테이지 시트 
 
-	for (int i = 0; i < m_gameObjects.size(); i++)
-	{
+	for (int i = 0; i < m_gameObjects.size(); i++) {
 		m_gameObjects[i]->update();
 	}
-	/*
-	for (GameObject* gameObj :  m_gameObjects) //중간에 중단 불가
-	{
-		gameObj->update();
-	}*/
 }
 
 void Game::Prepare()
@@ -75,8 +70,10 @@ void Game::Prepare()
 	TextureManager::GetInstance()->load("need for A+_notes", "notes_sprite", m_pRenderer);
 	TextureManager::GetInstance()->load("need for A+_selectMenu", "selectMenu_sprite", m_pRenderer);
 	//initial GameObject (배경 등등..)
-	//m_gameObjects = ObjManager::GetInstance()->InitPool(); //나중에 Vector 내용물을 전달해주기 어려워서 먼저 ObjectPool의 내용물로 초기화 시켰습니다 
-	m_gameObjects.push_back(new Note(new LoaderParams(0, 0, 96, 96, 0, 0, "notes_sprite"))); //test
+	m_gameObjects = ObjManager::GetInstance()->InitPool(); //나중에 Vector 내용물을 전달해주기 어려워서 먼저 ObjectPool의 내용물로 초기화 시켰습니다 
+	std::cout << "ObjectPool => " << m_gameObjects.size() << "개 생성\n\n";
+
+	//GameObject* object = new Note(new LoaderParams(0, 0, 96, 96, 0, 0, "notes_sprite"));
 	//m_gameObjects.push_back(new GameObject(new LoaderParams(0, 0, 96, 96, 0, 0, "notes_sprite")));
 
 	//Note
@@ -92,30 +89,6 @@ void Game::render()
 	}
 	SDL_RenderPresent(m_pRenderer);
 }
-/*
-void Game::MainMove(State state)
-{
-	int speed = state;
-	speed = curFlip == SDL_FLIP_HORIZONTAL ? -speed : speed;
-
-	if (SDL_GetTicks() % 8 == 0)
-	{
-		sprite1->m_destinationRectangle.x += speed;
-		sprite2->m_destinationRectangle.x += speed;
-	}
-}
-void Game::MainAnimation(State state)
-{
-	switch (state)
-	{
-	case idle:
-		SDL_RenderCopyEx(m_pRenderer, sprite1->texture, &sprite1->m_sourceRectangle, &sprite1->m_destinationRectangle, NULL, NULL, curFlip);
-		break;
-	case walk:
-		SDL_RenderCopyEx(m_pRenderer, sprite2->texture, &sprite2->m_sourceRectangle, &sprite2->m_destinationRectangle, NULL, NULL, curFlip);
-		break;
-	}
-}*/
 bool Game::running()
 {
 	return m_bRunning;
@@ -153,3 +126,27 @@ void Game::clean()
 	SDL_DestroyRenderer(m_pRenderer);
 	SDL_Quit();
 }
+/*
+void Game::MainMove(State state)
+{
+	int speed = state;
+	speed = curFlip == SDL_FLIP_HORIZONTAL ? -speed : speed;
+
+	if (SDL_GetTicks() % 8 == 0)
+	{
+		sprite1->m_destinationRectangle.x += speed;
+		sprite2->m_destinationRectangle.x += speed;
+	}
+}
+void Game::MainAnimation(State state)
+{
+	switch (state)
+	{
+	case idle:
+		SDL_RenderCopyEx(m_pRenderer, sprite1->texture, &sprite1->m_sourceRectangle, &sprite1->m_destinationRectangle, NULL, NULL, curFlip);
+		break;
+	case walk:
+		SDL_RenderCopyEx(m_pRenderer, sprite2->texture, &sprite2->m_sourceRectangle, &sprite2->m_destinationRectangle, NULL, NULL, curFlip);
+		break;
+	}
+}*/

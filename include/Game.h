@@ -10,7 +10,6 @@
 //Custom
 #include <NoteManager.h>
 #include <TextureManager.h>
-#include <ObjManager.h>
 #include <Timer.h>
 #include <GameObject.h>
 #include <Note.h>
@@ -50,6 +49,7 @@ public:
 	void Start_initialize();
 	//else
 	void DhrowBorder();
+	std::vector<GameObject*> GetGameObjects() { return m_gameObjects; }
 private:
 	static Game* s_pInstance;
 	SDL_Window* m_pWindow;

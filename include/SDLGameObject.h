@@ -1,7 +1,8 @@
 #pragma once
 #include <GameObject.h>
+
 //interface
-class INoteType { 
+class INoteType {
 public:
 	virtual Vector2D startPos() = 0;
 	virtual void move() = 0; //toPlayer || Fall
@@ -32,8 +33,8 @@ public:
 	void SetActive(bool isOn);
 	virtual void OnEnable() {}
 protected:
-	Vector2D m_position; //직접 변경하지 않고, Vector2D형식의 값을 대입하는 방식으로만 값변경.
-	Vector2D m_vector;
+	Vector2D m_position;
+	Vector2D m_vector; //m_position에 값을 넘겨주는 역할
 	float speed;
 
 	float m_x;
@@ -42,8 +43,6 @@ protected:
 	int m_height;
 	int m_currentRow;
 	int m_currentFrame;
-
-	bool onOff = true;
 
 	std::string m_textureID;
 };

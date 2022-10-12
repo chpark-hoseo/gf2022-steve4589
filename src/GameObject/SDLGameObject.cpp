@@ -3,7 +3,7 @@
 #include <Game.h>
 
 SDLGameObject::SDLGameObject(const LoaderParams* pParams)
-	: GameObject(pParams), 	m_position(pParams->getX(), pParams->getY()), m_vector(pParams->getX(), pParams->getY())
+	: GameObject(pParams), m_position(pParams->getX(), pParams->getY()), m_vector(pParams->getX(), pParams->getY())
 {
 	m_width = pParams->getWidth();
 	m_height = pParams->getHeight();
@@ -21,10 +21,10 @@ void SDLGameObject::draw() {
 }
 
 void SDLGameObject::SetActive(bool isOn) {
-	if (onOff)
+	if (isOn)
 	{
-		isOn = true;
-		OnEnable();
+		onOff = true;
+		OnEnable(); //위치초기화 / 등장 이펙트 등등에 사용할예정입니다 
 	}
-	else { isOn = false; }
+	else { onOff = false; }
 }

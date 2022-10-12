@@ -13,6 +13,11 @@ public:
 	virtual void clean() = 0;
 	virtual ~GameObject() {}
 
+	const char* GetName() { return name; }
+	void SetName(const char* getName) { name = getName; }
+
+	bool GetOnOff() { return onOff;  }
+
 protected:
 	GameObject(const LoaderParams* pParams) {}
 
@@ -23,4 +28,7 @@ protected:
 
 	int m_currentFrame;
 	int m_currentRow;
+
+	const char* name;
+	bool onOff = true;
 };

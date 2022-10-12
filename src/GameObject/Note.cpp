@@ -1,5 +1,6 @@
 #pragma once
 #include <Note.h>
+#include <iostream>
 Note::Note(const LoaderParams* pParams) : SDLGameObject(pParams) {}
 
 void Note::draw()
@@ -13,11 +14,10 @@ Vector2D Note::startPos()
 }
 void Note::update() //아래로 
 {
-	if (!onOff) return;
+	if (!onOff) return; //임시
 	move();
-	crashEvent();
+	//crashEvent();
 }
-void Note::clean() {}
 
 void Note::move()
 {

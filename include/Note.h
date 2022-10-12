@@ -7,7 +7,7 @@ public:
 	Note(const LoaderParams* pParams);
 	virtual void draw();
 	virtual void update();
-	virtual void clean();
+	virtual void clean() {}
 
 	Vector2D startPos() override;
 	void move() override;

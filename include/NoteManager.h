@@ -19,17 +19,22 @@ class NoteManager //노트 정보를 받아오고, 쏘는 역할
 public:
 	static NoteManager* GetInstance() //다이나믹 싱글턴. 전역변수로 초기화하지 않으므로, 메모리를 확보할 수 있다 
 	{
-		if (s_pInstance == 0)
+		if (s_pInstance == NULL)
 			s_pInstance = new NoteManager();
 		return s_pInstance;
 	}
-
+	//ReadTxtData
 	void ReadLineToTxt(string dataPath);
 	void ReadSpawnNotes();
-	void SpawnNotes();
+	void ReadSpawnNote();
+	//NoteSpawn
+	void spawnNotes(float nextSpawnDelay, int point, float speed);
+
 	queue<string> GetSpawnQueue();
 	map<int, string*> GetSpawnQueue_; //int -> n번째 스테이지
 private:
+	NoteManager() { }
+	~NoteManager() { }
 	int point;
 	float nextSpawnDelay = 1;
 	float speed;
