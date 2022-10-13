@@ -16,8 +16,6 @@ public:
 	const char* GetName() { return name; }
 	void SetName(const char* getName) { name = getName; }
 
-	bool GetOnOff() { return onOff;  }
-
 protected:
 	GameObject(const LoaderParams* pParams) {}
 

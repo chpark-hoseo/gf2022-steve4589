@@ -14,6 +14,7 @@ Vector2D Note::startPos()
 }
 void Note::update() //아래로 
 {
+	SDLGameObject::update();
 	if (!onOff) return; //임시
 	move();
 	//crashEvent();
@@ -21,10 +22,8 @@ void Note::update() //아래로
 
 void Note::move()
 {
-	//
-	//Vector2D vector = Vector2D(1, 0); 
-	//std::cout << vector.getX();
-	m_position.setY(m_position.getY() + 1);
+	m_position.setY(m_position.getY() + speed);
+	//m_velocity.setY(m_position.getY() + speed);
 }
 void Note::crashEvent()
 {

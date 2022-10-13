@@ -1,5 +1,6 @@
 #pragma once
 #include <GameObject.h>
+#include <iostream>
 
 //interface
 class INoteType {
@@ -26,16 +27,24 @@ class SDLGameObject : public GameObject {
 public:
 	SDLGameObject(const LoaderParams* pParams);
 	virtual void draw();
-	virtual void update() {}
+	virtual void update() { m_position += m_velocity; 
+	} //m_velocity += m_acceleration;
 	virtual void clean() {}
 	virtual ~SDLGameObject() {}
+
+	float GetSpeed() { return speed; }
+	void SetSpeed(float getSpeed) { speed = getSpeed; }
+
+	void SetPosition(Vector2D getPos) { m_position = getPos; }
 
 	void SetActive(bool isOn);
 	virtual void OnEnable() {}
 protected:
 	Vector2D m_position;
-	Vector2D m_vector; //m_position에 값을 넘겨주는 역할
-	float speed;
+
+	Vector2D m_velocity; 
+	Vector2D m_acceleration;
+	float speed = 0.5;
 
 	float m_x;
 	float m_y;
@@ -43,6 +52,8 @@ protected:
 	int m_height;
 	int m_currentRow;
 	int m_currentFrame;
+
+	int i = 0;
 
 	std::string m_textureID;
 };

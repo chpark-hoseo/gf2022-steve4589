@@ -28,7 +28,7 @@ public:
 	void ReadSpawnNotes();
 	void ReadSpawnNote();
 	//NoteSpawn
-	void spawnNotes(float nextSpawnDelay, int point, float speed);
+	void spawnNotes();
 
 	queue<string> GetSpawnQueue();
 	map<int, string*> GetSpawnQueue_; //int -> n번째 스테이지
@@ -40,6 +40,8 @@ private:
 	float speed;
 
 	double m_curTime = 0;
+
+	//notePos notePos;
 
 	queue<Spawn> spawnQueue;
 	queue<string> spawnQueue_test;

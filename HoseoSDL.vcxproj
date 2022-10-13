@@ -145,8 +145,8 @@
     <ClCompile Include="src\GameObject\EnergyNote.cpp" />
     <ClCompile Include="src\GameObject\Note.cpp" />
     <ClCompile Include="src\GameObject\SDLGameObject.cpp" />
-    <ClCompile Include="src\manager\ObjManager.cpp" />
-    <ClCompile Include="src\Controller\PlayerController.cpp" />
+    <ClCompile Include="src\Controller\InputHandler.cpp" />
+    <ClCompile Include="src\NoteControl.cpp" />
     <ClCompile Include="src\timer\Timer.cpp" />
     <ClCompile Include="src\physics\Transform.cpp" />
     <ClCompile Include="src\manager\Game.cpp" />
@@ -159,10 +159,11 @@
     <ClInclude Include="include\EnergyNote.h" />
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\GameObject.h" />
+    <ClInclude Include="include\InputHandler.h" />
     <ClInclude Include="include\LoaderParams.h" />
     <ClInclude Include="include\main.h" />
+    <ClInclude Include="include\NoteControl.h" />
     <ClInclude Include="include\NoteManager.h" />
-    <ClInclude Include="include\ObjManager.h" />
     <ClInclude Include="include\PlayerController.h" />
     <ClInclude Include="include\SDLGameObject.h" />
     <ClInclude Include="include\Spawn.h" />
@@ -171,6 +172,7 @@
     <ClInclude Include="include\Transform.h" />
     <ClInclude Include="include\Vector2D.h" />
     <ClInclude Include="include\Note.h" />
+    <ClInclude Include="include\NoteController.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -10,6 +10,7 @@ public:
 	//수정 가능 
 	void setX(float x) { m_x = x; }
 	void setY(float y) { m_y = y; }
+	void setXY(float x, float y) { m_x = x, m_y = y; }
 
 	//소인수분해
 	// sqrt(double x) ==> x의 루트, 제곱근

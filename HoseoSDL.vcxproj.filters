@@ -45,10 +45,10 @@
     <ClCompile Include="src\GameObject\SDLGameObject.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="src\manager\ObjManager.cpp">
+    <ClCompile Include="src\Controller\InputHandler.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="src\Controller\PlayerController.cpp">
+    <ClCompile Include="src\NoteControl.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -92,10 +92,16 @@
     <ClInclude Include="include\SDLGameObject.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="include\ObjManager.h">
+    <ClInclude Include="include\PlayerController.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="include\PlayerController.h">
+    <ClInclude Include="include\InputHandler.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="include\NoteController.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="include\NoteControl.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
