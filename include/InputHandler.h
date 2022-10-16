@@ -1,8 +1,9 @@
 #pragma once
 #include <SDL2/SDL.h> 
-//#include <NotePad.h>;
+#include <NotePad.h>
 class InputHandler {
 public:
+    
     ~InputHandler() {}
     static InputHandler* Instance() {
         if (s_pInstance == 0) {
@@ -13,15 +14,15 @@ public:
     bool isKeyDown(SDL_Scancode key);
     void update();
     void clean() {}
-
 private:
-    InputHandler() {}
+    //InputHandler() {}
     static InputHandler* s_pInstance;
     const Uint8* m_keystates;
 
-    //SDLGameObject * notePad1 = new ;
-    //SDLGameObject * notePad1;
-    //SDLGameObject * notePad1;
-    //SDLGameObject * notePad1;
+    /*GameObject* notePad;
+      GameObject* notePad1;
+      GameObject* notePad2;
+      GameObject* notePad2;
+    */
 };
 typedef InputHandler TheInputHandler;

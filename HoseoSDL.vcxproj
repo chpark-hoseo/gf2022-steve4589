@@ -146,7 +146,7 @@
     <ClCompile Include="src\GameObject\Note.cpp" />
     <ClCompile Include="src\GameObject\SDLGameObject.cpp" />
     <ClCompile Include="src\Controller\InputHandler.cpp" />
-    <ClCompile Include="src\NotePad.cpp" />
+    <ClCompile Include="src\GameObject\NotePad.cpp" />
     <ClCompile Include="src\timer\Timer.cpp" />
     <ClCompile Include="src\physics\Transform.cpp" />
     <ClCompile Include="src\manager\Game.cpp" />

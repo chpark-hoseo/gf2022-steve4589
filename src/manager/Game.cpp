@@ -52,13 +52,21 @@ void Game::Prepare()
 	TextureManager::GetInstance()->load("need for A+_selectMenu", "selectMenu_sprite", m_pRenderer);
 	//initial GameObject (배경 등등..)
 	GameObject* back1 = new SDLGameObject(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "stage1_sprite"));
-	GameObject* test = new Note(new LoaderParams(0, 0, 96, 96, 0, 0, "notes_sprite"));
-	test->SetActive(true);
 	m_gameObjects.push_back(back1);
-	m_gameObjects.push_back(test);
+	//notePads
+	
+	notePad->SetPosition(Vector2D(SCREEN_WIDTH * 0.5f - 200, 450));
+	notePad1->SetPosition(Vector2D(SCREEN_WIDTH * 0.5f - 100, 450));
+	notePad2->SetPosition(Vector2D(SCREEN_WIDTH * 0.5f, 450));
+	notePad3->SetPosition(Vector2D(SCREEN_WIDTH * 0.5f + 100, 450));
+
+	m_gameObjects.push_back(notePad);
+	m_gameObjects.push_back(notePad1);
+	m_gameObjects.push_back(notePad2);
+	m_gameObjects.push_back(notePad3);
+
 	InitPool();
 	std::cout << "ObjectSize => " << m_gameObjects.size() << "\n\n";
-
 	//Note
 	NoteManager::GetInstance()->ReadLineToTxt("stage1");
 }
@@ -132,12 +140,9 @@ GameObject* Game::GetObject(Vector2D spawnPos, const char* name)
 	gameObject->SetActive(true);
 	gameObject->SetPosition(spawnPos);
 		
-	std::cout << name << " Real Ptr : " << gameObject << "\n";
-
 	objects[name].pop_back();
 	return gameObject;
 }
-
 /*
 void Game::MainMove(State state)
 {

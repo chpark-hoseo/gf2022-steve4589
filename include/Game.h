@@ -50,6 +50,12 @@ private:
 
 	vector<GameObject*> m_gameObjects;
 	map<const char*, vector<GameObject* >> objects; //모든 오브젝트
+
+	GameObject* notePad = new NotePad(new LoaderParams(0, 0, 96, 96, 0, 0, "notesPad_sprite"));
+	GameObject* notePad1 = new NotePad(new LoaderParams(0, 0, 96, 96, 0, 1, "notesPad_sprite"));
+	GameObject* notePad2 = new NotePad(new LoaderParams(0, 0, 96, 96, 0, 2, "notesPad_sprite"));
+	GameObject* notePad3 = new NotePad(new LoaderParams(0, 0, 96, 96, 0, 3, "notesPad_sprite"));
+
 public:
 	Game() { }
 	~Game() { }

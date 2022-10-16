@@ -48,7 +48,7 @@
     <ClCompile Include="src\Controller\InputHandler.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="src\NotePad.cpp">
+    <ClCompile Include="src\GameObject\NotePad.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
