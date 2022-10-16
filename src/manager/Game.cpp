@@ -4,15 +4,6 @@
 
 Game* Game::s_pInstance = 0;
 
-class Pool //각각의 다른 게임오브젝트를 구별하기 위한 구조체처럼 사용합니다
-{
-public:
-	Pool(const char name[20], SDLGameObject* note, int size) : m_name(name), m_gameObj(note), m_size(size) {}
-	const char* m_name;
-	SDLGameObject* m_gameObj;
-	int m_size;
-};
-
 //----------------------------------------------------------------------------
 //MainCode
 bool Game::init(const char* title, int xpos, int ypos, int width, int height, int flags)
@@ -52,12 +43,19 @@ void Game::update()
 
 void Game::Prepare()
 {
-	//가져다 쓸 사진
+	//가져다 쓸 사진 need for A+_notesPad
 	TextureManager::GetInstance()->load("need for A+_stage1", "stage1_sprite", m_pRenderer);
+
 	TextureManager::GetInstance()->load("need for A+_notes", "notes_sprite", m_pRenderer);
+	TextureManager::GetInstance()->load("need for A+_notesPad", "notesPad_sprite", m_pRenderer);
+
 	TextureManager::GetInstance()->load("need for A+_selectMenu", "selectMenu_sprite", m_pRenderer);
 	//initial GameObject (배경 등등..)
-	m_gameObjects.push_back(new SDLGameObject(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "stage1_sprite")));
+	GameObject* back1 = new SDLGameObject(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "stage1_sprite"));
+	GameObject* test = new Note(new LoaderParams(0, 0, 96, 96, 0, 0, "notes_sprite"));
+	test->SetActive(true);
+	m_gameObjects.push_back(back1);
+	m_gameObjects.push_back(test);
 	InitPool();
 	std::cout << "ObjectSize => " << m_gameObjects.size() << "\n\n";
 
@@ -94,46 +92,52 @@ void Game::clean()
 //ObjectPool
 void Game::InitPool()
 {
-	Pool* pools[4] = { new Pool("LeftNote", m_note, 15), new Pool("UpNote", m_note1, 15), new Pool("DownNote", m_note2, 15), new Pool("RightNote", m_note3, 15) };
+	Pool* pools[4] = { new Pool("LeftNote", 15), new Pool("UpNote", 15), new Pool("DownNote", 15), new Pool("RightNote", 15) };
 	for (Pool* pool : pools) //이중 값을 가져오기 위해 포인터 형식사용
 	{
 		for (int i = 0; i < pool->m_size; i++)
 		{
-			SDLGameObject* gameObject = CreateObjects(pool->m_name, pool->m_gameObj);
-			gameObject->SetActive(false); //당장 작동하지 않게 기능을끕니다  
+			CreateObjects(pool->m_name);
 		}
-		name_size = (int)objects[pool->m_name].size();
 	}
 }
-SDLGameObject* Game::CreateObjects(const char* name, SDLGameObject* getGameObject)
+GameObject* Game::CreateObjects(const char* name)
 {
-	SDLGameObject* gameObject = getGameObject;
-
+	GameObject* gameObject = NULL;
+	if (name == "LeftNote") {
+		gameObject = new Note(new LoaderParams(0, 0, 96, 96, 0, 0, "notes_sprite"));
+	}
+	else if (name == "UpNote") {
+		gameObject = new Note(new LoaderParams(0, 0, 96, 96, 0, 1, "notes_sprite"));
+	}
+	else if (name == "DownNote") {
+		gameObject = new Note(new LoaderParams(0, 0, 96, 96, 0, 2, "notes_sprite"));
+	}
+	else if (name == "RightNote") {
+		gameObject = new Note(new LoaderParams(0, 0, 96, 96, 0, 3, "notes_sprite"));
+	}
 	gameObject->SetName(name);
-	
-	objects[name].emplace_back(gameObject); //이름 을 통해 원하는 오브젝트를 가져옵니다
+	gameObject->SetActive(false);
+
+	std::cout << "Ptr" << gameObject << "\n";
+
 	m_gameObjects.emplace_back(gameObject);
+	objects[name].emplace_back(gameObject); 
 
 	return gameObject;
-
 }
-SDLGameObject** Game::GetObject(Vector2D spawnPos, const char* name)
+GameObject* Game::GetObject(Vector2D spawnPos, const char* name)
 {
-	--name_size;
+	GameObject* gameObject = objects[name].back();
+	gameObject->SetActive(true);
+	gameObject->SetPosition(spawnPos);
+		
+	std::cout << name << " Real Ptr : " << gameObject << "\n";
 
-	SDLGameObject** gameObject = &objects[name][name_size];
-	(*gameObject)->SetActive(true);
-	(*gameObject)->SetPosition(spawnPos);
-
-	std::cout << name << " Name_Size : " << name_size << "\n";
-	std::cout << name << " Ptr : " << gameObject << "\n";
-	std::cout << name << " Solo Ptr : " << *gameObject << "\n";
-	std::cout << name << " Memory Size : " << objects[name].capacity() << "\n";
-
-	//objects[name].pop_back();
-	//objects[name].shrink_to_fit(); //메모리 초기화, 비추천
+	objects[name].pop_back();
 	return gameObject;
 }
+
 /*
 void Game::MainMove(State state)
 {

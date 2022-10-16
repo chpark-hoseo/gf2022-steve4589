@@ -48,7 +48,7 @@
     <ClCompile Include="src\Controller\InputHandler.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="src\NoteControl.cpp">
+    <ClCompile Include="src\NotePad.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -98,10 +98,7 @@
     <ClInclude Include="include\InputHandler.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="include\NoteController.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="include\NoteControl.h">
+    <ClInclude Include="include\NotePad.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

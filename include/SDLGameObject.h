@@ -32,12 +32,14 @@ public:
 	virtual void clean() {}
 	virtual ~SDLGameObject() {}
 
+	void SetPosition(Vector2D getPos) { m_position = getPos; }
+
 	float GetSpeed() { return speed; }
 	void SetSpeed(float getSpeed) { speed = getSpeed; }
 
-	void SetPosition(Vector2D getPos) { m_position = getPos; }
+	const char* GetName() { return name; }
+	void SetName(const char* getName) { name = getName; }
 
-	void SetActive(bool isOn);
 	virtual void OnEnable() {}
 protected:
 	Vector2D m_position;

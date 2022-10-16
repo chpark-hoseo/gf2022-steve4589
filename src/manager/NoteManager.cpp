@@ -84,7 +84,6 @@ void NoteManager::spawnNotes()
 {
 	noteData noteData;
 	Vector2D spawnPos = Vector2D(0, 0);
-	SDLGameObject ** gameObject = NULL;
 	//string type;
 	switch (point)
 	{
@@ -92,22 +91,21 @@ void NoteManager::spawnNotes()
 		break;
 	case 0:
 		spawnPos = noteData.pos;
-		gameObject = Game::GetInstance()->GetObject(spawnPos, "LeftNote");
+		Game::GetInstance()->GetObject(spawnPos, "LeftNote")->SetSpeed(speed);
 		break;
 	case 1:
 		spawnPos = noteData.pos1;
-		gameObject = Game::GetInstance()->GetObject(spawnPos, "UpNote");
+		Game::GetInstance()->GetObject(spawnPos, "UpNote")->SetSpeed(speed);
 		break;
 	case 2:
 		spawnPos = noteData.pos2;
-		gameObject = Game::GetInstance()->GetObject(spawnPos, "DownNote");
+		Game::GetInstance()->GetObject(spawnPos, "DownNote")->SetSpeed(speed);
 		break;
 	case 3:
 		spawnPos = noteData.pos3;
-		gameObject = Game::GetInstance()->GetObject(spawnPos, "RightNote");
+		Game::GetInstance()->GetObject(spawnPos, "RightNote")->SetSpeed(speed);
 		break;
 	}
-	std::cout << "실제 사용된 Ptr:" << gameObject << "\n\n";
 	//gameObject->SetSpeed(speed);
 }
 queue<string> NoteManager::GetSpawnQueue() { return spawnQueue_test; }

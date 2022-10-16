@@ -22,6 +22,14 @@
 
 typedef TextureManager TheTextureManager; //자료형 별칭 생성
 
+class Pool //각각의 다른 게임오브젝트를 구별하기 위한 구조체처럼 사용합니다
+{
+public:
+	Pool(const char name[20], int size) : m_name(name), m_size(size) {}
+	const char* m_name;
+	int m_size;
+};
+
 class Game
 {
 private:
@@ -40,17 +48,8 @@ private:
 	int startTimer;
 	bool isTimer = true;
 
-	vector<SDLGameObject*> m_gameObjects;
-	map<const char*, vector<SDLGameObject*>> objects; //모든 오브젝트 
-	int name_size = 0;
-	//ObjectPool
-	SDLGameObject* m_note = new Note(new LoaderParams(0, 0, 96, 96, 0, 0, "notes_sprite"));
-	SDLGameObject* m_note1 = new Note(new LoaderParams(0, 0, 96, 96, 0, 1, "notes_sprite"));  //Up
-	SDLGameObject* m_note2 = new Note(new LoaderParams(0, 0, 96, 96, 0, 2, "notes_sprite"));  //Down
-	SDLGameObject* m_note3 = new Note(new LoaderParams(0, 0, 96, 96, 0, 3, "notes_sprite")); //Right
-	//Note note3 = (new LoaderParams(0, 0, 96, 96, 96, 0, "notes_sprite")); //Else1
-	//Note note3 = (new LoaderParams(0, 0, 96, 96, 96, 0, "notes_sprite")); //Else2
-
+	vector<GameObject*> m_gameObjects;
+	map<const char*, vector<GameObject* >> objects; //모든 오브젝트
 public:
 	Game() { }
 	~Game() { }
@@ -82,10 +81,9 @@ public:
 
 	//ObjectPool
 	void InitPool(); //풀에 오브젝트를 집어넣고, game에 내보내는 역할 
-	SDLGameObject* CreateObjects(const char* tag, SDLGameObject* getGameObject);
-	SDLGameObject** GetObject(Vector2D spawnPos, const char* name);
-	void ReturnPool(const char name[20], SDLGameObject* getGameObject) {  //objects[name].emplace_back(getGameObject); };
-	}
+	GameObject* CreateObjects(const char* tag);
+	GameObject* GetObject(Vector2D spawnPos, const char* name);
+	void ReturnPool(const char name[20], GameObject* getGameObject) {  objects[name].emplace_back(getGameObject); }; 
 };
 
 //enum Menu { INPUT_MODE = 1, SEARCH_MODE, EXIT };

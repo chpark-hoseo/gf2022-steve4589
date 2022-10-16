@@ -19,17 +19,16 @@ void SDLGameObject::draw() {
 		m_height, m_currentRow, m_currentFrame,
 		Game::GetInstance()->getRenderer());
 }
-
+/*
 void SDLGameObject::SetActive(bool isOn) {
 	if (isOn)
 	{
-		i++;
-		std::cout << "     SetActive true" << i << "\n\n";
 		onOff = true;
-		OnEnable(); //위치초기화 / 등장 이펙트 등등에 사용할예정입니다 
+		OnEnable(); 
 	}
 	else {
-		std::cout << "      SetActive false" << "\n\n";
+		i++;
+		std::cout << "      SetActive false " << i <<"\n\n";
 		onOff = false;
 	}
-}
+}*/
