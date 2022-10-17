@@ -27,8 +27,7 @@ class SDLGameObject : public GameObject {
 public:
 	SDLGameObject(const LoaderParams* pParams);
 	virtual void draw();
-	virtual void update() { m_position += m_velocity; 
-	} //m_velocity += m_acceleration;
+	virtual void update() { m_position += m_velocity; } //m_velocity += m_acceleration;
 	virtual void clean() {}
 	virtual ~SDLGameObject() {}
 
@@ -39,6 +38,8 @@ public:
 
 	const char* GetName() { return name; }
 	void SetName(const char* getName) { name = getName; }
+	//KeyBoard
+	virtual void Pushed(bool isPush) {}
 
 	virtual void OnEnable() {}
 protected:

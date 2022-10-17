@@ -142,6 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Controller\PlayController.cpp" />
     <ClCompile Include="src\GameObject\EnergyNote.cpp" />
     <ClCompile Include="src\GameObject\Note.cpp" />
     <ClCompile Include="src\GameObject\SDLGameObject.cpp" />
@@ -164,7 +165,7 @@
     <ClInclude Include="include\main.h" />
     <ClInclude Include="include\NoteManager.h" />
     <ClInclude Include="include\NotePad.h" />
-    <ClInclude Include="include\PlayerController.h" />
+    <ClInclude Include="include\PlayController.h" />
     <ClInclude Include="include\SDLGameObject.h" />
     <ClInclude Include="include\Spawn.h" />
     <ClInclude Include="include\TextureManager.h" />

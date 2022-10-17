@@ -7,15 +7,18 @@
 //SDL
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_keyboard.h>
-//Custom
+//Manager
 #include <NoteManager.h>
 #include <TextureManager.h>
-#include <Timer.h>
+//GameObject
 #include <GameObject.h>
+//Controller
 #include <InputHandler.h>
+//#include <PlayController.h>
 //Only ObjectPool
 #include <Note.h>
+//Else
+#include <Timer.h>
 
 #define SCREEN_WIDTH 1024
 #define SCREEN_HEIGHT 800
@@ -25,8 +28,9 @@ typedef TextureManager TheTextureManager; //자료형 별칭 생성
 class Pool //각각의 다른 게임오브젝트를 구별하기 위한 구조체처럼 사용합니다
 {
 public:
-	Pool(const char name[20], int size) : m_name(name), m_size(size) {}
+	Pool(const char name[20], SDLGameObject* obj, int size) : m_name(name),m_obj(obj), m_size(size) {}
 	const char* m_name;
+	SDLGameObject* m_obj;
 	int m_size;
 };
 
@@ -50,11 +54,18 @@ private:
 
 	vector<GameObject*> m_gameObjects;
 	map<const char*, vector<GameObject* >> objects; //모든 오브젝트
-
-	GameObject* notePad = new NotePad(new LoaderParams(0, 0, 96, 96, 0, 0, "notesPad_sprite"));
-	GameObject* notePad1 = new NotePad(new LoaderParams(0, 0, 96, 96, 0, 1, "notesPad_sprite"));
-	GameObject* notePad2 = new NotePad(new LoaderParams(0, 0, 96, 96, 0, 2, "notesPad_sprite"));
-	GameObject* notePad3 = new NotePad(new LoaderParams(0, 0, 96, 96, 0, 3, "notesPad_sprite"));
+	//Notes
+	SDLGameObject* leftNote = new Note(new LoaderParams(0, 0, 96, 96, 0, 0, "notes_sprite"));
+	SDLGameObject* upNote = new Note(new LoaderParams(0, 0, 96, 96, 0, 1, "notes_sprite"));
+	SDLGameObject* downNote = new Note(new LoaderParams(0, 0, 96, 96, 0, 2, "notes_sprite"));
+	SDLGameObject* rightNote = new Note(new LoaderParams(0, 0, 96, 96, 0, 3, "notes_sprite"));
+	//NotePads
+	SDLGameObject* notePad = new NotePad(new LoaderParams(0, 0, 96, 96, 0, 0, "notesPad_sprite"));
+	SDLGameObject* notePad1 = new NotePad(new LoaderParams(0, 0, 96, 96, 0, 1, "notesPad_sprite"));
+	SDLGameObject* notePad2 = new NotePad(new LoaderParams(0, 0, 96, 96, 0, 2, "notesPad_sprite"));
+	SDLGameObject* notePad3 = new NotePad(new LoaderParams(0, 0, 96, 96, 0, 3, "notesPad_sprite"));
+	//Back
+	GameObject* back1 = new SDLGameObject(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "stage1_sprite"));
 
 public:
 	Game() { }
@@ -79,15 +90,16 @@ public:
 
 	void clean();
 	void quit() { m_bRunning = false; }
-
-	/* Initialized */
-	void Start_initialize();
+	//Input
+	void handleInput();
+	void Input_Note();
+	void Input_Menu() {}
 	//else
 	void DhrowBorder();
 
 	//ObjectPool
 	void InitPool(); //풀에 오브젝트를 집어넣고, game에 내보내는 역할 
-	GameObject* CreateObjects(const char* tag);
+	GameObject* CreateObjects(const char* tag, SDLGameObject* getGameObject);
 	GameObject* GetObject(Vector2D spawnPos, const char* name);
 	void ReturnPool(const char name[20], GameObject* getGameObject) {  objects[name].emplace_back(getGameObject); }; 
 };

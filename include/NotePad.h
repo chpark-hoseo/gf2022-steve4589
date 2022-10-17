@@ -5,7 +5,7 @@
 class NotePad : public SDLGameObject //public ICLICK
 {
 private:
-	bool isCrash = false;
+	bool isOnce = false;
 	//SpecialNotesPad
 public:
 	NotePad(const LoaderParams* pParams);
@@ -13,9 +13,19 @@ public:
 	virtual void update();
 	virtual void clean() {}
 
-	void ChangeSprites(bool isCrash)
+	//Make it Interface
+	void OncePushed()
 	{
-
+		if (isOnce)
+		{
+			std::cout << "한번 눌림", "\n";
+			isOnce = false;
+		}
+	}
+	void Pushed(bool isPush) { m_currentRow = isPush; }
+	void test()
+	{
+		std::cout << "누르고 있는중" << "\n";
 	}
 	void Collision2D()
 	{

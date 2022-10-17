@@ -51,20 +51,19 @@ void Game::Prepare()
 
 	TextureManager::GetInstance()->load("need for A+_selectMenu", "selectMenu_sprite", m_pRenderer);
 	//initial GameObject (배경 등등..)
-	GameObject* back1 = new SDLGameObject(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "stage1_sprite"));
 	m_gameObjects.push_back(back1);
-	//notePads
-	
-	notePad->SetPosition(Vector2D(SCREEN_WIDTH * 0.5f - 200, 450));
-	notePad1->SetPosition(Vector2D(SCREEN_WIDTH * 0.5f - 100, 450));
-	notePad2->SetPosition(Vector2D(SCREEN_WIDTH * 0.5f, 450));
-	notePad3->SetPosition(Vector2D(SCREEN_WIDTH * 0.5f + 100, 450));
 
 	m_gameObjects.push_back(notePad);
 	m_gameObjects.push_back(notePad1);
 	m_gameObjects.push_back(notePad2);
 	m_gameObjects.push_back(notePad3);
 
+	notePad->SetPosition(Vector2D(1024 * 0.5f - 200, 450));
+	notePad1->SetPosition(Vector2D(1024 * 0.5f - 100, 450));
+	notePad2->SetPosition(Vector2D(1024 * 0.5f, 450));
+	notePad3->SetPosition(Vector2D(1024 * 0.5f + 100, 450));
+
+	//ObjectPool
 	InitPool();
 	std::cout << "ObjectSize => " << m_gameObjects.size() << "\n\n";
 	//Note
@@ -87,6 +86,7 @@ bool Game::running()
 void Game::handleEvents()
 {
 	TheInputHandler::Instance()->update();
+	handleInput();
 }
 void Game::clean()
 {
@@ -100,18 +100,19 @@ void Game::clean()
 //ObjectPool
 void Game::InitPool()
 {
-	Pool* pools[4] = { new Pool("LeftNote", 15), new Pool("UpNote", 15), new Pool("DownNote", 15), new Pool("RightNote", 15) };
+	Pool* pools[4] = { new Pool("LeftNote", leftNote, 15), new Pool("UpNote", upNote, 15), new Pool("DownNote", downNote ,15), new Pool("RightNote", rightNote, 15) };
 	for (Pool* pool : pools) //이중 값을 가져오기 위해 포인터 형식사용
 	{
 		for (int i = 0; i < pool->m_size; i++)
 		{
-			CreateObjects(pool->m_name);
+			CreateObjects(pool->m_name, pool->m_obj);
 		}
 	}
 }
-GameObject* Game::CreateObjects(const char* name)
+GameObject* Game::CreateObjects(const char* name, SDLGameObject* getGameObject)
 {
-	GameObject* gameObject = NULL;
+	GameObject* gameObject = getGameObject;
+	
 	if (name == "LeftNote") {
 		gameObject = new Note(new LoaderParams(0, 0, 96, 96, 0, 0, "notes_sprite"));
 	}
@@ -124,13 +125,12 @@ GameObject* Game::CreateObjects(const char* name)
 	else if (name == "RightNote") {
 		gameObject = new Note(new LoaderParams(0, 0, 96, 96, 0, 3, "notes_sprite"));
 	}
+
 	gameObject->SetName(name);
 	gameObject->SetActive(false);
 
-	std::cout << "Ptr" << gameObject << "\n";
-
 	m_gameObjects.emplace_back(gameObject);
-	objects[name].emplace_back(gameObject); 
+	objects[name].emplace_back(gameObject);
 
 	return gameObject;
 }
@@ -142,6 +142,44 @@ GameObject* Game::GetObject(Vector2D spawnPos, const char* name)
 		
 	objects[name].pop_back();
 	return gameObject;
+}
+//----------------------------------------------------------------------
+//PlayInput
+void Game::handleInput()
+{
+	//Command Pattern
+	//SetCommand(NoteInput)
+	Input_Note();
+}
+void Game::Input_Note()
+{
+	//KeyUp
+	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_LEFT)) {
+		notePad->Pushed(true);
+	}
+	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_UP)) {
+		notePad1->Pushed(true);
+	}
+	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_DOWN)) {
+		notePad2->Pushed(true);
+	}
+	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_RIGHT)) {
+		notePad3->Pushed(true);
+	}
+	//KeyUp
+	/*
+	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_RIGHT)) {
+		notePad->Pushed(false);
+	}
+	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_LEFT)) {
+		notePad1->Pushed(false);
+	}
+	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_UP)) {
+		notePad2->Pushed(false);
+	}
+	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_DOWN)) {
+		notePad3->Pushed(false);
+	}*/
 }
 /*
 void Game::MainMove(State state)

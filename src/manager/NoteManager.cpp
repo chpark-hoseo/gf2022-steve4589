@@ -63,16 +63,17 @@ void NoteManager::ReadSpawnNote() //한줄씩 호출
 		datas.push(line);
 	}
 	nextSpawnDelay = stof(datas.front());
-	cout << "nextSpawnDelay => " << nextSpawnDelay << "    ";
 	datas.pop();
 
 	point = stoi(datas.front());
-	cout << "point => " << point << "    ";
 	datas.pop();
 
 	speed = stof(datas.front());
-	cout << "speed => " << speed << "\n\n";
 	datas.pop();
+
+	cout << "nextSpawnDelay => " << nextSpawnDelay << "    ";
+	cout << "point => " << point << "    ";
+	cout << "speed => " << speed << "\n\n";
 
 	spawnNotes();
 
@@ -84,6 +85,7 @@ void NoteManager::spawnNotes()
 {
 	noteData noteData;
 	Vector2D spawnPos = Vector2D(0, 0);
+	GameObject * gameObject = NULL;
 	//string type;
 	switch (point)
 	{
@@ -91,21 +93,22 @@ void NoteManager::spawnNotes()
 		break;
 	case 0:
 		spawnPos = noteData.pos;
-		Game::GetInstance()->GetObject(spawnPos, "LeftNote")->SetSpeed(speed);
+		gameObject = Game::GetInstance()->GetObject(spawnPos, "LeftNote");
 		break;
 	case 1:
 		spawnPos = noteData.pos1;
-		Game::GetInstance()->GetObject(spawnPos, "UpNote")->SetSpeed(speed);
+		gameObject = Game::GetInstance()->GetObject(spawnPos, "UpNote");
 		break;
 	case 2:
 		spawnPos = noteData.pos2;
-		Game::GetInstance()->GetObject(spawnPos, "DownNote")->SetSpeed(speed);
+		gameObject = Game::GetInstance()->GetObject(spawnPos, "DownNote");
 		break;
 	case 3:
 		spawnPos = noteData.pos3;
-		Game::GetInstance()->GetObject(spawnPos, "RightNote")->SetSpeed(speed);
+		gameObject = Game::GetInstance()->GetObject(spawnPos, "RightNote");
 		break;
 	}
-	//gameObject->SetSpeed(speed);
+	gameObject->SetSpeed(speed);
+	std::cout << "속도는 " << gameObject->GetSpeed() << "\n";
 }
 queue<string> NoteManager::GetSpawnQueue() { return spawnQueue_test; }
