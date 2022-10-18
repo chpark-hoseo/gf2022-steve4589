@@ -11,16 +11,16 @@ void PlayController::Input_Note()
 {
     //KeyUp
     if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_RIGHT)) {
-        notePad->Pushed(true);
+        notePad->IsPressed(true);
     }
     if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_LEFT)) {
-       notePad1->Pushed(true);
+       notePad1->IsPressed(true);
     }
     if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_UP)) {
-        notePad2->Pushed(true);
+        notePad2->IsPressed(true);
     }
     if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_DOWN)) {
-        notePad3->Pushed(true);
+        notePad3->IsPressed(true);
     }
     //KeyUp
     /*

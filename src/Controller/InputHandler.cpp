@@ -8,24 +8,29 @@ void InputHandler::update()
 	SDL_Event event;
 	//여러 키들을 감지해야 하므로, switch 사용 불가
 	while (SDL_PollEvent(&event)) {
-		if (event.type == SDL_QUIT) Game::GetInstance()->quit();
+		if (event.type == SDL_QUIT) Game::GetInstance()->quit(); 
 		//KeyDown
-		if (SDLK_LEFT) m_keystates[SDLK_LEFT];
-		if (SDLK_UP) m_keystates[SDLK_UP];
-		if (SDLK_DOWN) m_keystates[SDLK_DOWN];
-		if (SDLK_RIGHT) m_keystates[SDLK_RIGHT];
+		else if (event.type == SDL_KEYDOWN) {
+			if (SDLK_LEFT) m_keystates[SDLK_LEFT];
+			if (SDLK_UP) m_keystates[SDLK_UP];
+			if (SDLK_DOWN) m_keystates[SDLK_DOWN];
+			if (SDLK_RIGHT) m_keystates[SDLK_RIGHT];
+		}
 		//KeyUp	
+		else if (event.type == SDL_KEYUP) {
+			/*
+			if (SDLK_LEFT) m_keystates[SDLK_LEFT];
+			if (SDLK_UP) m_keystates[SDLK_UP];
+			if (SDLK_DOWN) m_keystates[SDLK_DOWN];
+			if (SDLK_RIGHT) m_keystates[SDLK_RIGHT];*/
+		}
 	}
 }
 bool InputHandler::isKeyDown(SDL_Scancode key)
 {
 	if (m_keystates != 0) {
-		if (m_keystates[key] == 1) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		if (m_keystates[key] == 1) return true;
+		else return false;
 	}
 	return false;
 }

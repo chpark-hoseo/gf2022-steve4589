@@ -153,33 +153,32 @@ void Game::handleInput()
 }
 void Game::Input_Note()
 {
-	//KeyUp
+	//KeyDown
 	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_LEFT)) {
-		notePad->Pushed(true);
+		notePad->IsPressed(true);
 	}
 	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_UP)) {
-		notePad1->Pushed(true);
+		notePad1->IsPressed(true);
 	}
 	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_DOWN)) {
-		notePad2->Pushed(true);
+		notePad2->IsPressed(true);
 	}
 	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_RIGHT)) {
-		notePad3->Pushed(true);
+		notePad3->IsPressed(true);
 	}
 	//KeyUp
-	/*
-	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_RIGHT)) {
-		notePad->Pushed(false);
+	if (!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_LEFT)) {
+		notePad->PressOut(false);
 	}
-	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_LEFT)) {
-		notePad1->Pushed(false);
+	if (!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_UP)) {
+		notePad1->PressOut(false);
 	}
-	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_UP)) {
-		notePad2->Pushed(false);
+	if (!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_DOWN)) {
+		notePad2->PressOut(false);
 	}
-	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_DOWN)) {
-		notePad3->Pushed(false);
-	}*/
+	if (!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_RIGHT)) {
+		notePad3->PressOut(false);
+	}
 }
 /*
 void Game::MainMove(State state)

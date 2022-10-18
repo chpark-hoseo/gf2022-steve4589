@@ -39,7 +39,7 @@ public:
 	const char* GetName() { return name; }
 	void SetName(const char* getName) { name = getName; }
 	//KeyBoard
-	virtual void Pushed(bool isPush) {}
+	virtual void IsPressed(bool isPush) {}
 
 	virtual void OnEnable() {}
 protected:

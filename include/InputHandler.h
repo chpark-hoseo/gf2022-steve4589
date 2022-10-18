@@ -10,7 +10,6 @@ public:
         }
         return s_pInstance;
     }
-
     bool isKeyDown(SDL_Scancode key);
     void update();
     void clean() {}
