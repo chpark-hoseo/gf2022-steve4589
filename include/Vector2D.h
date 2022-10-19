@@ -19,7 +19,7 @@ public:
 	//pow(double base, double n) ==> base가 되는 숫자의 n 제곱, 즉 제곱을 구하는 함수 
 	//pow(5, 3) -> 10의 2제곱 
 	//둘모두 함수 오버로딩에 의해 double외의 다른 자료형 사용 가능
-	float length() { return sqrt((float)(m_x * m_x + m_y * m_y)); } //둘다 10, 10이면 200 = 16.xxxxx
+	float length() { return sqrt(m_x * m_x + m_y * m_y); } //둘다 10, 10이면 200 = 16.xxxxx
 
 	Vector2D operator+(const Vector2D& v2) const;
 	Vector2D operator-(const Vector2D& v2) const;

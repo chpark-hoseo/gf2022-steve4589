@@ -24,6 +24,7 @@ public:
 	}
 
 	virtual void SetPosition(Vector2D getPos) = 0;
+	virtual const Vector2D GetPosition() = 0; //SDL_Rect x, y값 초기화
 
 	virtual const char* GetName() = 0;
 	virtual void SetName(const char* getName) = 0;
@@ -31,8 +32,18 @@ public:
 	virtual float GetSpeed() = 0;
 	virtual void SetSpeed(float getSpeed) = 0;
 
+	SDL_Rect GetRect() { return getRect; }
+
 protected:
-	GameObject(const LoaderParams* pParams) {}
+	GameObject(const LoaderParams* pParams) 
+	{
+		//나중에 getX랑 Y는 m_Position에서 받아와야 됨 
+		//초기값 
+		getRect.x = (int)pParams->getX();
+		getRect.y = (int)pParams->getY();
+		getRect.w = pParams->getWidth();
+		getRect.h = pParams->getHeight();
+	}
 
 	std::string m_textureID;
 	int m_width;
@@ -41,6 +52,8 @@ protected:
 	int m_currentRow;
 
 	float speed = 0.5;
+
+	SDL_Rect getRect;
 
 	const char* name;
 	bool onOff = true;

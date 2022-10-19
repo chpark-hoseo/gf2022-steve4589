@@ -142,6 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Collider2D.cpp" />
     <ClCompile Include="src\Controller\PlayController.cpp" />
     <ClCompile Include="src\GameObject\EnergyNote.cpp" />
     <ClCompile Include="src\GameObject\Note.cpp" />
@@ -157,6 +158,7 @@
     <ClCompile Include="src\physics\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Collider2D.h" />
     <ClInclude Include="include\EnergyNote.h" />
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\GameObject.h" />

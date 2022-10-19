@@ -32,6 +32,7 @@ public:
 	virtual ~SDLGameObject() {}
 
 	void SetPosition(Vector2D getPos) { m_position = getPos; }
+	const Vector2D GetPosition() { return m_position; }
 
 	float GetSpeed() { return speed; }
 	void SetSpeed(float getSpeed) { speed = getSpeed; }
@@ -44,7 +45,6 @@ public:
 	virtual void OnEnable() {}
 protected:
 	Vector2D m_position;
-
 	Vector2D m_velocity; 
 	Vector2D m_acceleration;
 	float speed = 0.5;

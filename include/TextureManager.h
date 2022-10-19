@@ -22,7 +22,6 @@ public:
 
 	void TextureAllClean();
 	void TextureClean(string id);
-
 private:
 	TextureManager() {}
 	map<string, SDL_Texture*> m_textureMap;
