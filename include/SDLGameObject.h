@@ -18,9 +18,10 @@ public:
 		Can2
 	};
 };
-class IEffect {
-public:
-	virtual void effect() = 0;
+class ICollision
+{
+public :
+	virtual void UpdateColliderData() = 0;
 };
 
 class SDLGameObject : public GameObject {
@@ -48,13 +49,6 @@ protected:
 	Vector2D m_velocity; 
 	Vector2D m_acceleration;
 	float speed = 0.5;
-
-	float m_x;
-	float m_y;
-	int m_width;
-	int m_height;
-	int m_currentRow;
-	int m_currentFrame;
 
 	int i = 0;
 

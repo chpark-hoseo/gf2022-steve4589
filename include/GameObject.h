@@ -32,7 +32,7 @@ public:
 	virtual float GetSpeed() = 0;
 	virtual void SetSpeed(float getSpeed) = 0;
 
-	SDL_Rect GetRect() { return getRect; }
+	SDL_Rect* GetRect() { return &getRect; }
 
 protected:
 	GameObject(const LoaderParams* pParams) 
