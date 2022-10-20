@@ -1,7 +1,7 @@
 #pragma once
 #include <Note.h>
 #include <iostream>
-Note::Note(const LoaderParams* pParams) : SDLGameObject(pParams) {}
+Note::Note(const LoaderParams* pParams) : SDLGameObject(pParams) { tag = "Note"; }
 
 void Note::draw()
 {

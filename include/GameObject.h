@@ -22,6 +22,11 @@ public:
 		}
 		else onOff = false;
 	}
+	bool activeSelf()
+	{
+		if (onOff) return true;
+		return false;
+	}
 
 	virtual void SetPosition(Vector2D getPos) = 0;
 	virtual const Vector2D GetPosition() = 0; //SDL_Rect x, y값 초기화
@@ -32,7 +37,9 @@ public:
 	virtual float GetSpeed() = 0;
 	virtual void SetSpeed(float getSpeed) = 0;
 
-	SDL_Rect* GetRect() { return &getRect; }
+	string getTag() { return tag; }
+	int getWidth() { return m_width; }
+	int getHeight() { return m_height; }
 
 protected:
 	GameObject(const LoaderParams* pParams) 
@@ -54,6 +61,8 @@ protected:
 	float speed = 0.5;
 
 	SDL_Rect getRect;
+
+	std::string tag = "";
 
 	const char* name;
 	bool onOff = true;

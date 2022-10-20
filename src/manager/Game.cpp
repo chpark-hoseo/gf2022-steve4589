@@ -125,12 +125,13 @@ GameObject* Game::CreateObjects(const char* name, SDLGameObject* getGameObject)
 	else if (name == "RightNote") {
 		gameObject = new Note(new LoaderParams(0, 0, 96, 96, 0, 3, "notes_sprite"));
 	}
-
 	gameObject->SetName(name);
 	gameObject->SetActive(false);
-
+	//All Objects
 	m_gameObjects.emplace_back(gameObject);
+	//ObjectPool, collision Object
 	objects[name].emplace_back(gameObject);
+	if (gameObject->getTag() == "Note") collisionObjects.emplace_back(gameObject);
 
 	return gameObject;
 }

@@ -21,9 +21,15 @@ public:
 class ICollision
 {
 public :
-	virtual void UpdateColliderData() = 0;
+	virtual void UpdateCollider() = 0;
 };
-
+class ICLICK
+{
+public :
+	virtual void IsPressed(bool _isPush) = 0;
+	//virtual void PressIn(bool isPress) = 0;
+	//virtual void PressOut(bool isPress) = 0;
+};
 class SDLGameObject : public GameObject {
 public:
 	SDLGameObject(const LoaderParams* pParams);
@@ -49,8 +55,6 @@ protected:
 	Vector2D m_velocity; 
 	Vector2D m_acceleration;
 	float speed = 0.5;
-
-	int i = 0;
 
 	std::string m_textureID;
 };

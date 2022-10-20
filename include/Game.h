@@ -53,6 +53,8 @@ private:
 	bool isTimer = true;
 
 	vector<GameObject*> m_gameObjects;
+	//object Manage
+	vector<GameObject*> collisionObjects; //충돌할 수 있는 오브젝트 
 	map<const char*, vector<GameObject* >> objects; //모든 오브젝트
 	//Notes
 	SDLGameObject* leftNote = new Note(new LoaderParams(0, 0, 96, 96, 0, 0, "notes_sprite"));
@@ -96,6 +98,7 @@ public:
 	void Input_Menu() {}
 	//else
 	void DhrowBorder();
+	vector<GameObject*> GetColliders() { return collisionObjects; }
 
 	//ObjectPool
 	void InitPool(); //풀에 오브젝트를 집어넣고, game에 내보내는 역할 

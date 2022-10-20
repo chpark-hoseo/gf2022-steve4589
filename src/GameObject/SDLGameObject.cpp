@@ -5,7 +5,6 @@
 SDLGameObject::SDLGameObject(const LoaderParams* pParams)
 	: GameObject(pParams), m_position(pParams->getX(), pParams->getY()), m_velocity(pParams->getX(), pParams->getY()), m_acceleration(pParams->getX(), pParams->getY())
 {
-	std::cout << "sdfasdf" << m_position.getX();
 	m_width = pParams->getWidth();
 	m_height = pParams->getHeight();
 	m_textureID = pParams->getTextureID();
