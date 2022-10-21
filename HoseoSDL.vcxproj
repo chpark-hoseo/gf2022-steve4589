@@ -149,6 +149,7 @@
     <ClCompile Include="src\GameObject\SDLGameObject.cpp" />
     <ClCompile Include="src\Controller\InputHandler.cpp" />
     <ClCompile Include="src\GameObject\NotePad.cpp" />
+    <ClCompile Include="src\NoteBoom.cpp" />
     <ClCompile Include="src\timer\Timer.cpp" />
     <ClCompile Include="src\physics\Transform.cpp" />
     <ClCompile Include="src\manager\Game.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="include\InputHandler.h" />
     <ClInclude Include="include\LoaderParams.h" />
     <ClInclude Include="include\main.h" />
+    <ClInclude Include="include\NoteBoom.h" />
     <ClInclude Include="include\NoteManager.h" />
     <ClInclude Include="include\NotePad.h" />
     <ClInclude Include="include\PlayController.h" />

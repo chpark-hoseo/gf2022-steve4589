@@ -48,6 +48,7 @@ void Game::Prepare()
 
 	TextureManager::GetInstance()->load("need for A+_notes", "notes_sprite", m_pRenderer);
 	TextureManager::GetInstance()->load("need for A+_notesPad", "notesPad_sprite", m_pRenderer);
+	TextureManager::GetInstance()->load("need for A+_noteBoom", "notesBoom_sprite", m_pRenderer);
 
 	TextureManager::GetInstance()->load("need for A+_selectMenu", "selectMenu_sprite", m_pRenderer);
 	//initial GameObject (배경 등등..)
@@ -57,17 +58,16 @@ void Game::Prepare()
 	m_gameObjects.push_back(notePad1);
 	m_gameObjects.push_back(notePad2);
 	m_gameObjects.push_back(notePad3);
-
-	notePad->SetPosition(Vector2D(1024 * 0.5f - 200, 450));
-	notePad1->SetPosition(Vector2D(1024 * 0.5f - 100, 450));
-	notePad2->SetPosition(Vector2D(1024 * 0.5f, 450));
-	notePad3->SetPosition(Vector2D(1024 * 0.5f + 100, 450));
-
 	//ObjectPool
 	InitPool();
 	std::cout << "ObjectSize => " << m_gameObjects.size() << "\n\n";
 	//Note
 	NoteManager::GetInstance()->ReadLineToTxt("stage1");
+	//Position
+	notePad->SetPosition(Vector2D(1024 * 0.5f - 200, 450));
+	notePad1->SetPosition(Vector2D(1024 * 0.5f - 100, 450));
+	notePad2->SetPosition(Vector2D(1024 * 0.5f, 450));
+	notePad3->SetPosition(Vector2D(1024 * 0.5f + 100, 450));
 }
 
 void Game::render()
@@ -100,7 +100,7 @@ void Game::clean()
 //ObjectPool
 void Game::InitPool()
 {
-	Pool* pools[4] = { new Pool("LeftNote", leftNote, 15), new Pool("UpNote", upNote, 15), new Pool("DownNote", downNote ,15), new Pool("RightNote", rightNote, 15) };
+	Pool* pools[5] = { new Pool("LeftNote", leftNote, 10), new Pool("UpNote", upNote, 10), new Pool("DownNote", downNote ,10), new Pool("RightNote", rightNote, 10) , new Pool("WinBoom", rightNote, 15) };
 	for (Pool* pool : pools) //이중 값을 가져오기 위해 포인터 형식사용
 	{
 		for (int i = 0; i < pool->m_size; i++)
@@ -124,6 +124,10 @@ GameObject* Game::CreateObjects(const char* name, SDLGameObject* getGameObject)
 	}
 	else if (name == "RightNote") {
 		gameObject = new Note(new LoaderParams(0, 0, 96, 96, 0, 3, "notes_sprite"));
+	}
+	else if (name == "WinBoom")
+	{
+		gameObject = new Note(new LoaderParams(0, 0, 96, 96, 0, 0, "notesBoom_sprite"));
 	}
 	gameObject->SetName(name);
 	gameObject->SetActive(false);

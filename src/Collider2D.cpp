@@ -1,9 +1,8 @@
-#include <Collider2D.h>
 #include <Game.h>
+#include <Collider2D.h>
 
-bool Collider2D::OnCollision2D()
+void Collider2D::OnCollision2D()
 {
-	vector<GameObject *> colliders = Game::GetInstance()->GetColliders();
 	for (int i = 0; i < colliders.size(); i++)
 	{
 		if (colliders[i]->activeSelf() == false) continue;
@@ -13,16 +12,13 @@ bool Collider2D::OnCollision2D()
 		b.y = getXY.getY();
 		b.w = colliders[i]->getWidth();
 		b.h = colliders[i]->getHeight();
-
-		std::cout << b.y << "\n\n";
 		
 		if (CheckAABB(a, b) == true)
 		{
 			colliders[i]->SetActive(false);
-			std::cout << "충돌" << "\n";
 		}
 	}
-	return true;
+	//colliders => delete 해야함
 }
 bool Collider2D::OnCollisionExit2D()
 {
@@ -33,10 +29,19 @@ bool Collider2D::OnCollisionExit2D()
 	
 	if (CheckAABB(a, b) == false)
 	{
-		std::cout << "안녕히 가세요" << "\n";
+		std::cout << "다시 만나요" << "\n";
 	}
 	return true;
 }
+void Collider2D::SetPosition(float x, float y, int h, int w)
+{
+	colliders = Game::GetInstance()->GetColliders();
+	a.x = x;
+	a.y = y;
+	a.w = w;
+	a.h = h;
+}
+
 //AAbb 패턴 => 회전시 다시 갱신해줘야 하기때문에, 정적인 물체에 적합 
 bool Collider2D::CheckAABB(a_AABB m_AABB, b_AABB d_AABB) //x = 0, y = 0 == x / y는 가장 왼쪽 / 윗쪽 
 {

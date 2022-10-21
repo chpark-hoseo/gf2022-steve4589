@@ -57,6 +57,9 @@
     <ClCompile Include="src\Collider2D.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="src\NoteBoom.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\main.h">
@@ -108,6 +111,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="include\Collider2D.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="include\NoteBoom.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

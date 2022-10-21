@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <vector>
 #include <SDL2/SDL.h>
 #include <Vector2D.h>
 #include <SDLGameObject.h>
@@ -27,6 +28,8 @@ private:
 
 	A a;
 	B b;
+
+	vector<GameObject*> colliders;
 public:
 	Collider2D(float x, float y, int h, int w) //본게임에서 모든 원본(x)의 위치는 정적으로만 사용되므로 값만 세팅해줍니다
 	{
@@ -35,16 +38,11 @@ public:
 		a.w = w;
 		a.h = h;
 	};
-	void SetPosition(float x, float y, int h, int w)
-	{
-		a.x = x;
-		a.y = y;
-		a.w = w;
-		a.h = h;
-	} //본게임에서 모든 원본(x)의 위치는 정적으로만 사용되므로 값만 세팅해줍니다
-	//생성한뒤 위치를 잡기때문에 함수로 받습니다 
+	void SetPosition(float x, float y, int h, int w);
+	//본게임에서 모든 원본(x)의 위치는 정적으로만 사용되므로 값만 세팅해줍니다
+	   //생성한뒤 위치를 잡기때문에 함수로 받습니다 
 
-	bool OnCollision2D();
+	void OnCollision2D();
 	bool OnCollisionExit2D();
-	static bool CheckAABB(a_AABB m_AABB,b_AABB d_AABB);
+	static bool CheckAABB(a_AABB m_AABB, b_AABB d_AABB);
 };
