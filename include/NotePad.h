@@ -10,6 +10,10 @@ private:
 	bool isPressOut = false;
 
 	Collider2D collision = Collider2D(m_position.getX(), m_position.getY(), m_width, m_height);
+
+	GameObject* EntergameObject;
+
+	void OffNote();
 	//SpecialNotesPad
 public:
 	NotePad(const LoaderParams* pParams);
@@ -18,6 +22,7 @@ public:
 	virtual void clean() {}
 
 	void SetPosition(Vector2D getPos) override;
+	void DetectCollider();
 
 	//Interface
 	void PressIn(bool);

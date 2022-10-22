@@ -72,10 +72,6 @@ void NoteManager::ReadSpawnNote() //한줄씩 호출
 	speed = stof(datas.front());
 	datas.pop();
 
-	cout << "nextSpawnDelay => " << nextSpawnDelay << "    ";
-	cout << "point => " << point << "    ";
-	cout << "speed => " << speed << "\n\n";
-
 	spawnNotes();
 	spawnQueue_test.pop();
 
