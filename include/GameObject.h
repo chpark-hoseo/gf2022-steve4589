@@ -4,6 +4,7 @@
 #include<Vector2D.h>
 #include<LoaderParams.h>
 #include <TextureManager.h>
+#include <iostream>
 
 class GameObject
 {
@@ -14,13 +15,19 @@ public:
 	virtual ~GameObject() {}
 
 	virtual void OnEnable() {};
+	virtual void OnDisable() {};
 	void SetActive(bool isOn) {
 		if (isOn)
 		{
 			onOff = true;
 			OnEnable();
 		}
-		else onOff = false;
+		else
+		{
+			if(!onFirst)OnDisable(); //생성될때 작동 방지 (초기화 여러번 방지)
+			onOff = false;
+			onFirst = false;
+		}
 	}
 	bool activeSelf()
 	{
@@ -62,8 +69,9 @@ protected:
 
 	SDL_Rect getRect;
 
-	std::string tag = "";
+	std::string tag = "";  
 
 	const char* name;
 	bool onOff = true;
+	bool onFirst = true;
 };

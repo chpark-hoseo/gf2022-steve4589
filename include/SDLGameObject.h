@@ -5,30 +5,12 @@
 //interface
 class INoteType {
 public:
-	virtual Vector2D startPos() = 0;
-	virtual void move() = 0; //toPlayer || Fall
-	virtual void crashEvent() = 0; //플레이어 / 미 적중시 이펙트 및 보상 / 패널티
-	enum Type
-	{
-		Left = 0,
-		Up,
-		Down,
-		Right,
-		Can1,
-		Can2
-	};
-};
-class ICollision
-{
-public :
-	virtual void UpdateCollider() = 0;
+	virtual void move() = 0;
 };
 class ICLICK
 {
 public :
 	virtual void IsPressed(bool _isPush) = 0;
-	//virtual void PressIn(bool isPress) = 0;
-	//virtual void PressOut(bool isPress) = 0;
 };
 class SDLGameObject : public GameObject {
 public:

@@ -1,23 +1,24 @@
 #pragma once
 #include <Note.h>
+#include <NoteBoom.h>
 #include <iostream>
-Note::Note(const LoaderParams* pParams) : SDLGameObject(pParams) { tag = "Note"; }
+#include <Game.h>
+
+Note::Note(const LoaderParams* pParams, const char* name) : SDLGameObject(pParams)
+{
+	tag = "Note";
+	noteName = name;
+}
 
 void Note::draw()
 {
 	SDLGameObject::draw();
 }
-Vector2D Note::startPos()
-{
-	Vector2D pos = Vector2D(1, 0);
-	return pos;
-}
 void Note::update() //아래로 
 {
+	if (!onOff) return;
 	SDLGameObject::update();
-	if (!onOff) return; //임시
 	move();
-	//crashEvent();
 }
 
 void Note::move()
@@ -25,12 +26,7 @@ void Note::move()
 	m_position.setY(m_position.getY() + speed);
 	//m_velocity.setY(m_position.getY() + speed);
 }
-void Note::crashEvent()
+void Note::OnDisable()
 {
-
-}
-void Note::OnEnable()
-{
-	//m_position.setX(0);
-	m_position.setY(0);
+	Game::GetInstance()->ReturnPool(noteName, this);
 }

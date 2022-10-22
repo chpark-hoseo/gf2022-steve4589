@@ -17,8 +17,7 @@
 //#include <PlayController.h>
 //Only ObjectPool
 #include <Note.h>
-//Else
-#include <Timer.h>
+#include <NoteBoom.h>
 
 #define SCREEN_WIDTH 1024
 #define SCREEN_HEIGHT 800
@@ -28,9 +27,8 @@ typedef TextureManager TheTextureManager; //자료형 별칭 생성
 class Pool //각각의 다른 게임오브젝트를 구별하기 위한 구조체처럼 사용합니다
 {
 public:
-	Pool(const char name[20], SDLGameObject* obj, int size) : m_name(name),m_obj(obj), m_size(size) {}
+	Pool(const char name[20], int size) : m_name(name), m_size(size) {}
 	const char* m_name;
-	SDLGameObject* m_obj;
 	int m_size;
 };
 
@@ -56,11 +54,6 @@ private:
 	//object Manage
 	vector<GameObject*> collisionObjects; //충돌할 수 있는 오브젝트 
 	map<const char*, vector<GameObject* >> objects; //모든 오브젝트
-	//Notes
-	SDLGameObject* leftNote = new Note(new LoaderParams(0, 0, 96, 96, 0, 0, "notes_sprite"));
-	SDLGameObject* upNote = new Note(new LoaderParams(0, 0, 96, 96, 0, 1, "notes_sprite"));
-	SDLGameObject* downNote = new Note(new LoaderParams(0, 0, 96, 96, 0, 2, "notes_sprite"));
-	SDLGameObject* rightNote = new Note(new LoaderParams(0, 0, 96, 96, 0, 3, "notes_sprite"));
 	//NotePads
 	NotePad* notePad = new NotePad(new LoaderParams(0, 0, 96, 96, 0, 0, "notesPad_sprite"));
 	NotePad* notePad1 = new NotePad(new LoaderParams(0, 0, 96, 96, 0, 1, "notesPad_sprite"));
@@ -98,13 +91,13 @@ public:
 	void Input_Menu() {}
 	//else
 	void DhrowBorder();
-	vector<GameObject*> GetColliders() { return collisionObjects; }
+	vector<GameObject*> GetColliders() { return collisionObjects; } 
 
 	//ObjectPool
 	void InitPool(); //풀에 오브젝트를 집어넣고, game에 내보내는 역할 
-	GameObject* CreateObjects(const char* tag, SDLGameObject* getGameObject);
+	GameObject* CreateObjects(const char* tag);
 	GameObject* GetObject(Vector2D spawnPos, const char* name);
-	void ReturnPool(const char name[20], GameObject* getGameObject) {  objects[name].emplace_back(getGameObject); }; 
+	void ReturnPool(const char name[20], GameObject* getGameObject) { objects[name].emplace_back(getGameObject); }
 };
 
 //enum Menu { INPUT_MODE = 1, SEARCH_MODE, EXIT };

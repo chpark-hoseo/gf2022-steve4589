@@ -3,7 +3,7 @@
 #include <Collider2D.h>
 
 //need for A+_notesPad
-class NotePad : public SDLGameObject, public ICollision, public ICLICK
+class NotePad : public SDLGameObject, public ICLICK
 {
 private:
 	bool isPressIn = true;
@@ -18,7 +18,6 @@ public:
 	virtual void clean() {}
 
 	void SetPosition(Vector2D getPos) override;
-	void UpdateCollider() override;
 
 	//Interface
 	void PressIn(bool);

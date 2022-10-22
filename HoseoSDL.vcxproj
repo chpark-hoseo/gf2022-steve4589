@@ -146,10 +146,12 @@
     <ClCompile Include="src\Controller\PlayController.cpp" />
     <ClCompile Include="src\GameObject\EnergyNote.cpp" />
     <ClCompile Include="src\GameObject\Note.cpp" />
+    <ClCompile Include="src\GameObject\PowerNote.cpp" />
     <ClCompile Include="src\GameObject\SDLGameObject.cpp" />
     <ClCompile Include="src\Controller\InputHandler.cpp" />
     <ClCompile Include="src\GameObject\NotePad.cpp" />
-    <ClCompile Include="src\NoteBoom.cpp" />
+    <ClCompile Include="src\GameObject\NoteBoom.cpp" />
+    <ClCompile Include="src\manager\ObjectManager.cpp" />
     <ClCompile Include="src\timer\Timer.cpp" />
     <ClCompile Include="src\physics\Transform.cpp" />
     <ClCompile Include="src\manager\Game.cpp" />
@@ -169,7 +171,9 @@
     <ClInclude Include="include\NoteBoom.h" />
     <ClInclude Include="include\NoteManager.h" />
     <ClInclude Include="include\NotePad.h" />
+    <ClInclude Include="include\ObjectManager.h" />
     <ClInclude Include="include\PlayController.h" />
+    <ClInclude Include="include\PowerNote.h" />
     <ClInclude Include="include\SDLGameObject.h" />
     <ClInclude Include="include\Spawn.h" />
     <ClInclude Include="include\TextureManager.h" />

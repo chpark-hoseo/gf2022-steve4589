@@ -10,7 +10,6 @@
 #include <SDL2/SDL_timer.h>
 
 #include <Spawn.h>
-#include <Timer.h>
 
 using namespace std;
 

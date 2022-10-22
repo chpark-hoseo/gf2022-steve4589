@@ -2,6 +2,7 @@
 #include "NoteManager.h"
 #include "Vector2D.h"
 #include <Game.h>
+#include <Timer.h>
 
 using namespace std;
 
@@ -9,10 +10,10 @@ NoteManager* NoteManager::s_pInstance = NULL;
 
 typedef struct NoteData //1 ~ 4 -> 기본 루트, 5, 6 -> 에너지루트 
 {
-	Vector2D pos = Vector2D(SCREEN_WIDTH * 0.5f - 200, 0);
-	Vector2D pos1 = Vector2D(SCREEN_WIDTH * 0.5f - 100, 0);
-	Vector2D pos2 = Vector2D(SCREEN_WIDTH * 0.5f, 0);
-	Vector2D pos3 = Vector2D(SCREEN_WIDTH * 0.5f + 100, 0);
+	Vector2D pos = Vector2D(SCREEN_WIDTH * 0.5f - 200, -96);
+	Vector2D pos1 = Vector2D(SCREEN_WIDTH * 0.5f - 100, -96);
+	Vector2D pos2 = Vector2D(SCREEN_WIDTH * 0.5f, -96);
+	Vector2D pos3 = Vector2D(SCREEN_WIDTH * 0.5f + 100, -96);
 	//Vector2D EnergyPos = Vector2D(500, 0);
 	//Vector2D EnergyPos1 = Vector2D(500, 0);
 }noteData;
@@ -26,7 +27,7 @@ void NoteManager::ReadLineToTxt(string data) //스테이지 시트 리필 1. 게임이 시작
 	string line;
 	if (spawnSheet.is_open())
 	{
-		while (!spawnSheet.eof())
+		while (!spawnSheet.eof()) 
 		{
 			getline(spawnSheet, line); //getline(desline, buffer, '/');
 			spawnQueue_test.push(line);
@@ -76,8 +77,8 @@ void NoteManager::ReadSpawnNote() //한줄씩 호출
 	cout << "speed => " << speed << "\n\n";
 
 	spawnNotes();
-
 	spawnQueue_test.pop();
+
 	if (spawnQueue_test.size() == 1) { nextSpawnDelay = NULL; } //게임 클리어 - 모든 노트 소모  
 }
 
@@ -87,13 +88,13 @@ void NoteManager::spawnNotes()
 	Vector2D spawnPos = Vector2D(0, 0);
 	GameObject * gameObject = NULL;
 	//string type;
-	switch (point)
+	switch (point) 
 	{
 	default:
 		break;
 	case 0:
 		spawnPos = noteData.pos;
-		gameObject = Game::GetInstance()->GetObject(spawnPos, "LeftNote");
+		gameObject = Game::GetInstance()->GetObject(spawnPos, "LeftNote"); 
 		break;
 	case 1:
 		spawnPos = noteData.pos1;

@@ -1,6 +1,7 @@
 #include <NotePad.h>
+#include <Game.h>
 
-NotePad::NotePad(const LoaderParams* pParams) : SDLGameObject(pParams) {}
+NotePad::NotePad(const LoaderParams* pParams) : SDLGameObject(pParams) {} 
 
 void NotePad::update() {}
 void NotePad::SetPosition(Vector2D getPos)
@@ -17,6 +18,14 @@ void NotePad::PressIn(bool isPress) //누른순간 for문으로 collisionObject에 있는 
 
 	collision.OnCollision2D();
 
+	vector<GameObject* > gameObject = collision.OnCollision2D();
+
+	for (int i = 0; i < gameObject.size(); i++)
+	{
+		Game::GetInstance()->GetObject(gameObject[i]->GetPosition(), "WinBoom");
+		gameObject[i]->SetActive(false);
+	}
+
 	m_currentRow = isPress;
 }
 void NotePad::PressOut(bool isPress)
@@ -26,8 +35,4 @@ void NotePad::PressOut(bool isPress)
 	isPressIn = true;
 
 	m_currentRow = isPress;
-}
-void NotePad::UpdateCollider()
-{
-
 }
