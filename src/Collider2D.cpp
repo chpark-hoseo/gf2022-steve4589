@@ -3,6 +3,8 @@
 
 GameObject* Collider2D::OnCollision2D()
 {
+	vector<GameObject*> Objects;
+
 	GameObject* enterNote = NULL;
 
 	for (int i = 0; i < colliders.size(); i++)
@@ -12,44 +14,68 @@ GameObject* Collider2D::OnCollision2D()
 
 		b.x = getXY.getX();
 		b.y = getXY.getY();
-		b.w = colliders[i]->getWidth();
-		b.h = colliders[i]->getHeight();
 
 		if (CheckAABB(a, b) == true)
 		{
-			enterNote = colliders[i];
-			if (!isEnter)
+			//Exit에 넘겨줄 vector
+			int agree = 0;
+			if (collidedObjects.size() == 0)
 			{
-				note = enterNote; //this->note이(가) nullptr였습니다.
-				isEnter = true;
+				collidedObjects.emplace_back(colliders[i]);
 			}
+			else
+			{
+				for (int j = 0; j < collidedObjects.size(); j++)
+				{
+					if (collidedObjects[j] != colliders[i])
+					{
+						++agree;
+					}
+					else if (collidedObjects[j] == colliders[i]) break; //이미 충돌했다면
+				}
+
+				if (agree == collidedObjects.size())
+				{
+					collidedObjects.insert(collidedObjects.begin(), colliders[i]); //첫번째에 삽입 
+				}
+			}
+			//Enter
+			enterNote = colliders[i];
 		}
 	}
 	return enterNote;
 }
 
-GameObject* Collider2D::OnCollisionExit2D()
+vector <GameObject*> Collider2D::OnCollisionExit2D() 
 {
-	GameObject* exitGameObject = NULL; //벗어난 오브젝트들
+	vector <GameObject*> exitGameObject; //벗어날 오브젝트들
 
-	if (note == NULL)return exitGameObject;
-
-	Vector2D getXY = note->GetPosition();
-
-	b.x = getXY.getX();
-	b.y = getXY.getY();
-
-	if (CheckAABB(a, b) == false)
+	for (int i = 0; i < collidedObjects.size(); i++)
 	{
-		exitGameObject = note;
-		note = NULL;
-		isEnter = false;
+		Vector2D getXY = collidedObjects[i]->GetPosition();
+
+		b.x = getXY.getX();
+		b.y = getXY.getY();
+
+		if (CheckAABB(a, b) == false)
+		{
+			exitGameObject.emplace_back(collidedObjects[i]);
+
+			collidedObjects.pop_back();
+			if (collidedObjects.size() == 0) //메모리 초기화 
+			{
+				collidedObjects.shrink_to_fit();
+				std::cout << "collidedObjects Ptr : " << collidedObjects.capacity() << "\n\n";
+			}
+		}
 	}
 	return exitGameObject;
 }
 void Collider2D::SetPosition(float x, float y, int h, int w)
 {
 	colliders = Game::GetInstance()->GetColliders();
+	b.w = colliders[0]->getWidth(); //어차피 모양은 다 똑같으므로 
+	b.h = colliders[0]->getHeight();
 	a.x = x;
 	a.y = y;
 	a.w = w;

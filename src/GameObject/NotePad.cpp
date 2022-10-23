@@ -10,23 +10,30 @@ void NotePad::update()
 void NotePad::SetPosition(Vector2D getPos)
 {
 	SDLGameObject::SetPosition(getPos);
-	collision.SetPosition(m_position.getX(), m_position.getY() - 15, m_width, m_height - 95); 
+	collision.SetPosition(m_position.getX(), m_position.getY() - 15, m_width, m_height - 95);
 }
+
+//Collider
 void NotePad::DetectCollider()
 {
 	//Enter
 	EntergameObject = collision.OnCollision2D();
 	//Exit
-	
-	GameObject* ExitgameObject = collision.OnCollisionExit2D();
+	vector <GameObject*> ExitgameObject = collision.OnCollisionExit2D();
 
-	if (ExitgameObject != NULL)
+	for (int i = 0; i < ExitgameObject.size(); i++)
 	{
-		Game::GetInstance()->GetObject(ExitgameObject->GetPosition(), "WinBoom");
-		ExitgameObject->SetActive(false);
+		if (ExitgameObject[i]->activeSelf())
+		{ 
+			std::cout << ExitgameObject[i] << "        Size         \n";
+			Game::GetInstance()->GetObject(ExitgameObject[i]->GetPosition(), "WinBoom");
+			ExitgameObject[i]->SetActive(false);
+		}
 	}
 }
-void NotePad::PressIn(bool isPress) //누른순간 for문으로 collisionObject에 있는 애들을 넘겨주기  
+
+//Button
+void NotePad::PressIn(bool isPress)   
 {
 	if (!isPressIn) return;
 	isPressIn = false;
@@ -44,7 +51,6 @@ void NotePad::PressOut(bool isPress)
 
 	m_currentRow = isPress;
 }
-
 void NotePad::OffNote()
 {
 	if (EntergameObject != NULL)

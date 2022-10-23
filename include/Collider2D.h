@@ -29,8 +29,7 @@ private:
 	A a;
 	B b;
 	vector<GameObject*> colliders;
-
-	GameObject* note = NULL;
+	vector<GameObject*> collidedObjects;  
 
 	bool CheckAABB(a_AABB m_AABB, b_AABB d_AABB);
 public:
@@ -46,5 +45,5 @@ public:
 	   //생성한뒤 위치를 잡기때문에 함수로 받습니다 
 
 	GameObject* OnCollision2D();
-	GameObject* OnCollisionExit2D();
+	vector <GameObject*> OnCollisionExit2D();
 };

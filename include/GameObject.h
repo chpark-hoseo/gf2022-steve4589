@@ -24,7 +24,7 @@ public:
 		}
 		else
 		{
-			if(!onFirst)OnDisable(); //생성될때 작동 방지 (초기화 여러번 방지)
+			if (!onFirst) OnDisable(); //생성될때 작동 방지 (초기화 여러번 방지)
 			onOff = false;
 			onFirst = false;
 		}
