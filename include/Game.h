@@ -17,6 +17,7 @@
 //#include <PlayController.h>
 //Only ObjectPool
 #include <Note.h>
+#include <PowerNote.h>
 #include <NoteBoom.h>
 
 #define SCREEN_WIDTH 1024

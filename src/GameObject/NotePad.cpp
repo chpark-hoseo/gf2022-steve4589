@@ -25,7 +25,8 @@ void NotePad::DetectCollider()
 	{
 		if (ExitgameObject[i]->activeSelf())
 		{ 
-			Game::GetInstance()->GetObject(ExitgameObject[i]->GetPosition(), "MissBoom");
+			Game::GetInstance()->GetObject(Vector2D(200, 500), "PowerNote");
+			//Game::GetInstance()->GetObject(ExitgameObject[i]->GetPosition(), "MissBoom");
 			ExitgameObject[i]->SetActive(false);
 		}
 	}

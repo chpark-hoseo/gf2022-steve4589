@@ -146,6 +146,7 @@
     <ClCompile Include="src\Controller\PlayController.cpp" />
     <ClCompile Include="src\GameObject\EnergyNote.cpp" />
     <ClCompile Include="src\GameObject\Note.cpp" />
+    <ClCompile Include="src\GameObject\NoteShooter.cpp" />
     <ClCompile Include="src\GameObject\PowerNote.cpp" />
     <ClCompile Include="src\GameObject\SDLGameObject.cpp" />
     <ClCompile Include="src\Controller\InputHandler.cpp" />
@@ -171,6 +172,7 @@
     <ClInclude Include="include\NoteBoom.h" />
     <ClInclude Include="include\NoteManager.h" />
     <ClInclude Include="include\NotePad.h" />
+    <ClInclude Include="include\NoteShooter.h" />
     <ClInclude Include="include\ObjectManager.h" />
     <ClInclude Include="include\PlayController.h" />
     <ClInclude Include="include\PowerNote.h" />

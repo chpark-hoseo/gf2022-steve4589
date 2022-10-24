@@ -101,7 +101,7 @@ void Game::clean()
 //ObjectPool
 void Game::InitPool()  
 {
-	Pool* pools[6] = { new Pool("LeftNote", 10), new Pool("UpNote", 10), new Pool("DownNote" ,10), new Pool("RightNote", 10) , new Pool("WinBoom", 13), new Pool("MissBoom", 13) };
+	Pool* pools[7] = { new Pool("LeftNote", 10), new Pool("UpNote", 10), new Pool("DownNote" ,10), new Pool("RightNote", 10) , new Pool("PowerNote", 15), new Pool("WinBoom", 13), new Pool("MissBoom", 13) };
 	for (Pool* pool : pools) //이중 값을 가져오기 위해 포인터 형식사용
 	{
 		for (int i = 0; i < pool->m_size; i++)
@@ -125,6 +125,9 @@ GameObject* Game::CreateObjects(const char* name)
 	}
 	else if (name == "RightNote") {
 		gameObject = new Note(new LoaderParams(0, 0, 96, 96, 0, 3, "notes_sprite"), name);
+	}
+	else if (name == "PowerNote") {
+		gameObject = new PowerNote(new LoaderParams(0, 0, 96, 96, 0, 0, "notes_sprite"));
 	}
 	else if (name == "WinBoom") {
 		gameObject = new NoteBoom(new LoaderParams(0, 0, 128, 128, 0, 0, "notesBoom_sprite"));
