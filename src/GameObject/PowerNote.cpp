@@ -18,14 +18,15 @@ void PowerNote::move()
 	m_position.setX(m_position.getX() + dirVec.getX() * speed);
 	m_position.setY(m_position.getY() + dirVec.getY() * speed);
 }
-void PowerNote::SetShotPos()
+void PowerNote::SetShotPos(Vector2D getPos) 
 {
+	disPos = getPos;
+
 	float x = disPos.getX() - m_position.getX();
 	float y = disPos.getY() - m_position.getY();
 	dirVec.setXY(x, y);
 	dirVec.normalize();
-	std::cout << "dirVec.getX() ==> " << dirVec.getX() * speed << "\n";
-	std::cout << "dirVec.getY() ==> " << dirVec.getY() * speed << "\n";
+	//dirVec = disPos.SetShotPos(getPos);
 }
 
 void PowerNote::OnDisable()
@@ -34,6 +35,5 @@ void PowerNote::OnDisable()
 }
 void PowerNote::OnEnable()
 {
-	disPos = Vector2D(2, -2);
-	SetShotPos();
+	SetShotPos(Vector2D(1, -2));
 }

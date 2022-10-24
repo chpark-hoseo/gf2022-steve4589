@@ -1,6 +1,11 @@
 #pragma once
 #include <SDLGameObject.h>
 
+class State
+{
+
+};
+
 class NoteShooter : public SDLGameObject
 {
 public :
@@ -8,6 +13,21 @@ public :
 	virtual void draw();
 	virtual void update();
 	virtual void clean() {}
-private :
 
+	void Shot();
+private :
+	/*
+	void AniStart();
+	void AninEnd();
+	void AniPop();
+
+	void State()
+	{
+		SetState(State statue)
+	}
+
+	void SetState()
+	{
+
+	}*/
 };

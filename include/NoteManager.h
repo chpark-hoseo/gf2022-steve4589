@@ -9,6 +9,7 @@
 #include <SDL2/SDL_stdinc.h>
 #include <SDL2/SDL_timer.h>
 
+#include <NoteShooter.h>
 #include <Spawn.h>
 
 using namespace std;
@@ -22,25 +23,29 @@ public:
 			s_pInstance = new NoteManager();
 		return s_pInstance;
 	}
-	//ReadTxtData
 	void ReadLineToTxt(string dataPath);
 	void ReadSpawnNotes();
-	void ReadSpawnNote();
-	//NoteSpawn
-	void spawnNotes();
+
+	void SetNoteShooters(NoteShooter* noteShooter) { noteShooters.emplace_back(noteShooter); }
 
 	queue<string> GetSpawnQueue();
 	map<int, string*> GetSpawnQueue_; //int -> n번째 스테이지
 private:
 	NoteManager() { }
 	~NoteManager() { }
+
+	void ReadSpawnNote();
+	//NoteSpawn
+	void spawnNotes();
+	void SpawnPowerNote(int point);
+
 	int point;
 	float nextSpawnDelay = 1;
 	float speed;
 
 	double m_curTime = 0;
 
-	//notePos notePos;
+	vector<NoteShooter*> noteShooters;
 
 	queue<Spawn> spawnQueue;
 	queue<string> spawnQueue_test;

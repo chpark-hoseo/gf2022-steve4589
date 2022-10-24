@@ -60,6 +60,11 @@ private:
 	NotePad* notePad1 = new NotePad(new LoaderParams(0, 0, 96, 96, 0, 1, "notesPad_sprite"));
 	NotePad* notePad2 = new NotePad(new LoaderParams(0, 0, 96, 96, 0, 2, "notesPad_sprite"));
 	NotePad* notePad3 = new NotePad(new LoaderParams(0, 0, 96, 96, 0, 3, "notesPad_sprite"));
+	//NotePad* PowernotePad1 = new NotePad(new LoaderParams(0, 0, 96, 96, 0, 3, "notesPad_sprite"));
+	//NotePad* PowernotePad2 = new NotePad(new LoaderParams(0, 0, 96, 96, 0, 3, "notesPad_sprite"));
+	//
+	NoteShooter* NoteShooter1 = new NoteShooter(new LoaderParams(0, 0, 96, 96, 0, 3, "notesPad_sprite"));
+	NoteShooter* NoteShooter2 = new NoteShooter(new LoaderParams(0, 0, 96, 96, 0, 3, "notesPad_sprite"));
 	//Back
 	GameObject* back1 = new SDLGameObject(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "stage1_sprite"));
 

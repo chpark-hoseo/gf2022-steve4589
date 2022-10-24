@@ -46,7 +46,7 @@ GameObject* Collider2D::OnCollision2D()
 	return enterNote;
 }
 
-vector <GameObject*> Collider2D::OnCollisionExit2D() 
+vector <GameObject*> Collider2D::OnCollisionExit2D(std::string tag)
 {
 	vector <GameObject*> exitGameObject; //벗어날 오브젝트들
 
@@ -57,15 +57,18 @@ vector <GameObject*> Collider2D::OnCollisionExit2D()
 		b.x = getXY.getX();
 		b.y = getXY.getY();
 
+		if (collidedObjects[i]->getTag() != tag) continue;
+
 		if (CheckAABB(a, b) == false)
 		{
+			std::cout << "Exit Tag ==>  " << collidedObjects[i]->getTag() << "\n\n";
+
 			exitGameObject.emplace_back(collidedObjects[i]);
 
 			collidedObjects.pop_back();
 			if (collidedObjects.size() == 0) //메모리 초기화 
 			{
 				collidedObjects.shrink_to_fit();
-				std::cout << "collidedObjects Ptr : " << collidedObjects.capacity() << "\n\n";
 			}
 		}
 	}

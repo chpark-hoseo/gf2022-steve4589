@@ -29,4 +29,5 @@ void Note::move()
 void Note::OnDisable()
 {
 	Game::GetInstance()->ReturnPool(noteName, this);
+	m_position.setXY(0, 0);
 }

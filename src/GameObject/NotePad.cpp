@@ -19,14 +19,14 @@ void NotePad::DetectCollider()
 	//Enter
 	EntergameObject = collision.OnCollision2D();
 	//Exit
-	vector <GameObject*> ExitgameObject = collision.OnCollisionExit2D();
+	vector <GameObject*> ExitgameObject = collision.OnCollisionExit2D("Note");
 
 	for (int i = 0; i < ExitgameObject.size(); i++)
 	{
 		if (ExitgameObject[i]->activeSelf())
 		{ 
-			Game::GetInstance()->GetObject(Vector2D(200, 500), "PowerNote");
-			//Game::GetInstance()->GetObject(ExitgameObject[i]->GetPosition(), "MissBoom");
+			Game::GetInstance()->GetObject(ExitgameObject[i]->GetPosition(), "BoomTrashA");
+			Game::GetInstance()->GetObject(ExitgameObject[i]->GetPosition(), "MissBoom");
 			ExitgameObject[i]->SetActive(false);
 		}
 	}

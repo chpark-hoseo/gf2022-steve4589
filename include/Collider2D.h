@@ -45,5 +45,5 @@ public:
 	   //생성한뒤 위치를 잡기때문에 함수로 받습니다 
 
 	GameObject* OnCollision2D();
-	vector <GameObject*> OnCollisionExit2D();
+	vector <GameObject*> OnCollisionExit2D(std::string tag);
 };

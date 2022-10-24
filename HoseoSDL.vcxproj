@@ -142,7 +142,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Collider2D.cpp" />
+    <ClCompile Include="src\GameObject\Player.cpp" />
+    <ClCompile Include="src\physics\Collider2D.cpp" />
     <ClCompile Include="src\Controller\PlayController.cpp" />
     <ClCompile Include="src\GameObject\EnergyNote.cpp" />
     <ClCompile Include="src\GameObject\Note.cpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="include\NoteShooter.h" />
     <ClInclude Include="include\ObjectManager.h" />
     <ClInclude Include="include\PlayController.h" />
+    <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\PowerNote.h" />
     <ClInclude Include="include\SDLGameObject.h" />
     <ClInclude Include="include\Spawn.h" />

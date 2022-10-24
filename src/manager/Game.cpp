@@ -33,12 +33,12 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 }
 void Game::update()
 {
-	//플레이 버튼 클릭
-	NoteManager::GetInstance()->ReadSpawnNotes(); //추가 필요--> 1스테이지 버튼 => 1스테이지 시트, 2스테이지 버튼 => 2스테이지 시트 
-
 	for (int i = 0; i < m_gameObjects.size(); i++) {
 		m_gameObjects[i]->update();
 	}
+	//플레이 버튼 클릭
+	//if(Player::GetInstance()->GetHp() > 0)*/
+	NoteManager::GetInstance()->ReadSpawnNotes(); //추가 필요--> 1스테이지 버튼 => 1스테이지 시트, 2스테이지 버튼 => 2스테이지 시트 
 }
 
 void Game::Prepare()
@@ -48,17 +48,22 @@ void Game::Prepare()
 
 	TextureManager::GetInstance()->load("need for A+_notes", "notes_sprite", m_pRenderer);
 	TextureManager::GetInstance()->load("need for A+_notesPad", "notesPad_sprite", m_pRenderer);
+
 	TextureManager::GetInstance()->load("need for A+_noteBoom", "notesBoom_sprite", m_pRenderer); 
 	TextureManager::GetInstance()->load("need for A+_noteBoom1", "notesBoom1_sprite", m_pRenderer);
+	TextureManager::GetInstance()->load("need for A+_noteBoom_trash", "BoomTrash_sprite", m_pRenderer);
 
-	TextureManager::GetInstance()->load("need for A+_selectMenu", "selectMenu_sprite", m_pRenderer);
+	TextureManager::GetInstance()->load("need for A+_selectMenu", "selectMenu_sprite", m_pRenderer); 
 	//initial GameObject (배경 등등..)
 	m_gameObjects.push_back(back1); 
 
 	m_gameObjects.push_back(notePad);
 	m_gameObjects.push_back(notePad1);
 	m_gameObjects.push_back(notePad2);
-	m_gameObjects.push_back(notePad3);
+	m_gameObjects.push_back(notePad3); 
+
+	m_gameObjects.push_back(NoteShooter1);
+	m_gameObjects.push_back(NoteShooter2);
 	//ObjectPool
 	InitPool();
 	std::cout << "ObjectSize => " << m_gameObjects.size() << "\n\n";
@@ -69,6 +74,12 @@ void Game::Prepare()
 	notePad1->SetPosition(Vector2D(1024 * 0.5f - 100, 450));
 	notePad2->SetPosition(Vector2D(1024 * 0.5f, 450));
 	notePad3->SetPosition(Vector2D(1024 * 0.5f + 100, 450));
+
+	NoteShooter1->SetPosition(Vector2D(750, 250));
+	NoteShooter2->SetPosition(Vector2D(200, 150));
+
+	NoteManager::GetInstance()->SetNoteShooters(NoteShooter1);
+	NoteManager::GetInstance()->SetNoteShooters(NoteShooter2);
 }
 
 void Game::render()
@@ -101,7 +112,7 @@ void Game::clean()
 //ObjectPool
 void Game::InitPool()  
 {
-	Pool* pools[7] = { new Pool("LeftNote", 10), new Pool("UpNote", 10), new Pool("DownNote" ,10), new Pool("RightNote", 10) , new Pool("PowerNote", 15), new Pool("WinBoom", 13), new Pool("MissBoom", 13) };
+	Pool* pools[9] = { new Pool("LeftNote", 10), new Pool("UpNote", 10), new Pool("DownNote" ,10), new Pool("RightNote", 10) , new Pool("PowerNote", 10), new Pool("WinBoom", 13), new Pool("MissBoom", 13), new Pool("BoomTrashA", 15), new Pool("BoomTrashF", 15) };
 	for (Pool* pool : pools) //이중 값을 가져오기 위해 포인터 형식사용
 	{
 		for (int i = 0; i < pool->m_size; i++)
@@ -135,6 +146,12 @@ GameObject* Game::CreateObjects(const char* name)
 	else if (name == "MissBoom") {
 		gameObject = new NoteBoom(new LoaderParams(0, 0, 128, 128, 0, 0, "notesBoom1_sprite"));
 	}
+	else if (name == "BoomTrashA") {
+		gameObject = new PowerNote(new LoaderParams(0, 0, 32, 32, 0, 0, "BoomTrash_sprite"));
+	}
+	else if (name == "BoomTrashF") {
+		gameObject = new PowerNote(new LoaderParams(0, 0, 32, 32, 0, 0, "BoomTrash_sprite"));
+	}
 	gameObject->SetName(name);
 	gameObject->SetActive(false); 
 	//All Objects
@@ -151,7 +168,6 @@ GameObject* Game::GetObject(Vector2D spawnPos, const char* name)
 	gameObject->SetActive(true);
 	gameObject->SetPosition(spawnPos);
 		
-	std::cout << "name ==> " << gameObject->GetName() << "\n\n";
 	objects[name].pop_back(); 
 	return gameObject;
 }
