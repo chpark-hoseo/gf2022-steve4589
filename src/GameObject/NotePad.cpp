@@ -25,8 +25,7 @@ void NotePad::DetectCollider()
 	{
 		if (ExitgameObject[i]->activeSelf())
 		{ 
-			std::cout << ExitgameObject[i] << "        Size         \n";
-			Game::GetInstance()->GetObject(ExitgameObject[i]->GetPosition(), "WinBoom");
+			Game::GetInstance()->GetObject(ExitgameObject[i]->GetPosition(), "MissBoom");
 			ExitgameObject[i]->SetActive(false);
 		}
 	}

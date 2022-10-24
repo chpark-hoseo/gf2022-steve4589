@@ -48,7 +48,8 @@ void Game::Prepare()
 
 	TextureManager::GetInstance()->load("need for A+_notes", "notes_sprite", m_pRenderer);
 	TextureManager::GetInstance()->load("need for A+_notesPad", "notesPad_sprite", m_pRenderer);
-	TextureManager::GetInstance()->load("need for A+_noteBoom", "notesBoom_sprite", m_pRenderer);
+	TextureManager::GetInstance()->load("need for A+_noteBoom", "notesBoom_sprite", m_pRenderer); 
+	TextureManager::GetInstance()->load("need for A+_noteBoom1", "notesBoom1_sprite", m_pRenderer);
 
 	TextureManager::GetInstance()->load("need for A+_selectMenu", "selectMenu_sprite", m_pRenderer);
 	//initial GameObject (배경 등등..)
@@ -100,7 +101,7 @@ void Game::clean()
 //ObjectPool
 void Game::InitPool()  
 {
-	Pool* pools[5] = { new Pool("LeftNote", 10), new Pool("UpNote", 10), new Pool("DownNote" ,10), new Pool("RightNote", 10) , new Pool("WinBoom", 15) };
+	Pool* pools[6] = { new Pool("LeftNote", 10), new Pool("UpNote", 10), new Pool("DownNote" ,10), new Pool("RightNote", 10) , new Pool("WinBoom", 13), new Pool("MissBoom", 13) };
 	for (Pool* pool : pools) //이중 값을 가져오기 위해 포인터 형식사용
 	{
 		for (int i = 0; i < pool->m_size; i++)
@@ -128,6 +129,9 @@ GameObject* Game::CreateObjects(const char* name)
 	else if (name == "WinBoom") {
 		gameObject = new NoteBoom(new LoaderParams(0, 0, 128, 128, 0, 0, "notesBoom_sprite"));
 	}
+	else if (name == "MissBoom") {
+		gameObject = new NoteBoom(new LoaderParams(0, 0, 128, 128, 0, 0, "notesBoom1_sprite"));
+	}
 	gameObject->SetName(name);
 	gameObject->SetActive(false); 
 	//All Objects
@@ -144,6 +148,7 @@ GameObject* Game::GetObject(Vector2D spawnPos, const char* name)
 	gameObject->SetActive(true);
 	gameObject->SetPosition(spawnPos);
 		
+	std::cout << "name ==> " << gameObject->GetName() << "\n\n";
 	objects[name].pop_back(); 
 	return gameObject;
 }
