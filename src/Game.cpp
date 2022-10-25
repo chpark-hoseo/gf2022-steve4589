@@ -63,7 +63,12 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 }
 void Game::update()
 {
-	//m_currentFrame = ((SDL_GetTicks() / 100) % 6);
+	SDL_RenderClear(m_pRenderer);
+
+	m_go.draw(m_pRenderer);
+	m_player.draw(m_pRenderer);
+
+	SDL_RenderPresent(m_pRenderer);
 }
 
 void Game::render()
