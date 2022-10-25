@@ -11,11 +11,12 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
 		m_pWindow = SDL_CreateWindow(
 			title, xpos, ypos, width, height, flags);
+		//SDL_SetWindowFullscreen(m_pWindow, SDL_WINDOW_FULLSCREEN);
 		if (m_pWindow != 0) {
 			m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, 0);
 			if (m_pRenderer != 0) {
 				//Start_initialize();
-				SDL_SetRenderDrawColor(m_pRenderer, 0, 0, 0, 255);
+				SDL_SetRenderDrawColor(m_pRenderer, 0, 0, 0, 0);
 			}
 			else {
 				return false; // 랜더러 생성 실패
@@ -70,10 +71,10 @@ void Game::Prepare()
 	//Note
 	NoteManager::GetInstance()->ReadLineToTxt("stage1");
 	//Position
-	notePad->SetPosition(Vector2D(1024 * 0.5f - 200, 450));
-	notePad1->SetPosition(Vector2D(1024 * 0.5f - 100, 450));
-	notePad2->SetPosition(Vector2D(1024 * 0.5f, 450));
-	notePad3->SetPosition(Vector2D(1024 * 0.5f + 100, 450));
+	notePad->SetPosition(Vector2D(1536 * 0.5f - 250, 550)); 
+	notePad1->SetPosition(Vector2D(1536 * 0.5f - 100, 550));
+	notePad2->SetPosition(Vector2D(1536 * 0.5f + 50, 550));
+	notePad3->SetPosition(Vector2D(1536 * 0.5f + 200, 550));
 
 	NoteShooter1->SetPosition(Vector2D(750, 250));
 	NoteShooter2->SetPosition(Vector2D(200, 150));
@@ -126,31 +127,31 @@ GameObject* Game::CreateObjects(const char* name)
 	GameObject* gameObject = NULL;
 
 	if (name == "LeftNote") {
-		gameObject = new Note(new LoaderParams(0, 0, 96, 96, 0, 0, "notes_sprite"), name);
+		gameObject = new Note(new LoaderParams(0, 0, 144, 144, 0, 0, "notes_sprite"), name);
 	}
 	else if (name == "UpNote") {
-		gameObject = new Note(new LoaderParams(0, 0, 96, 96, 0, 1, "notes_sprite"), name);
+		gameObject = new Note(new LoaderParams(0, 0, 144, 144, 0, 1, "notes_sprite"), name);
 	}
 	else if (name == "DownNote") {
-		gameObject = new Note(new LoaderParams(0, 0, 96, 96, 0, 2, "notes_sprite"), name);
+		gameObject = new Note(new LoaderParams(0, 0, 144, 144, 0, 2, "notes_sprite"), name);
 	}
 	else if (name == "RightNote") {
-		gameObject = new Note(new LoaderParams(0, 0, 96, 96, 0, 3, "notes_sprite"), name);
+		gameObject = new Note(new LoaderParams(0, 0, 144, 144, 0, 3, "notes_sprite"), name);
 	}
 	else if (name == "PowerNote") {
-		gameObject = new PowerNote(new LoaderParams(0, 0, 96, 96, 0, 0, "notes_sprite"));
+		gameObject = new PowerNote(new LoaderParams(0, 0, 144, 144, 0, 0, "notes_sprite"));
 	}
 	else if (name == "WinBoom") {
-		gameObject = new NoteBoom(new LoaderParams(0, 0, 128, 128, 0, 0, "notesBoom_sprite"));
+		gameObject = new NoteBoom(new LoaderParams(0, 0, 192, 192, 0, 0, "notesBoom_sprite"));
 	}
 	else if (name == "MissBoom") {
-		gameObject = new NoteBoom(new LoaderParams(0, 0, 128, 128, 0, 0, "notesBoom1_sprite"));
+		gameObject = new NoteBoom(new LoaderParams(0, 0, 192, 192, 0, 0, "notesBoom1_sprite"));
 	}
 	else if (name == "BoomTrashA") {
-		gameObject = new PowerNote(new LoaderParams(0, 0, 32, 32, 0, 0, "BoomTrash_sprite"));
+		gameObject = new PowerNote(new LoaderParams(0, 0, 48, 48, 0, 0, "BoomTrash_sprite")); 
 	}
 	else if (name == "BoomTrashF") {
-		gameObject = new PowerNote(new LoaderParams(0, 0, 32, 32, 0, 0, "BoomTrash_sprite"));
+		gameObject = new PowerNote(new LoaderParams(0, 0, 48, 48, 0, 0, "BoomTrash_sprite"));
 	}
 	gameObject->SetName(name);
 	gameObject->SetActive(false);

@@ -1,6 +1,7 @@
 #pragma once
 #include <SDLGameObject.h>
 #include <Vector2D.h>
+#include <Animation.h>
 
 class NoteBoom : public SDLGameObject
 {
@@ -16,5 +17,7 @@ private :
 	Uint32 startTimer;
 	void OnEnable() override { Animation_Once(); }
 	void OnDisable() override;
-	void Animation();
+	void AnimationState();
+
+	Animation* m_animation = new Animation();
 };

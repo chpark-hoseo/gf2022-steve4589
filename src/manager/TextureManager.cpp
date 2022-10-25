@@ -1,6 +1,6 @@
 #pragma once
 #include <TextureManager.h>
-#include <iostream>
+#include <Game.h>
 
 TextureManager* TextureManager::s_pInstance = 0; //정적변수를 사용할 수 있게 하기 위해서 
 
@@ -19,7 +19,7 @@ bool TextureManager::load(string fileName, string id, SDL_Renderer* pRenderer)
 	}
 	return false;
 }
-void TextureManager::TextureClean(string id) //사용하지 않는 텍스쳐를 삭제하는 코드 추가하기 
+void TextureManager::TextureClean(string id)
 {
 	m_textureMap.erase(id);
 }
@@ -28,7 +28,7 @@ void TextureManager::TextureAllClean()
 	m_textureMap.clear();
 }
 
-void TextureManager::drawFrame(string id, int x, int y, int width, int height, int currentRow, int currentFrame, SDL_Renderer* pRenderer, SDL_RendererFlip flip)
+void TextureManager::drawFrame(string id, int x, int y, int width, int height, int currentRow, int currentFrame, SDL_RendererFlip flip)
 {
 	SDL_Rect srcRect;
 	SDL_Rect destRect;
@@ -51,5 +51,5 @@ void TextureManager::drawFrame(string id, int x, int y, int width, int height, i
 	destRect.x = x;
 	destRect.y = y;
 
-	SDL_RenderCopyEx(pRenderer, m_textureMap[id], &srcRect, &destRect, 0, 0, flip);
+	SDL_RenderCopyEx(Game::GetInstance()->getRenderer(), m_textureMap[id], &srcRect, &destRect, 0, 0, flip);
 }

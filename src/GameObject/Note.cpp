@@ -16,8 +16,8 @@ void Note::draw()
 void Note::update() //¾Æ·¡·Î 
 {
 	if (!onOff) return;
-	SDLGameObject::update();
 	move();
+	SDLGameObject::update();
 }
 
 void Note::move()

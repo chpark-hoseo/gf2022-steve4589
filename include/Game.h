@@ -20,8 +20,8 @@
 #include <PowerNote.h>
 #include <NoteBoom.h>
 
-#define SCREEN_WIDTH 1400
-#define SCREEN_HEIGHT 980
+#define SCREEN_WIDTH 1536
+#define SCREEN_HEIGHT 1080
 
 typedef TextureManager TheTextureManager; //자료형 별칭 생성
 
@@ -56,15 +56,15 @@ private:
 	vector<GameObject*> collisionObjects; //충돌할 수 있는 오브젝트 
 	map<const char*, vector<GameObject* >> objects; //모든 오브젝트
 	//NotePads
-	NotePad* notePad = new NotePad(new LoaderParams(0, 0, 96, 96, 0, 0, "notesPad_sprite"));
-	NotePad* notePad1 = new NotePad(new LoaderParams(0, 0, 96, 96, 0, 1, "notesPad_sprite"));
-	NotePad* notePad2 = new NotePad(new LoaderParams(0, 0, 96, 96, 0, 2, "notesPad_sprite"));
-	NotePad* notePad3 = new NotePad(new LoaderParams(0, 0, 96, 96, 0, 3, "notesPad_sprite"));
+	NotePad* notePad = new NotePad(new LoaderParams(0, 0, 144, 144, 0, 0, "notesPad_sprite"));
+	NotePad* notePad1 = new NotePad(new LoaderParams(0, 0, 144, 144, 0, 1, "notesPad_sprite"));
+	NotePad* notePad2 = new NotePad(new LoaderParams(0, 0, 144, 144, 0, 2, "notesPad_sprite"));
+	NotePad* notePad3 = new NotePad(new LoaderParams(0, 0, 144, 144, 0, 3, "notesPad_sprite"));
 	//NotePad* PowernotePad1 = new NotePad(new LoaderParams(0, 0, 96, 96, 0, 3, "notesPad_sprite"));
 	//NotePad* PowernotePad2 = new NotePad(new LoaderParams(0, 0, 96, 96, 0, 3, "notesPad_sprite"));
 	//
-	NoteShooter* NoteShooter1 = new NoteShooter(new LoaderParams(0, 0, 96, 96, 0, 3, "notesPad_sprite"));
-	NoteShooter* NoteShooter2 = new NoteShooter(new LoaderParams(0, 0, 96, 96, 0, 3, "notesPad_sprite"));
+	NoteShooter* NoteShooter1 = new NoteShooter(new LoaderParams(0, 0, 144, 144, 0, 3, "notesPad_sprite"));
+	NoteShooter* NoteShooter2 = new NoteShooter(new LoaderParams(0, 0, 144, 144, 0, 3, "notesPad_sprite"));
 	//Back
 	GameObject* back1 = new SDLGameObject(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "stage1_sprite"));
 
