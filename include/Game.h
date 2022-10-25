@@ -4,6 +4,7 @@
 #include <SDL2/SDL_keyboard.h>
 #include <TextureManager.h>
 #include <Player.h>
+#include <vector>
 
 #define SCREEN_WIDTH 1024
 #define SCREEN_HEIGHT 720
@@ -30,8 +31,7 @@ private:
 	SDL_Renderer* m_pRenderer;
 	bool m_bRunning;
 
-	GameObject m_go;
-	Player m_player;
-
 	int m_currentFrame;
+
+	std::vector<GameObject*> m_gameObjects;
 };

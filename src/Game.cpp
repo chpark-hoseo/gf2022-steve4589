@@ -4,29 +4,6 @@
 #include "string.h"
 #include "GameObject.h"
 
-/*void Game::DhrowBorder()
-{
-	SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 255, 255);
-	//SDL_RenderClear(m_pRenderer);
-
-	SDL_Rect fillRect = { SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 }; //x, y, w, h
-	SDL_SetRenderDrawColor(m_pRenderer, 255, 0, 0, 255);
-	SDL_RenderFillRect(m_pRenderer, &fillRect); //속이 꽉찬 사각형
-
-	SDL_Rect outlineRect = { SCREEN_WIDTH / 6, SCREEN_HEIGHT / 6, SCREEN_WIDTH * 2 / 3, SCREEN_HEIGHT * 2 / 3 };
-	SDL_SetRenderDrawColor(m_pRenderer, 0, 255, 0, 255);
-	SDL_RenderDrawRect(m_pRenderer, &outlineRect); //속이 빈 사각형
-
-	SDL_SetRenderDrawColor(m_pRenderer, 0, 0, 255, 255);
-	SDL_RenderDrawLine(m_pRenderer, 0, SCREEN_HEIGHT / 2, SCREEN_WIDTH, SCREEN_HEIGHT / 2); //선
-
-	SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 0, 255);
-	for (int i = 0; i < SCREEN_HEIGHT; i += 4)
-	{
-		SDL_RenderDrawPoint(m_pRenderer, SCREEN_WIDTH / 2, i); //점선
-	}
-}*/
-
 bool Game::init(const char* title, int xpos, int ypos, int width, int height, int flags)
 {
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
@@ -40,15 +17,18 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 				{
 					return false; //싱글턴 생성 실패 
 				}
-				//과제 :: 사용하지 않는 텍스쳐 삭제 
-				TextureManager::GetInstance()->TextureClean("dog_animate");
 				//Load Texture
 				TheTextureManager::GetInstance()->load("need for A+_stage1", "stage1_sprite", m_pRenderer);
 				TheTextureManager::GetInstance()->load("textureManager_test", "dog1_sprite", m_pRenderer);
 				TheTextureManager::GetInstance()->load("textureManager_test", "dogBack_sprite", m_pRenderer);
 
-				m_go.load(100, 100, 400, 100, "dog1_sprite");
-				m_player.load(300, 300, 400, 100, "dog1_sprite");
+				GameObject* m_go = new GameObject();
+				GameObject* m_player = new Player();
+
+				m_go->load(100, 100, 128, 82, "dog_animate");
+				m_player->load(300, 300, 128, 82, "dog_animate");
+				m_gameObjects.push_back(m_go);
+				m_gameObjects.push_back(m_player);
 			}
 			else {
 				return false; // 랜더러 생성 실패
@@ -66,16 +46,20 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 }
 void Game::update()
 {
-	m_go.update();
-	m_player.update();
+	for (int i = 0; i < m_gameObjects.size(); i++)
+	{
+		m_gameObjects[i]->update();
+	}
 }
 
 void Game::render()
 {
 	SDL_RenderClear(m_pRenderer);
 
-	m_go.draw(m_pRenderer);
-	m_player.draw(m_pRenderer);
+	for (int i = 0; i < m_gameObjects.size(); i++)
+	{
+		m_gameObjects[i]->draw(m_pRenderer);
+	}
 
 	SDL_RenderPresent(m_pRenderer);
 }
