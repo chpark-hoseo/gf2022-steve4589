@@ -15,14 +15,7 @@ void InputHandler::update()
 			if (SDLK_UP) m_keystates[SDLK_UP];
 			if (SDLK_DOWN) m_keystates[SDLK_DOWN];
 			if (SDLK_RIGHT) m_keystates[SDLK_RIGHT];
-		}
-		//KeyUp	
-		else if (event.type == SDL_KEYUP) {
-			/*
-			if (SDLK_LEFT) m_keystates[SDLK_LEFT];
-			if (SDLK_UP) m_keystates[SDLK_UP];
-			if (SDLK_DOWN) m_keystates[SDLK_DOWN];
-			if (SDLK_RIGHT) m_keystates[SDLK_RIGHT];*/
+			if (SDLK_ESCAPE) m_keystates[SDLK_ESCAPE];
 		}
 	}
 }

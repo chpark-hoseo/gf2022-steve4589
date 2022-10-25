@@ -10,7 +10,6 @@ public:
 	virtual void clean() {}
 
 private:
-	const char * noteName;
 	void OnDisable() override;
 
 	void move() override;

@@ -20,8 +20,8 @@
 #include <PowerNote.h>
 #include <NoteBoom.h>
 
-#define SCREEN_WIDTH 1024
-#define SCREEN_HEIGHT 800
+#define SCREEN_WIDTH 1400
+#define SCREEN_HEIGHT 980
 
 typedef TextureManager TheTextureManager; //자료형 별칭 생성
 

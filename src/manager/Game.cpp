@@ -15,7 +15,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 			m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, 0);
 			if (m_pRenderer != 0) {
 				//Start_initialize();
-				SDL_SetRenderDrawColor(m_pRenderer, 255, 0, 0, 255);
+				SDL_SetRenderDrawColor(m_pRenderer, 0, 0, 0, 255);
 			}
 			else {
 				return false; // 랜더러 생성 실패
@@ -49,18 +49,18 @@ void Game::Prepare()
 	TextureManager::GetInstance()->load("need for A+_notes", "notes_sprite", m_pRenderer);
 	TextureManager::GetInstance()->load("need for A+_notesPad", "notesPad_sprite", m_pRenderer);
 
-	TextureManager::GetInstance()->load("need for A+_noteBoom", "notesBoom_sprite", m_pRenderer); 
+	TextureManager::GetInstance()->load("need for A+_noteBoom", "notesBoom_sprite", m_pRenderer);
 	TextureManager::GetInstance()->load("need for A+_noteBoom1", "notesBoom1_sprite", m_pRenderer);
 	TextureManager::GetInstance()->load("need for A+_noteBoom_trash", "BoomTrash_sprite", m_pRenderer);
 
-	TextureManager::GetInstance()->load("need for A+_selectMenu", "selectMenu_sprite", m_pRenderer); 
+	TextureManager::GetInstance()->load("need for A+_selectMenu", "selectMenu_sprite", m_pRenderer);
 	//initial GameObject (배경 등등..)
-	m_gameObjects.push_back(back1); 
+	m_gameObjects.push_back(back1);
 
 	m_gameObjects.push_back(notePad);
 	m_gameObjects.push_back(notePad1);
 	m_gameObjects.push_back(notePad2);
-	m_gameObjects.push_back(notePad3); 
+	m_gameObjects.push_back(notePad3);
 
 	m_gameObjects.push_back(NoteShooter1);
 	m_gameObjects.push_back(NoteShooter2);
@@ -110,21 +110,21 @@ void Game::clean()
 }
 //----------------------------------------------------------------------------
 //ObjectPool
-void Game::InitPool()  
+void Game::InitPool()
 {
 	Pool* pools[9] = { new Pool("LeftNote", 10), new Pool("UpNote", 10), new Pool("DownNote" ,10), new Pool("RightNote", 10) , new Pool("PowerNote", 10), new Pool("WinBoom", 13), new Pool("MissBoom", 13), new Pool("BoomTrashA", 15), new Pool("BoomTrashF", 15) };
 	for (Pool* pool : pools) //이중 값을 가져오기 위해 포인터 형식사용
 	{
 		for (int i = 0; i < pool->m_size; i++)
 		{
-			CreateObjects(pool->m_name); 
+			CreateObjects(pool->m_name);
 		}
 	}
 }
-GameObject* Game::CreateObjects(const char* name) 
+GameObject* Game::CreateObjects(const char* name)
 {
 	GameObject* gameObject = NULL;
-	
+
 	if (name == "LeftNote") {
 		gameObject = new Note(new LoaderParams(0, 0, 96, 96, 0, 0, "notes_sprite"), name);
 	}
@@ -153,12 +153,12 @@ GameObject* Game::CreateObjects(const char* name)
 		gameObject = new PowerNote(new LoaderParams(0, 0, 32, 32, 0, 0, "BoomTrash_sprite"));
 	}
 	gameObject->SetName(name);
-	gameObject->SetActive(false); 
+	gameObject->SetActive(false);
 	//All Objects
 	m_gameObjects.emplace_back(gameObject);
 	//ObjectPool, collision Object
 	objects[name].emplace_back(gameObject);
-	if (gameObject->getTag() == "Note") collisionObjects.emplace_back(gameObject); 
+	if (gameObject->getTag() == "Note") collisionObjects.emplace_back(gameObject);
 
 	return gameObject;
 }
@@ -167,8 +167,8 @@ GameObject* Game::GetObject(Vector2D spawnPos, const char* name)
 	GameObject* gameObject = objects[name].back();
 	gameObject->SetActive(true);
 	gameObject->SetPosition(spawnPos);
-		
-	objects[name].pop_back(); 
+
+	objects[name].pop_back();
 	return gameObject;
 }
 //----------------------------------------------------------------------
@@ -181,6 +181,10 @@ void Game::handleInput()
 }
 void Game::Input_Note()
 {
+	//Quit
+	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_ESCAPE)) {
+		m_bRunning = false;
+	}
 	//KeyDown
 	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_LEFT)) {
 		notePad->IsPressed(true);
