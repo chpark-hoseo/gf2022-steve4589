@@ -30,5 +30,8 @@ private:
 	SDL_Renderer* m_pRenderer;
 	bool m_bRunning;
 
+	GameObject m_go;
+	Player m_player;
+
 	int m_currentFrame;
 };
