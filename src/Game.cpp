@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "iostream"
 #include "string.h"
+#include "GameObject.h"
 
 /*void Game::DhrowBorder()
 {
@@ -69,10 +70,10 @@ void Game::render()
 {
 	SDL_RenderClear(m_pRenderer);
 	//Back (layer == 0)
-	TheTextureManager::GetInstance()->draw("stage1_sprite", 0, 0, 1024, 720, m_pRenderer);
+	TextureManager::GetInstance()->draw("stage1_sprite", 0, 0, 1024, 720, m_pRenderer);
 	//Sprites (layer == 1 ~ n)
-	TheTextureManager::GetInstance()->drawFrame("dogBack_sprite", 350, 120, 240, 400, 0, 0, m_pRenderer);
-	TheTextureManager::GetInstance()->drawFrame("dog1_sprite", 450, 300, 240, 400, 0, 1, m_pRenderer);
+	TextureManager::GetInstance()->drawFrame("dogBack_sprite", 350, 120, 240, 400, 0, 0, m_pRenderer);
+	TextureManager::GetInstance()->drawFrame("dog1_sprite", 450, 300, 240, 400, 0, 1, m_pRenderer);
 
 	SDL_RenderPresent(m_pRenderer);
 }
