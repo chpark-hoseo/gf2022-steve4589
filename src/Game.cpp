@@ -23,7 +23,7 @@
 	SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 0, 255);
 	for (int i = 0; i < SCREEN_HEIGHT; i += 4)
 	{
-		SDL_RenderDrawPoint(m_pRenderer, SCREEN_WIDTH / 2, i); //점선 
+		SDL_RenderDrawPoint(m_pRenderer, SCREEN_WIDTH / 2, i); //점선
 	}
 }*/
 
@@ -41,11 +41,14 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 					return false; //싱글턴 생성 실패 
 				}
 				//과제 :: 사용하지 않는 텍스쳐 삭제 
-				TextureManager::GetInstance()->TextureClean("dog_animate"); 
+				TextureManager::GetInstance()->TextureClean("dog_animate");
 				//Load Texture
 				TheTextureManager::GetInstance()->load("need for A+_stage1", "stage1_sprite", m_pRenderer);
 				TheTextureManager::GetInstance()->load("textureManager_test", "dog1_sprite", m_pRenderer);
 				TheTextureManager::GetInstance()->load("textureManager_test", "dogBack_sprite", m_pRenderer);
+
+				m_go.load(100, 100, 400, 100, "dog1_sprite");
+				m_player.load(300, 300, 400, 100, "dog1_sprite");
 			}
 			else {
 				return false; // 랜더러 생성 실패
@@ -63,22 +66,16 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 }
 void Game::update()
 {
-	SDL_RenderClear(m_pRenderer);
-
-	m_go.draw(m_pRenderer);
-	m_player.draw(m_pRenderer);
-
-	SDL_RenderPresent(m_pRenderer);
+	m_go.update();
+	m_player.update();
 }
 
 void Game::render()
 {
 	SDL_RenderClear(m_pRenderer);
-	//Back (layer == 0)
-	TextureManager::GetInstance()->draw("stage1_sprite", 0, 0, 1024, 720, m_pRenderer);
-	//Sprites (layer == 1 ~ n)
-	TextureManager::GetInstance()->drawFrame("dogBack_sprite", 350, 120, 240, 400, 0, 0, m_pRenderer);
-	TextureManager::GetInstance()->drawFrame("dog1_sprite", 450, 300, 240, 400, 0, 1, m_pRenderer);
+
+	m_go.draw(m_pRenderer);
+	m_player.draw(m_pRenderer);
 
 	SDL_RenderPresent(m_pRenderer);
 }
