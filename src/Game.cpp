@@ -25,7 +25,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 				GameObject* m_go = new GameObject();
 				GameObject* m_player = new Player();
 
-				m_go->load(100, 100, 128, 82, "dog_animate");
+				m_go->load(100, 100, 128, 82, "dog_animate"); 
 				m_player->load(300, 300, 128, 82, "dog_animate");
 				m_gameObjects.push_back(m_go);
 				m_gameObjects.push_back(m_player);
