@@ -10,6 +10,7 @@
 #include <SDL2/SDL_timer.h>
 
 #include <NoteShooter.h>
+#include <NotePad.h>
 #include <Spawn.h>
 
 using namespace std;

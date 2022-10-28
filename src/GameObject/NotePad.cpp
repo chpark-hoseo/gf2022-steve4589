@@ -1,7 +1,7 @@
 #include <NotePad.h>
 #include <Game.h>
 
-NotePad::NotePad(const LoaderParams* pParams) : SDLGameObject(pParams) { /*getTag = noteTag*/ }
+NotePad::NotePad(const LoaderParams* pParams, string noteTag) : SDLGameObject(pParams) { getTag = noteTag; }
 
 void NotePad::update()
 {
@@ -17,9 +17,9 @@ void NotePad::SetPosition(Vector2D getPos)
 void NotePad::DetectCollider()
 {
 	//Enter
-	EntergameObject = collision.OnCollision2D();
+	EntergameObject = collision.OnCollision2D(getTag);
 	//Exit
-	vector <GameObject*> ExitgameObject = collision.OnCollisionExit2D("Note"/*notesTag*/);
+	vector <GameObject*> ExitgameObject = collision.OnCollisionExit2D(getTag);
 
 	for (int i = 0; i < ExitgameObject.size(); i++)
 	{

@@ -44,6 +44,6 @@ public:
 	//본게임에서 모든 원본(x)의 위치는 정적으로만 사용되므로 값만 세팅해줍니다
 	   //생성한뒤 위치를 잡기때문에 함수로 받습니다 
 
-	GameObject* OnCollision2D();
+	GameObject* OnCollision2D(std::string tag);
 	vector <GameObject*> OnCollisionExit2D(std::string tag);
 };

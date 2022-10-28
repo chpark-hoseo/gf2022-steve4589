@@ -18,7 +18,7 @@ private:
 	void OffNote();
 	//SpecialNotesPad
 public:
-	NotePad(const LoaderParams* pParams);
+	NotePad(const LoaderParams* pParams, string noteTag);
 	virtual void draw() { SDLGameObject::draw(); }
 	virtual void update();
 	virtual void clean() {}

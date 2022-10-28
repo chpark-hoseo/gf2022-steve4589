@@ -95,12 +95,14 @@ void Game::Awake()
 	notePad2->SetPosition(Vector2D(1536 * 0.5f + 50, 550));
 	notePad3->SetPosition(Vector2D(1536 * 0.5f + 200, 550)); 
 
-	powerNotePad1->SetPosition(Vector2D(1536 * 0.5f - 800, 550));
-	powerNotePad2->SetPosition(Vector2D(1536 * 0.5f - 500, 400));
+	powerNotePad1->SetPosition(Vector2D(1536 * 0.5f - 550, 550));
+	powerNotePad2->SetPosition(Vector2D(1536 * 0.5f - 400, 400));
 
 	NoteShooter1->SetPosition(Vector2D(1300, 800));
 
-	NoteManager::GetInstance()->SetNoteShooters(NoteShooter1);
+	NoteManager::GetInstance()->SetNoteShooters(NoteShooter1); //powerNotePad1
+	NoteManager::GetInstance()->SetPowerNotePads(powerNotePad1);
+	NoteManager::GetInstance()->SetPowerNotePads(powerNotePad2);
 }
 
 void Game::render()
@@ -182,7 +184,7 @@ GameObject* Game::CreateObjects(const char* name)
 	m_gameObjects.emplace_back(gameObject);
 	//ObjectPool, collision Object
 	objects[name].emplace_back(gameObject);
-	if (gameObject->getTag() == "Note") collisionObjects.emplace_back(gameObject);
+	if (gameObject->getTag() == "Note" || gameObject->getTag() == "PowerNote") collisionObjects.emplace_back(gameObject);
 
 	return gameObject;
 }
@@ -225,6 +227,9 @@ void Game::Input_Note()
 	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_SPACE)) {
 		powerNotePad1->IsPressed(true);
 	}
+	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_SPACE)) {
+		powerNotePad2->IsPressed(true);
+	}
 	//KeyUp
 	if (!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_LEFT)) {
 		notePad->PressOut(false);
@@ -240,6 +245,9 @@ void Game::Input_Note()
 	}
 	if (!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_SPACE)) {
 		powerNotePad1->PressOut(false);
+	}
+	if (!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_SPACE)) {
+		powerNotePad2->PressOut(false);
 	}
 }
 /*

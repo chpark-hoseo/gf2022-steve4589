@@ -1,7 +1,7 @@
 #include <Game.h>
 #include <Collider2D.h>
 
-GameObject* Collider2D::OnCollision2D()
+GameObject* Collider2D::OnCollision2D(std::string tag)
 {
 	vector<GameObject*> Objects;
 
@@ -9,7 +9,7 @@ GameObject* Collider2D::OnCollision2D()
 
 	for (int i = 0; i < colliders.size(); i++)
 	{
-		if (colliders[i]->activeSelf() == false) continue;
+		if (colliders[i]->activeSelf() == false || colliders[i]->getTag() != tag) continue;
 		Vector2D getXY = colliders[i]->GetPosition();
 
 		b.x = getXY.getX();

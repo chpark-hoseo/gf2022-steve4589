@@ -10,7 +10,6 @@ public:
 	virtual void clean() {}
 
 private:
-	void OnEnable() override;
 	void OnDisable() override;
 
 	void move() override;
