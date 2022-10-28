@@ -6,39 +6,34 @@ NoteShooter::NoteShooter(const LoaderParams* pParams) : SDLGameObject(pParams) {
 void NoteShooter::draw()
 {
 	m_animation->Draw(m_position.getX(), m_position.getY(), m_width, m_height);
-	SDLGameObject::draw();
 }
 void NoteShooter::update()
 {
 	if (!onOff) return;
+
 	m_animation->Update();
 	SDLGameObject::update();
-	SetState();
 }
-void NoteShooter::Shot()
+void NoteShooter::Shot(float speed)
 {
-	//if(getState() == false) //애니작동
-	Game::GetInstance()->GetObject(m_position, "PowerNote");
+	SetPop();
+
+	GameObject* gameObject = Game::GetInstance()->GetObject(m_position, "PowerNote");
+	gameObject->SetSpeed(speed);
+
+	Game::GetInstance()->GetObject(m_position, "PowerNoteStartBoom");
 }
-//State
-void NoteShooter::AnimationState()
+void NoteShooter::SetIdle()
 {
-	
+	m_animation->SetProp("noteShooter_stage1_idle_sprite", 0.01f, 0, 6);
+
+	m_animation->StartAnimation(); 
+	m_animation->SetAnimPause(false);
 }
-void NoteShooter::SetState()
+void NoteShooter::SetPop()
 {
-	switch (state)
-	{
-	default:
-		break;
-	case State_idle:
+	m_animation->SetProp("noteShooter_stage1_pop_sprite", 0.01f, 0, 6);
 
-		break;
-	case State_idle1:
-
-		break;
-	case State_pop:
-
-		break;
-	}
+	m_animation->SetAnimPause(true);
+	m_animation->AnimationOnce(); //트리거 
 }

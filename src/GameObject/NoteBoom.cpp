@@ -1,7 +1,7 @@
 #include <NoteBoom.h>
 #include <Game.h> //#include <ObjectManager>
 
-NoteBoom::NoteBoom(const LoaderParams* pParams) : SDLGameObject(pParams) {}
+NoteBoom::NoteBoom(const LoaderParams* pParams, int frame) : SDLGameObject(pParams) { lastFrame = frame; }
 
 void NoteBoom::draw()
 {
@@ -20,7 +20,7 @@ void NoteBoom::OnceAnimation()
 	Uint32 curTime = SDL_GetTicks();
 	m_currentFrame = (Uint32)((curTime - startTimer) * 0.01f) % 6; //0.01 => speed
 
-	if (m_currentFrame == 5)
+	if (m_currentFrame == lastFrame)
 	{
 		SetActive(false);
 	}

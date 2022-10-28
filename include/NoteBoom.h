@@ -6,7 +6,7 @@
 class NoteBoom : public SDLGameObject
 {
 public :
-	NoteBoom(const LoaderParams* pParams);
+	NoteBoom(const LoaderParams* pParams, int frame);
 	virtual void draw();
 	virtual void update();
 	virtual void clean() {}
@@ -16,6 +16,8 @@ public :
 private :
 	Uint32 startTimer;
 	Animation* m_animation = new Animation();
+
+	int lastFrame = 0;
 
 	void OnEnable() override 
 	{ 

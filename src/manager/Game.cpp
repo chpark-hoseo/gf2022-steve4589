@@ -47,17 +47,19 @@ void Game::Awake()
 	//가져다 쓸 사진 need for A+_notesPad
 	TextureManager::GetInstance()->load("need for A+_stage1", "stage1_sprite", m_pRenderer);
 
-	TextureManager::GetInstance()->load("need for A+_notes", "notes_sprite", m_pRenderer);
-	TextureManager::GetInstance()->load("need for A+need for A+_PowerNote", "powerNotes_sprite", m_pRenderer); 
+	TextureManager::GetInstance()->load("need for A+_notes", "notes_sprite", m_pRenderer); 
+	TextureManager::GetInstance()->load("need for A+_PowerNote", "powerNotes_sprite", m_pRenderer); 
+
 	TextureManager::GetInstance()->load("need for A+_notesPad", "notesPad_sprite", m_pRenderer);
 	//TextureManager::GetInstance()->load("need for A+_powerNotesPad", "powerNotesPad_sprite", m_pRenderer);
 
 	TextureManager::GetInstance()->load("need for A+_noteBoom", "notesBoom_sprite", m_pRenderer);
-	TextureManager::GetInstance()->load("need for A+_noteBoom1", "notesBoom1_sprite", m_pRenderer); 
-	TextureManager::GetInstance()->load("need for A+_PowerNoteBoom", "powerNotesBoom1_sprite", m_pRenderer);
+	TextureManager::GetInstance()->load("need for A+_noteBoom1", "notesBoom1_sprite", m_pRenderer);
+	TextureManager::GetInstance()->load("need for A+_PowerNoteStartBoom", "powerNoteStartBoom_sprite", m_pRenderer);
 	TextureManager::GetInstance()->load("need for A+_noteBoom_trash", "BoomTrash_sprite", m_pRenderer);
 
-	TextureManager::GetInstance()->load("need for A+_noteShooter_stage1", "noteShooter_stage1_sprite", m_pRenderer);
+	TextureManager::GetInstance()->load("need for A+_noteShooter_stage1_idle", "noteShooter_stage1_idle_sprite", m_pRenderer);
+	TextureManager::GetInstance()->load("need for A+_noteShooter_stage1_pop", "noteShooter_stage1_pop_sprite", m_pRenderer);
 	//TextureManager::GetInstance()->load("need for A+_noteShooter_stage2", "noteShooter_stage2_sprite", m_pRenderer);
 
 	TextureManager::GetInstance()->load("need for A+_selectMenu", "selectMenu_sprite", m_pRenderer);
@@ -119,7 +121,7 @@ void Game::clean()
 //ObjectPool
 void Game::InitPool()
 {
-	Pool* pools[9] = { new Pool("LeftNote", 10), new Pool("UpNote", 10), new Pool("DownNote" ,10), new Pool("RightNote", 10) , new Pool("PowerNote", 10), new Pool("WinBoom", 13), new Pool("MissBoom", 13), new Pool("BoomTrashA", 15), new Pool("BoomTrashF", 15) };
+	Pool* pools[10] = { new Pool("LeftNote", 10), new Pool("UpNote", 10), new Pool("DownNote" ,10), new Pool("RightNote", 10) , new Pool("PowerNote", 10), new Pool("WinBoom", 13), new Pool("MissBoom", 13), new Pool("BoomTrashA", 15), new Pool("BoomTrashF", 15), new Pool("PowerNoteStartBoom", 10) };
 	for (Pool* pool : pools) //이중 값을 가져오기 위해 포인터 형식사용
 	{
 		for (int i = 0; i < pool->m_size; i++)
@@ -145,19 +147,22 @@ GameObject* Game::CreateObjects(const char* name)
 		gameObject = new Note(new LoaderParams(0, 0, 144, 144, 0, 3, "notes_sprite"), name);
 	}
 	else if (name == "PowerNote") {
-		gameObject = new PowerNote(new LoaderParams(0, 0, 144, 144, 0, 0, "notes_sprite"));
+		gameObject = new PowerNote(new LoaderParams(0, 0, 144, 144, 0, 0, "powerNotes_sprite"));
 	}
 	else if (name == "WinBoom") {
-		gameObject = new NoteBoom(new LoaderParams(0, 0, 192, 192, 0, 0, "notesBoom_sprite"));
+		gameObject = new NoteBoom(new LoaderParams(0, 0, 192, 192, 0, 0, "notesBoom_sprite"), 5);
 	}
 	else if (name == "MissBoom") {
-		gameObject = new NoteBoom(new LoaderParams(0, 0, 192, 192, 0, 0, "notesBoom1_sprite"));
+		gameObject = new NoteBoom(new LoaderParams(0, 0, 192, 192, 0, 0, "notesBoom1_sprite"), 5);
 	}
 	else if (name == "BoomTrashA") {
 		gameObject = new PowerNote(new LoaderParams(0, 0, 48, 48, 0, 0, "BoomTrash_sprite")); 
 	}
 	else if (name == "BoomTrashF") {
 		gameObject = new PowerNote(new LoaderParams(0, 0, 48, 48, 0, 0, "BoomTrash_sprite"));
+	}
+	else if (name == "PowerNoteStartBoom") {
+		gameObject = new NoteBoom(new LoaderParams(0, 0, 144, 144, 0, 0, "powerNoteStartBoom_sprite"), 3);
 	}
 	gameObject->SetName(name);
 	gameObject->SetActive(false);
