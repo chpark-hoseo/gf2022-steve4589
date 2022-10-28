@@ -109,22 +109,28 @@ void NoteManager::spawnNotes()
 void NoteManager::SpawnPowerNote(int point)
 {
 	NoteShooter* noteShooter = NULL;
+	NotePad* notePad = NULL;
+
+	Vector2D disPos = Vector2D(0, 0);
 
 	switch (point)
 	{
 	default:
 		return;
 	case 4:
+		notePad = powerNotePads[0];
 		noteShooter = noteShooters[0];
 		break;
 	case 5:
+		notePad = powerNotePads[1];
 		noteShooter = noteShooters[1];
 		break;
 	}
+	disPos = notePad->GetPosition();
 	//speed == 0 ==> 파워노트 처음쏠때
 	//speed == -1 ==> 파워노트를 이제 안쏜다는 뜻 
 	if (speed == 0) noteShooter->SetPop();
 	else if (speed == -1)noteShooter->SetIdle();
-	else noteShooter->Shot(speed);
+	else noteShooter->Shot(speed, disPos);
 }
 queue<string> NoteManager::GetSpawnQueue() { return spawnQueue_test; }

@@ -27,6 +27,7 @@ public:
 	void ReadSpawnNotes();
 
 	void SetNoteShooters(NoteShooter* noteShooter) { noteShooters.emplace_back(noteShooter); }
+	void SetPowerNotePads(NotePad* powerNotePad) { powerNotePads.emplace_back(powerNotePad); }
 
 	queue<string> GetSpawnQueue();
 	map<int, string*> GetSpawnQueue_; //int -> n번째 스테이지
@@ -46,6 +47,7 @@ private:
 	double m_curTime = 0;
 
 	vector<NoteShooter*> noteShooters;
+	vector<NotePad*> powerNotePads;
 
 	queue<Spawn> spawnQueue;
 	queue<string> spawnQueue_test;

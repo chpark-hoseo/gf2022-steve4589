@@ -4,12 +4,16 @@
 
 void Animation::Update()
 {
-	if (!m_animRunning) return;
+	if (!m_animRunning)
+	{
+		m_currentFrame = 0;
+		return;
+	}
 
 	double curTime = SDL_GetTicks();
 	m_currentFrame = (Uint32)((curTime - startTimer) * m_speed) % m_frameCount; //speed
 
-	if ((m_animationOnce && m_currentFrame == m_frameCount - 1)) 
+	if ((m_animationOnce && m_currentFrame == m_frameCount - 1))  //애니메이션 한번만 작동
 	{ 
 		m_animRunning = false;
 		m_animationOnce = false;

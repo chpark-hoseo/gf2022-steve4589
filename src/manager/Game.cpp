@@ -44,26 +44,33 @@ void Game::update()
 
 void Game::Awake()
 {
-	//가져다 쓸 사진 need for A+_notesPad
+	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	//스테이지 배경
 	TextureManager::GetInstance()->load("need for A+_stage1", "stage1_sprite", m_pRenderer);
-
+	
+	//노트
 	TextureManager::GetInstance()->load("need for A+_notes", "notes_sprite", m_pRenderer); 
 	TextureManager::GetInstance()->load("need for A+_PowerNote", "powerNotes_sprite", m_pRenderer); 
-
+	
+	//노트 패드
 	TextureManager::GetInstance()->load("need for A+_notesPad", "notesPad_sprite", m_pRenderer);
-	//TextureManager::GetInstance()->load("need for A+_powerNotesPad", "powerNotesPad_sprite", m_pRenderer);
+	TextureManager::GetInstance()->load("need for A+_PowernotePad", "powerNotesPad_sprite", m_pRenderer);
 
+	//폭발 애니메이션  
 	TextureManager::GetInstance()->load("need for A+_noteBoom", "notesBoom_sprite", m_pRenderer);
 	TextureManager::GetInstance()->load("need for A+_noteBoom1", "notesBoom1_sprite", m_pRenderer);
 	TextureManager::GetInstance()->load("need for A+_PowerNoteStartBoom", "powerNoteStartBoom_sprite", m_pRenderer);
 	TextureManager::GetInstance()->load("need for A+_noteBoom_trash", "BoomTrash_sprite", m_pRenderer);
 
-	TextureManager::GetInstance()->load("need for A+_noteShooter_stage1_idle", "noteShooter_stage1_idle_sprite", m_pRenderer);
+	//노트 슈터 애니메이션
+	TextureManager::GetInstance()->load("need for A+_noteShooter_stage1_idle", "noteShooter_stage1_idle_sprite", m_pRenderer); 
 	TextureManager::GetInstance()->load("need for A+_noteShooter_stage1_pop", "noteShooter_stage1_pop_sprite", m_pRenderer);
 	//TextureManager::GetInstance()->load("need for A+_noteShooter_stage2", "noteShooter_stage2_sprite", m_pRenderer);
 
+	//메뉴 
 	TextureManager::GetInstance()->load("need for A+_selectMenu", "selectMenu_sprite", m_pRenderer);
-	//initial GameObject (배경 등등..)
+	
+	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	m_gameObjects.push_back(back1);
 
 	m_gameObjects.push_back(notePad);
@@ -71,24 +78,29 @@ void Game::Awake()
 	m_gameObjects.push_back(notePad2);
 	m_gameObjects.push_back(notePad3);
 
+	m_gameObjects.push_back(powerNotePad1);
+	m_gameObjects.push_back(powerNotePad2);
+
 	m_gameObjects.push_back(NoteShooter1);
-	m_gameObjects.push_back(NoteShooter2);
 	//ObjectPool
 	InitPool();
 	std::cout << "ObjectSize => " << m_gameObjects.size() << "\n\n";
-	//Note
+
+	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	//Setting
 	NoteManager::GetInstance()->ReadLineToTxt("stage1");
 	//Position
 	notePad->SetPosition(Vector2D(1536 * 0.5f - 250, 550)); 
 	notePad1->SetPosition(Vector2D(1536 * 0.5f - 100, 550));
 	notePad2->SetPosition(Vector2D(1536 * 0.5f + 50, 550));
-	notePad3->SetPosition(Vector2D(1536 * 0.5f + 200, 550));
+	notePad3->SetPosition(Vector2D(1536 * 0.5f + 200, 550)); 
+
+	powerNotePad1->SetPosition(Vector2D(1536 * 0.5f - 800, 550));
+	powerNotePad2->SetPosition(Vector2D(1536 * 0.5f - 500, 400));
 
 	NoteShooter1->SetPosition(Vector2D(1300, 800));
-	NoteShooter2->SetPosition(Vector2D(200, 150));
 
 	NoteManager::GetInstance()->SetNoteShooters(NoteShooter1);
-	NoteManager::GetInstance()->SetNoteShooters(NoteShooter2);
 }
 
 void Game::render()
@@ -210,6 +222,9 @@ void Game::Input_Note()
 	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_RIGHT)) {
 		notePad3->IsPressed(true);
 	}
+	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_SPACE)) {
+		powerNotePad1->IsPressed(true);
+	}
 	//KeyUp
 	if (!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_LEFT)) {
 		notePad->PressOut(false);
@@ -222,6 +237,9 @@ void Game::Input_Note()
 	}
 	if (!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_RIGHT)) {
 		notePad3->PressOut(false);
+	}
+	if (!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_SPACE)) {
+		powerNotePad1->PressOut(false);
 	}
 }
 /*

@@ -9,6 +9,8 @@ private:
 	bool isPressIn = true;
 	bool isPressOut = false;
 
+	std::string getTag;
+
 	Collider2D collision = Collider2D(m_position.getX(), m_position.getY(), m_width, m_height);
 
 	GameObject* EntergameObject;

@@ -37,6 +37,7 @@ public:
 
 	virtual void SetPosition(Vector2D getPos) = 0;
 	virtual const Vector2D GetPosition() = 0; //SDL_Rect x, y값 초기화
+	virtual void SetDirVec(Vector2D getVec) { dirVec = getVec; }
 
 	virtual const char* GetName() = 0;
 	virtual void SetName(const char* getName) = 0;
@@ -74,4 +75,6 @@ protected:
 	const char* name;
 	bool onOff = true;
 	bool onFirst = true;
+
+	Vector2D dirVec = Vector2D(0, 0);;
 };
