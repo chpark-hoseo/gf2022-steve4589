@@ -17,7 +17,9 @@ void Monster::update()
 }
 void Monster::move()
 {
-    if (m_x < 10) speed = 0;
+    speed = m_x < 1000 ? speed : -speed;
+    speed = m_x > 0 ? speed : -speed;
+
     m_x += speed;
     std::cout << speed;
 }
