@@ -9,6 +9,7 @@ public:
 
 	void draw(SDL_Renderer* pRenderer);
 	void update();
+	void move();
 
 	void clean();
 

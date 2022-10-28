@@ -4,6 +4,7 @@
 #include <SDL2/SDL_keyboard.h>
 #include <TextureManager.h>
 #include <Player.h>
+#include <Monster.h>
 
 #define SCREEN_WIDTH 1024
 #define SCREEN_HEIGHT 720
@@ -31,7 +32,10 @@ private:
 	bool m_bRunning;
 
 	GameObject m_go;
+
 	Player m_player;
+	Monster m_Monster;
+	Monster m_Monster1;
 
 	int m_currentFrame;
 };

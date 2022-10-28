@@ -49,6 +49,11 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 
 				m_go.load(100, 100, 400, 100, "dog1_sprite");
 				m_player.load(300, 300, 400, 100, "dog1_sprite");
+				m_Monster.load(300, 300, 400, 100, "dog1_sprite");
+				m_Monster1.load(300, 400, 400, 100, "dog1_sprite");
+
+				m_Monster.SetSpeed(10);
+				m_Monster1.SetSpeed(2);
 			}
 			else {
 				return false; // 랜더러 생성 실패
@@ -67,7 +72,8 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 void Game::update()
 {
 	m_go.update();
-	m_player.update();
+	m_Monster.update();
+	m_Monster1.update();
 }
 
 void Game::render()
@@ -75,7 +81,8 @@ void Game::render()
 	SDL_RenderClear(m_pRenderer);
 
 	m_go.draw(m_pRenderer);
-	m_player.draw(m_pRenderer);
+	m_Monster.draw(m_pRenderer);
+	m_Monster1.draw(m_pRenderer);
 
 	SDL_RenderPresent(m_pRenderer);
 }
