@@ -63,8 +63,9 @@ private:
 	//NotePad* PowernotePad1 = new NotePad(new LoaderParams(0, 0, 96, 96, 0, 3, "notesPad_sprite"));
 	//NotePad* PowernotePad2 = new NotePad(new LoaderParams(0, 0, 96, 96, 0, 3, "notesPad_sprite"));
 	//
-	NoteShooter* NoteShooter1 = new NoteShooter(new LoaderParams(0, 0, 144, 144, 0, 3, "notesPad_sprite"));
+	NoteShooter* NoteShooter1 = new NoteShooter(new LoaderParams(0, 0, 192, 192, 0, 0, "noteShooter_stage1_sprite"));
 	NoteShooter* NoteShooter2 = new NoteShooter(new LoaderParams(0, 0, 144, 144, 0, 3, "notesPad_sprite"));
+	//NoteShooter* NoteShooter3 = new NoteShooter(new LoaderParams(0, 0, 144, 144, 0, 3, "notesPad_sprite"));
 	//Back
 	GameObject* back1 = new SDLGameObject(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "stage1_sprite"));
 
@@ -82,7 +83,7 @@ public:
 	SDL_Renderer* getRenderer() const { return m_pRenderer; }
 	/* Main Frame */
 	bool init(const char* title, int, int, int, int, int flags);
-	void Prepare();
+	void Awake();
 
 	void render();
 	void update();

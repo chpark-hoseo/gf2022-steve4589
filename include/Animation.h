@@ -5,11 +5,12 @@ class Animation
 {
 public :
 	void Update();
-	void Draw(float x, float y, int width, int height, std::string texture);
+	void Draw(float x, float y, int width, int height);
 
-	void SetProp(std::string m_texture, int speed, int spriteRow, int frameCount, bool ionOff);
+	void SetProp(std::string textureID, float speed, int spriteRow, int frameCount);
+	void SetAnimPause(bool onOff);
 private :
-	int m_speed;
+	float m_speed;
 	int m_frameCount;
 	int m_spriteRow;
 	int m_currentFrame;
@@ -20,5 +21,5 @@ private :
 
 	std::string m_textureID;
 
-	void StartAnimation(bool onOff);
+	void StartAnimation();
 };

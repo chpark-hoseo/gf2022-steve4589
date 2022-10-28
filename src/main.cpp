@@ -10,7 +10,7 @@ int main(int argc, char* argv[])
     if (Game::GetInstance()->init("Need For Grade", 0, 10, SCREEN_WIDTH, SCREEN_HEIGHT, 0))
     {
         frameStart = SDL_GetTicks();    
-        Game::GetInstance()->Prepare();
+        Game::GetInstance()->Awake();
 
         while (Game::GetInstance()->running())
         {

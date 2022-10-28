@@ -42,17 +42,23 @@ void Game::update()
 	NoteManager::GetInstance()->ReadSpawnNotes(); //추가 필요--> 1스테이지 버튼 => 1스테이지 시트, 2스테이지 버튼 => 2스테이지 시트 
 }
 
-void Game::Prepare()
+void Game::Awake()
 {
 	//가져다 쓸 사진 need for A+_notesPad
 	TextureManager::GetInstance()->load("need for A+_stage1", "stage1_sprite", m_pRenderer);
 
 	TextureManager::GetInstance()->load("need for A+_notes", "notes_sprite", m_pRenderer);
+	TextureManager::GetInstance()->load("need for A+need for A+_PowerNote", "powerNotes_sprite", m_pRenderer); 
 	TextureManager::GetInstance()->load("need for A+_notesPad", "notesPad_sprite", m_pRenderer);
+	//TextureManager::GetInstance()->load("need for A+_powerNotesPad", "powerNotesPad_sprite", m_pRenderer);
 
 	TextureManager::GetInstance()->load("need for A+_noteBoom", "notesBoom_sprite", m_pRenderer);
-	TextureManager::GetInstance()->load("need for A+_noteBoom1", "notesBoom1_sprite", m_pRenderer);
+	TextureManager::GetInstance()->load("need for A+_noteBoom1", "notesBoom1_sprite", m_pRenderer); 
+	TextureManager::GetInstance()->load("need for A+_PowerNoteBoom", "powerNotesBoom1_sprite", m_pRenderer);
 	TextureManager::GetInstance()->load("need for A+_noteBoom_trash", "BoomTrash_sprite", m_pRenderer);
+
+	TextureManager::GetInstance()->load("need for A+_noteShooter_stage1", "noteShooter_stage1_sprite", m_pRenderer);
+	//TextureManager::GetInstance()->load("need for A+_noteShooter_stage2", "noteShooter_stage2_sprite", m_pRenderer);
 
 	TextureManager::GetInstance()->load("need for A+_selectMenu", "selectMenu_sprite", m_pRenderer);
 	//initial GameObject (배경 등등..)
@@ -76,7 +82,7 @@ void Game::Prepare()
 	notePad2->SetPosition(Vector2D(1536 * 0.5f + 50, 550));
 	notePad3->SetPosition(Vector2D(1536 * 0.5f + 200, 550));
 
-	NoteShooter1->SetPosition(Vector2D(750, 250));
+	NoteShooter1->SetPosition(Vector2D(1300, 800));
 	NoteShooter2->SetPosition(Vector2D(200, 150));
 
 	NoteManager::GetInstance()->SetNoteShooters(NoteShooter1);

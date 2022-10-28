@@ -142,7 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Animation.cpp" />
+    <ClCompile Include="src\Animation\Animation.cpp" />
     <ClCompile Include="src\GameObject\Player.cpp" />
     <ClCompile Include="src\physics\Collider2D.cpp" />
     <ClCompile Include="src\Controller\PlayController.cpp" />

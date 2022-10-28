@@ -5,15 +5,17 @@ NoteBoom::NoteBoom(const LoaderParams* pParams) : SDLGameObject(pParams) {}
 
 void NoteBoom::draw()
 {
-	m_animation->Draw(m_position.getX(), m_position.getY(), m_width, m_height, m_textureID);
+	if (!onOff) return;
+	//m_animation->Draw(m_position.getX(), m_position.getY(), m_width, m_height);
 	SDLGameObject::draw();
 }
 void NoteBoom::update()
 {
 	if (!onOff) return;
-	Animation();
+	OnceAnimation();
+	//m_animation->Update();
 }
-void NoteBoom::AnimationState()
+void NoteBoom::OnceAnimation()
 {
 	Uint32 curTime = SDL_GetTicks();
 	m_currentFrame = (Uint32)((curTime - startTimer) * 0.01f) % 6; //0.01 => speed

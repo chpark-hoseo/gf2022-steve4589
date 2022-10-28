@@ -6,16 +6,19 @@ void Animation::Update()
 {
 	if (!m_animRunning) return;
 	double curTime = SDL_GetTicks();
-	m_currentFrame = (Uint32)(curTime - startTimer) * m_speed % m_frameCount;
+	m_currentFrame = (Uint32)((curTime - startTimer) * m_speed ) % m_frameCount; //speed
 }
 
-void Animation::StartAnimation(bool onOff)
+void Animation::StartAnimation()
 {
-	m_animRunning = onOff;
 	startTimer = SDL_GetTicks();
 }
+void Animation::SetAnimPause(bool onOff)
+{
+	m_animRunning = onOff;
+}
 
-void Animation::Draw(float x, float y, int width, int height, std::string texture)
+void Animation::Draw(float x, float y, int width, int height)
 {
 	TextureManager::GetInstance()->drawFrame(m_textureID,
 		(int)x, (int)y, width,
@@ -23,12 +26,11 @@ void Animation::Draw(float x, float y, int width, int height, std::string textur
 		SDL_FLIP_NONE);
 }
 
-void Animation::SetProp(std::string textureID, int speed, int spriteRow, int frameCount, bool onOff)
+void Animation::SetProp(std::string textureID, float speed, int spriteRow, int frameCount)
 {
-	StartAnimation(onOff);
-
 	m_speed = speed;
 	m_spriteRow = spriteRow;
 	m_frameCount = frameCount;
 	m_textureID = textureID;
+	std::cout << "ID :::::: " << m_textureID << "   SDfasdf\n";
 }

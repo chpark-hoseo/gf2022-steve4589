@@ -15,9 +15,13 @@ public :
 	void Animation_Once() { startTimer = SDL_GetTicks(); }
 private :
 	Uint32 startTimer;
-	void OnEnable() override { Animation_Once(); }
-	void OnDisable() override;
-	void AnimationState();
-
 	Animation* m_animation = new Animation();
+
+	void OnEnable() override 
+	{ 
+		Animation_Once();
+		/*m_animation->SetProp(m_textureID, 0.01f, 0, 6, true);*/ 
+	}
+	void OnDisable() override;
+	void OnceAnimation();
 };
