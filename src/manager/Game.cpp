@@ -47,14 +47,17 @@ void Game::Awake()
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	//스테이지 배경
 	TextureManager::GetInstance()->load("need for A+_stage1", "stage1_sprite", m_pRenderer);
-	
+
+	//메인캐릭터 (240x240)
+	TextureManager::GetInstance()->load("need for A+_main", "main_sprite", m_pRenderer);
+
 	//노트
 	TextureManager::GetInstance()->load("need for A+_notes", "notes_sprite", m_pRenderer); 
 	TextureManager::GetInstance()->load("need for A+_PowerNote", "powerNotes_sprite", m_pRenderer); 
 	
 	//노트 패드
 	TextureManager::GetInstance()->load("need for A+_notesPad", "notesPad_sprite", m_pRenderer);
-	TextureManager::GetInstance()->load("need for A+_PowernotePad", "powerNotesPad_sprite", m_pRenderer);
+	TextureManager::GetInstance()->load("need for A+_PowernotePad", "powerNotesPad_sprite", m_pRenderer); 
 
 	//폭발 애니메이션  
 	TextureManager::GetInstance()->load("need for A+_noteBoom", "notesBoom_sprite", m_pRenderer);
