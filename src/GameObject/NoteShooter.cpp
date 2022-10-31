@@ -50,5 +50,7 @@ void NoteShooter::SetPop()
 	m_animation->SetProp("noteShooter_stage1_pop_sprite", 0.01f, 0, 6);
 
 	m_animation->SetAnimPause(true);
-	m_animation->AnimationOnce(); //트리거 
+
+	m_animation->AnimationOnce(true); //트리거 
+	m_animation->StartAnimation();
 }

@@ -48,8 +48,8 @@ void Game::Awake()
 	//스테이지 배경
 	TextureManager::GetInstance()->load("need for A+_stage1", "stage1_sprite", m_pRenderer);
 
-	//메인캐릭터 (240x240)
-	TextureManager::GetInstance()->load("need for A+_main", "main_sprite", m_pRenderer);
+	//메인캐릭터 
+	TextureManager::GetInstance()->load("need for A+_main", "mainCharacter_sprite", m_pRenderer); //(240x240)
 
 	//노트
 	TextureManager::GetInstance()->load("need for A+_notes", "notes_sprite", m_pRenderer); 
@@ -64,6 +64,7 @@ void Game::Awake()
 	TextureManager::GetInstance()->load("need for A+_noteBoom1", "notesBoom1_sprite", m_pRenderer);
 	TextureManager::GetInstance()->load("need for A+_PowerNoteStartBoom", "powerNoteStartBoom_sprite", m_pRenderer);
 	TextureManager::GetInstance()->load("need for A+_noteBoom_trash", "BoomTrash_sprite", m_pRenderer);
+	TextureManager::GetInstance()->load("need for A+_missBoom", "playerMissBoom_sprite", m_pRenderer);
 
 	//노트 슈터 애니메이션
 	TextureManager::GetInstance()->load("need for A+_noteShooter_stage1_idle", "noteShooter_stage1_idle_sprite", m_pRenderer); 
@@ -76,6 +77,8 @@ void Game::Awake()
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	m_gameObjects.push_back(back1);
 
+	m_gameObjects.push_back(player);
+
 	m_gameObjects.push_back(notePad);
 	m_gameObjects.push_back(notePad1);
 	m_gameObjects.push_back(notePad2);
@@ -84,7 +87,7 @@ void Game::Awake()
 	m_gameObjects.push_back(powerNotePad1);
 	m_gameObjects.push_back(powerNotePad2);
 
-	m_gameObjects.push_back(NoteShooter1);
+	m_gameObjects.push_back(NoteShooter1); //SetPos
 	//ObjectPool
 	InitPool();
 	std::cout << "ObjectSize => " << m_gameObjects.size() << "\n\n";
@@ -103,9 +106,12 @@ void Game::Awake()
 
 	NoteShooter1->SetPosition(Vector2D(1300, 800));
 
-	NoteManager::GetInstance()->SetNoteShooters(NoteShooter1); //powerNotePad1
+	player->PosTrigger();
+
 	NoteManager::GetInstance()->SetPowerNotePads(powerNotePad1);
 	NoteManager::GetInstance()->SetPowerNotePads(powerNotePad2);
+	//해당 스테이지가 시작할때 추가 하도록 변경
+	NoteManager::GetInstance()->SetNoteShooters(NoteShooter1); //powerNotePad1
 }
 
 void Game::render()
@@ -206,9 +212,9 @@ void Game::handleInput()
 {
 	//Command Pattern - 메인화면, 플레이 
 	//SetCommand(NoteInput)
-	Input_Note();
+	Input_Play();
 }
-void Game::Input_Note()
+void Game::Input_Play()
 {
 	//Quit
 	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_ESCAPE)) {
@@ -217,40 +223,46 @@ void Game::Input_Note()
 	//KeyDown
 	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_LEFT)) {
 		notePad->IsPressed(true);
+		player->PressIn_Left();
 	}
 	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_UP)) {
 		notePad1->IsPressed(true);
+		player->PressIn_Up();
 	}
 	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_DOWN)) {
 		notePad2->IsPressed(true);
+		player->PressIn_Down();
 	}
 	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_RIGHT)) {
 		notePad3->IsPressed(true);
+		player->PressIn_Right();
 	}
 	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_SPACE)) {
 		powerNotePad1->IsPressed(true);
-	}
-	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_SPACE)) {
 		powerNotePad2->IsPressed(true);
+		player->PressIn_Space();
 	}
 	//KeyUp
 	if (!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_LEFT)) {
 		notePad->PressOut(false);
+		player->PressOut_Left();
 	}
 	if (!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_UP)) {
 		notePad1->PressOut(false);
+		player->PressOut_Up();
 	}
 	if (!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_DOWN)) {
 		notePad2->PressOut(false);
+		player->PressOut_Down();
 	}
 	if (!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_RIGHT)) {
 		notePad3->PressOut(false);
+		player->PressOut_Right();
 	}
 	if (!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_SPACE)) {
 		powerNotePad1->PressOut(false);
-	}
-	if (!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_SPACE)) {
 		powerNotePad2->PressOut(false);
+		player->PressOut_Space();
 	}
 }
 /*

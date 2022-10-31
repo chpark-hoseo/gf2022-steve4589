@@ -131,10 +131,11 @@ void NoteManager::SpawnPowerNote(int getPoint)
 		break;
 	}
 	disPos = notePad->GetPosition();
-	//speed == 0 ==> 파워노트 처음쏠때
-	//speed == -1 ==> 파워노트를 이제 안쏜다는 뜻 
+	//speed == 0 ==> 파워노트 처음쏠때 (시각적으로)
+	//speed == -1 ==> 파워노트를 이제 안쏜다는 뜻 (시각적으로)
 	if (speed == 0) noteShooter->SetPop();
 	else if (speed == -1)noteShooter->SetIdle();
+
 	else noteShooter->Shot(speed, disPos);
 }
 queue<string> NoteManager::GetSpawnQueue() { return spawnQueue_test; }

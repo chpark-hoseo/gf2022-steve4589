@@ -12,6 +12,7 @@
 #include <TextureManager.h>
 //GameObject
 #include <GameObject.h>
+#include <Player.h>
 //Controller
 #include <InputHandler.h>
 //#include <PlayController.h>
@@ -55,6 +56,8 @@ private:
 	//object Manage
 	vector<GameObject*> collisionObjects; //충돌할 수 있는 오브젝트 
 	map<const char*, vector<GameObject* >> objects; //모든 오브젝트
+	//MainCharacter
+	Player* player = new Player(new LoaderParams(0, 0, 240, 240, 0, 0, "mainCharacter_sprite"));
 	//NotePads
 	NotePad* notePad = new NotePad(new LoaderParams(0, 0, 144, 144, 0, 0, "notesPad_sprite"), "Note");
 	NotePad* notePad1 = new NotePad(new LoaderParams(0, 0, 144, 144, 0, 1, "notesPad_sprite"), "Note");
@@ -63,11 +66,12 @@ private:
 	//PowerNotePads
 	NotePad* powerNotePad1 = new NotePad(new LoaderParams(0, 0, 144, 144, 0, 0, "powerNotesPad_sprite"), "PowerNote");
 	NotePad* powerNotePad2 = new NotePad(new LoaderParams(0, 0, 144, 144, 0, 0, "powerNotesPad_sprite"), "PowerNote");
-	//
+	//NoteShooter
 	NoteShooter* NoteShooter1 = new NoteShooter(new LoaderParams(0, 0, 192, 192, 0, 0, "noteShooter_stage1_idle_sprite"));
 	//NoteShooter* NoteShooter3 = new NoteShooter(new LoaderParams(0, 0, 144, 144, 0, 3, "notesPad_sprite"));
 	//Back
-	GameObject* back1 = new SDLGameObject(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "stage1_sprite"));
+	GameObject* back1 = new SDLGameObject(new LoaderParams(0/*back의 x크기*/, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "stage1_sprite"));
+	//GameObject* back2 = new SDLGameObject(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "stage1_sprite"));
 
 public:
 	Game() { }
@@ -94,7 +98,7 @@ public:
 	void quit() { m_bRunning = false; }
 	//Input
 	void handleInput();
-	void Input_Note();
+	void Input_Play();
 	void Input_Menu() {}
 	//else
 	void DhrowBorder();

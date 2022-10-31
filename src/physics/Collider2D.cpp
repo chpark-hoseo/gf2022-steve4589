@@ -27,13 +27,9 @@ GameObject* Collider2D::OnCollision2D(std::string tag)
 			{
 				for (int j = 0; j < collidedObjects.size(); j++)
 				{
-					if (collidedObjects[j] != colliders[i])
-					{
-						++agree;
-					}
+					if (collidedObjects[j] != colliders[i]) { ++agree; }
 					else if (collidedObjects[j] == colliders[i]) break; //이미 충돌했다면
 				}
-
 				if (agree == collidedObjects.size())
 				{
 					collidedObjects.insert(collidedObjects.begin(), colliders[i]); //첫번째에 삽입 

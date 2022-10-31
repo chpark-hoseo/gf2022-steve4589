@@ -31,7 +31,6 @@ void NotePad::DetectCollider()
 		}
 	}
 }
-
 //Button
 void NotePad::PressIn(bool isPress)   
 {

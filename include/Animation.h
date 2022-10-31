@@ -7,10 +7,11 @@ public :
 	void Update();
 	void Draw(float x, float y, int width, int height);
 
-	void SetProp(std::string textureID, float speed, int spriteRow, int frameCount);
+	bool GetAnimationOnce() { return m_animationOnce; }
 
+	void SetProp(std::string textureID, float speed, int spriteRow, int frameCount);
 	void SetAnimPause(bool onOff);
-	void AnimationOnce();
+	void AnimationOnce(bool onOff);
 
 	void StartAnimation();
 private :
