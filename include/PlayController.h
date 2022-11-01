@@ -1,7 +1,7 @@
 #pragma once
 #include <NotePad.h>
 class PlayController
-{
+{/*
 public:
 	PlayController()
 	{
@@ -19,9 +19,9 @@ public:
 	void Input_Menu() {}
 
 private:
-	SDLGameObject* notePads[4] = { notePad , notePad1 , notePad2 , notePad3 };
-	SDLGameObject* notePad = new NotePad(new LoaderParams(0, 0, 96, 96, 0, 0, "notesPad_sprite"), "Note");
-	SDLGameObject* notePad1 = new NotePad(new LoaderParams(0, 0, 96, 96, 0, 1, "notesPad_sprite"), "Note");
-	SDLGameObject* notePad2 = new NotePad(new LoaderParams(0, 0, 96, 96, 0, 2, "notesPad_sprite"), "Note");
-	SDLGameObject* notePad3 = new NotePad(new LoaderParams(0, 0, 96, 96, 0, 3, "notesPad_sprite"), "Note");
-};
+	//SDLGameObject* notePads[4] = { notePad , notePad1 , notePad2 , notePad3 };
+	//SDLGameObject* notePad = new NotePad(new LoaderParams(0, 0, 96, 96, 0, 0, "notesPad_sprite"), "Note", player->GetPosition());
+	//SDLGameObject* notePad1 = new NotePad(new LoaderParams(0, 0, 96, 96, 0, 1, "notesPad_sprite"), "Note");
+	//SDLGameObject* notePad2 = new NotePad(new LoaderParams(0, 0, 96, 96, 0, 2, "notesPad_sprite"), "Note", player->GetPosition());
+	//SDLGameObject* notePad3 = new NotePad(new LoaderParams(0, 0, 96, 96, 0, 3, "notesPad_sprite"), "Note", player->GetPosition());
+*/};

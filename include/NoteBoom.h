@@ -19,11 +19,11 @@ private :
 
 	int lastFrame = 0;
 
-	void OnEnable() override 
+	virtual void OnEnable() override 
 	{ 
 		Animation_Once();
 		/*m_animation->SetProp(m_textureID, 0.01f, 0, 6, true);*/ 
 	}
-	void OnDisable() override;
+	virtual void OnDisable() override;
 	void OnceAnimation();
 };

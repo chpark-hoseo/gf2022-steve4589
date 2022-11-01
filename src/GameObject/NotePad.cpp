@@ -1,7 +1,10 @@
 #include <NotePad.h>
 #include <Game.h>
 
-NotePad::NotePad(const LoaderParams* pParams, string noteTag) : SDLGameObject(pParams) { getTag = noteTag; }
+NotePad::NotePad(const LoaderParams* pParams, string noteTag) : SDLGameObject(pParams)
+{
+	getTag = noteTag;
+}
 
 void NotePad::update()
 {
@@ -24,7 +27,7 @@ void NotePad::DetectCollider()
 	for (int i = 0; i < ExitgameObject.size(); i++)
 	{
 		if (ExitgameObject[i]->activeSelf())
-		{ 
+		{
 			Game::GetInstance()->GetObject(ExitgameObject[i]->GetPosition(), "BoomTrashA");
 			Game::GetInstance()->GetObject(ExitgameObject[i]->GetPosition(), "MissBoom");
 			ExitgameObject[i]->SetActive(false);
@@ -32,7 +35,7 @@ void NotePad::DetectCollider()
 	}
 }
 //Button
-void NotePad::PressIn(bool isPress)   
+void NotePad::PressIn(bool isPress)
 {
 	if (!isPressIn) return;
 	isPressIn = false;
@@ -56,5 +59,9 @@ void NotePad::OffNote()
 	{
 		Game::GetInstance()->GetObject(EntergameObject->GetPosition(), "WinBoom");
 		EntergameObject->SetActive(false);
+	}
+	else 
+	{
+		Game::GetInstance()->GetObject(playerPos, "PlayerMiss");
 	}
 }

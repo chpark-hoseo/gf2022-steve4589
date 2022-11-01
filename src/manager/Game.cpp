@@ -47,6 +47,9 @@ void Game::Awake()
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	//스테이지 배경
 	TextureManager::GetInstance()->load("need for A+_stage1", "stage1_sprite", m_pRenderer);
+	//TextureManager::GetInstance()->load("need for A+_stage1_back", "stage1back_sprite", m_pRenderer);
+	//TextureManager::GetInstance()->load("need for A+_stage2", "stage2_sprite", m_pRenderer);
+	//TextureManager::GetInstance()->load("need for A+_stage2_back", "stage2back_sprite", m_pRenderer);
 
 	//메인캐릭터 
 	TextureManager::GetInstance()->load("need for A+_main", "mainCharacter_sprite", m_pRenderer); //(240x240)
@@ -73,6 +76,9 @@ void Game::Awake()
 
 	//메뉴 
 	TextureManager::GetInstance()->load("need for A+_selectMenu", "selectMenu_sprite", m_pRenderer);
+
+	//체력바 
+	TextureManager::GetInstance()->load("need for A+_healthBarPack", "healthBarPack_sprite", m_pRenderer);
 	
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	m_gameObjects.push_back(back1);
@@ -144,7 +150,7 @@ void Game::clean()
 //ObjectPool
 void Game::InitPool()
 {
-	Pool* pools[10] = { new Pool("LeftNote", 10), new Pool("UpNote", 10), new Pool("DownNote" ,10), new Pool("RightNote", 10) , new Pool("PowerNote", 10), new Pool("WinBoom", 13), new Pool("MissBoom", 13), new Pool("BoomTrashA", 15), new Pool("BoomTrashF", 15), new Pool("PowerNoteStartBoom", 10) };
+	Pool* pools[11] = { new Pool("LeftNote", 10), new Pool("UpNote", 10), new Pool("DownNote" ,10), new Pool("RightNote", 10) , new Pool("PowerNote", 10), new Pool("WinBoom", 13), new Pool("MissBoom", 13), new Pool("BoomTrashA", 15), new Pool("BoomTrashF", 15), new Pool("PowerNoteStartBoom", 10), new Pool("PlayerMiss", 10) };
 	for (Pool* pool : pools) //이중 값을 가져오기 위해 포인터 형식사용
 	{
 		for (int i = 0; i < pool->m_size; i++)
@@ -186,6 +192,9 @@ GameObject* Game::CreateObjects(const char* name)
 	}
 	else if (name == "PowerNoteStartBoom") {
 		gameObject = new NoteBoom(new LoaderParams(0, 0, 144, 144, 0, 0, "powerNoteStartBoom_sprite"), 3);
+	}
+	else if (name == "PlayerMiss") {
+		gameObject = new NoteBoom(new LoaderParams(0, 0, 240, 240, 0, 0, "playerMissBoom_sprite"), 1);
 	}
 	gameObject->SetName(name);
 	gameObject->SetActive(false);

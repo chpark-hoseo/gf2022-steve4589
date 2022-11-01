@@ -27,5 +27,5 @@ void NoteBoom::OnceAnimation()
 }
 void NoteBoom::OnDisable()
 {
-	Game::GetInstance()->ReturnPool("WinBoom", this);
+	Game::GetInstance()->ReturnPool(GetName(), this);
 }

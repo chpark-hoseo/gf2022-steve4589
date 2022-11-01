@@ -41,7 +41,6 @@ void Player::SetState()
 	{
 		RightPop();
 	}
-	//Game::GetInstance()->GetObject(m_position, "PlayerMiss"); 
 }
 void Player::Idle_Play()
 {

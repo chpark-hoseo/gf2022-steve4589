@@ -1,5 +1,4 @@
 #pragma once
-#include <SDLGameObject.h>
 #include <Collider2D.h>
 
 //need for A+_notesPad
@@ -12,9 +11,9 @@ private:
 	std::string getTag;
 
 	Collider2D collision = Collider2D(m_position.getX(), m_position.getY(), m_width, m_height);
-
 	GameObject* EntergameObject;
 
+	Vector2D playerPos = Vector2D(635.5f, 750);
 	void OffNote();
 	//SpecialNotesPad
 public:

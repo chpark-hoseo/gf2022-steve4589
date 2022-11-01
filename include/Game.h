@@ -55,8 +55,8 @@ private:
 	vector<GameObject*> m_gameObjects;
 	//object Manage
 	vector<GameObject*> collisionObjects; //충돌할 수 있는 오브젝트 
-	map<const char*, vector<GameObject* >> objects; //모든 오브젝트
-	//MainCharacter
+	map<const char*, vector<GameObject* >> objects; //모든 오브젝트 
+	//MainCharacter 0.5f + 635, 750 
 	Player* player = new Player(new LoaderParams(0, 0, 240, 240, 0, 0, "mainCharacter_sprite"));
 	//NotePads
 	NotePad* notePad = new NotePad(new LoaderParams(0, 0, 144, 144, 0, 0, "notesPad_sprite"), "Note");

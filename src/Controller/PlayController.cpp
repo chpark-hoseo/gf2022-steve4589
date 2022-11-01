@@ -1,6 +1,6 @@
 #include <PlayController.h>
 #include <InputHandler.h>
-
+/*
 void PlayController::handleInput()
 {
     //Command Pattern
@@ -35,5 +35,5 @@ void PlayController::Input_Note()
     }
     if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_DOWN)) {
         notePad3->Pushed(false);
-    }*/
-}
+    }
+}*/
