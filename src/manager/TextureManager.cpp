@@ -53,3 +53,24 @@ void TextureManager::drawFrame(string id, int x, int y, int width, int height, i
 
 	SDL_RenderCopyEx(Game::GetInstance()->getRenderer(), m_textureMap[id], &srcRect, &destRect, 0, 0, flip);
 }
+void TextureManager::drawFrame(string id, int x, int y, int width, int height, int currentRow, int currentFrame, int percent, SDL_RendererFlip flip)
+{
+	SDL_Rect srcRect;
+	SDL_Rect destRect;
+	//MAX_HP == 50;
+	float m_percent = (2 * percent) * 0.01f;
+
+	srcRect.w = width;
+	srcRect.h = m_percent * height;
+
+	destRect.w = width;
+	destRect.h = m_percent * height;
+
+	srcRect.x = width * currentFrame;
+	srcRect.y = height * currentRow;
+
+	destRect.x = x;
+	destRect.y = y;
+
+	SDL_RenderCopyEx(Game::GetInstance()->getRenderer(), m_textureMap[id], &srcRect, &destRect, 0, 0, flip);
+}

@@ -31,6 +31,8 @@ void NotePad::DetectCollider()
 			Game::GetInstance()->GetObject(ExitgameObject[i]->GetPosition(), "BoomTrashA");
 			Game::GetInstance()->GetObject(ExitgameObject[i]->GetPosition(), "MissBoom");
 			ExitgameObject[i]->SetActive(false);
+
+			Game::GetInstance()->DamagedHp(4);
 		}
 	}
 }
@@ -59,9 +61,12 @@ void NotePad::OffNote()
 	{
 		Game::GetInstance()->GetObject(EntergameObject->GetPosition(), "WinBoom");
 		EntergameObject->SetActive(false);
+
+		Game::GetInstance()->HealHp(1);
 	}
 	else 
 	{
 		Game::GetInstance()->GetObject(playerPos, "PlayerMiss");
+		Game::GetInstance()->DamagedHp(4);
 	}
 }

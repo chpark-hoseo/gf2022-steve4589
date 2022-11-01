@@ -13,6 +13,7 @@
 //GameObject
 #include <GameObject.h>
 #include <Player.h>
+#include <HealthBar.h>
 //Controller
 #include <InputHandler.h>
 //#include <PlayController.h>
@@ -23,6 +24,8 @@
 
 #define SCREEN_WIDTH 1536
 #define SCREEN_HEIGHT 1080
+
+#define MAX_HP 50;
 
 typedef TextureManager TheTextureManager; //자료형 별칭 생성
 
@@ -52,12 +55,16 @@ private:
 	int startTimer;
 	bool isTimer = true;
 
-	vector<GameObject*> m_gameObjects;
-	//object Manage
-	vector<GameObject*> collisionObjects; //충돌할 수 있는 오브젝트 
-	map<const char*, vector<GameObject* >> objects; //모든 오브젝트 
-	//MainCharacter 0.5f + 635, 750 
+	const int max_Hp = MAX_HP;
+	int hp = max_Hp;
+ 
+	//MainCharacter 
 	Player* player = new Player(new LoaderParams(0, 0, 240, 240, 0, 0, "mainCharacter_sprite"));
+	//HpSet
+	SDLGameObject* hpBar_Back = new SDLGameObject(new LoaderParams(0, 0, 48, 192, 1, 0, "healthBarPack_sprite"));
+	HealthBar* hpBar = new HealthBar(new LoaderParams(0, 0, 48, 192, 0, 0, "healthBarPack_sprite"));
+	//HealthBar* energyBar = new HealthBar(new LoaderParams(0, 0, 48, 192, 0, 0, "healthBarPack_sprite"));
+
 	//NotePads
 	NotePad* notePad = new NotePad(new LoaderParams(0, 0, 144, 144, 0, 0, "notesPad_sprite"), "Note");
 	NotePad* notePad1 = new NotePad(new LoaderParams(0, 0, 144, 144, 0, 1, "notesPad_sprite"), "Note");
@@ -73,6 +80,10 @@ private:
 	GameObject* back1 = new SDLGameObject(new LoaderParams(0/*back의 x크기*/, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "stage1_sprite"));
 	//GameObject* back2 = new SDLGameObject(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "stage1_sprite"));
 
+	vector<GameObject*> m_gameObjects;
+	//object Manage
+	vector<GameObject*> collisionObjects; //충돌할 수 있는 오브젝트 
+	map<const char*, vector<GameObject* >> objects; //모든 오브젝트
 public:
 	Game() { }
 	~Game() { }
@@ -96,19 +107,37 @@ public:
 
 	void clean();
 	void quit() { m_bRunning = false; }
+
 	//Input
 	void handleInput();
 	void Input_Play();
 	void Input_Menu() {}
+
 	//else
-	void DhrowBorder();
-	vector<GameObject*> GetColliders() { return collisionObjects; } 
+	//void DhrowBorder();
+	vector<GameObject*> GetColliders() { return collisionObjects; }
 
 	//ObjectPool
 	void InitPool(); //풀에 오브젝트를 집어넣고, game에 내보내는 역할 
 	GameObject* CreateObjects(const char* tag);
 	GameObject* GetObject(Vector2D spawnPos, const char* name);
 	void ReturnPool(const char name[20], GameObject* getGameObject) { objects[name].emplace_back(getGameObject); }
+
+	//Hp, Energy
+	int GetHp() { return hp; }
+	void DamagedHp(int damagedHp) 
+	{
+		if (hp - damagedHp < 0) { hp = 0; }
+		else { hp -= damagedHp; }
+	}
+	void HealHp(int heal) 
+	{
+		if (hp + heal > max_Hp) { hp = MAX_HP; }
+		else { hp += heal; }
+	}
+
+	/*void DamagedEnergy(int damagedEnergy) { energy -= damagedEnergy; }
+	void HealEnergy(int heal) { energy += heal; }*/
 };
 
 //enum Menu { INPUT_MODE = 1, SEARCH_MODE, EXIT };

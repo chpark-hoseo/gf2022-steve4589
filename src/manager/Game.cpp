@@ -93,7 +93,10 @@ void Game::Awake()
 	m_gameObjects.push_back(powerNotePad1);
 	m_gameObjects.push_back(powerNotePad2);
 
-	m_gameObjects.push_back(NoteShooter1); //SetPos
+	m_gameObjects.push_back(NoteShooter1); //SetPos 
+
+	m_gameObjects.push_back(hpBar_Back);
+	m_gameObjects.push_back(hpBar);
 	//ObjectPool
 	InitPool();
 	std::cout << "ObjectSize => " << m_gameObjects.size() << "\n\n";
@@ -114,10 +117,13 @@ void Game::Awake()
 
 	player->PosTrigger();
 
+	hpBar_Back->SetPosition(Vector2D(640, 750));
+	hpBar->SetPosition(Vector2D(640, 750));
+
 	NoteManager::GetInstance()->SetPowerNotePads(powerNotePad1);
 	NoteManager::GetInstance()->SetPowerNotePads(powerNotePad2);
 	//해당 스테이지가 시작할때 추가 하도록 변경
-	NoteManager::GetInstance()->SetNoteShooters(NoteShooter1); //powerNotePad1
+	NoteManager::GetInstance()->SetNoteShooters(NoteShooter1); 
 }
 
 void Game::render()

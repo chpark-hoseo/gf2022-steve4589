@@ -1,5 +1,4 @@
 #include <Player.h>
-#include <Game.h>
 #include <InputHandler.h>
 
 Player::Player(const LoaderParams* pParams) : SDLGameObject(pParams) 

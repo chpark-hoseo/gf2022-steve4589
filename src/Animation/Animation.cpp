@@ -37,6 +37,13 @@ void Animation::Draw(float x, float y, int width, int height)
 		height, m_spriteRow, m_currentFrame,
 		SDL_FLIP_NONE);
 }
+void Animation::Draw(float x, float y, int width, int height, int hp)
+{
+	TextureManager::GetInstance()->drawFrame(m_textureID,
+		(int)x, (int)y, width,
+		height, m_spriteRow, m_currentFrame, hp,
+		SDL_FLIP_NONE);
+}
 
 void Animation::SetProp(std::string textureID, float speed, int spriteRow, int frameCount)
 {

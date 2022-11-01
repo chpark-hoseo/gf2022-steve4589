@@ -6,6 +6,7 @@ class Animation
 public :
 	void Update();
 	void Draw(float x, float y, int width, int height);
+	void Draw(float x, float y, int width, int height, int hp);
 
 	bool GetAnimationOnce() { return m_animationOnce; }
 
