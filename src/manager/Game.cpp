@@ -47,7 +47,8 @@ void Game::Awake()
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	//스테이지 배경
 	TextureManager::GetInstance()->load("need for A+_stage1", "stage1_sprite", m_pRenderer);
-	//TextureManager::GetInstance()->load("need for A+_stage1_back", "stage1back_sprite", m_pRenderer);
+	TextureManager::GetInstance()->load("need for A+_stage1_back_frame", "stage1_back_frame_sprite", m_pRenderer);
+	TextureManager::GetInstance()->load("need for A+_stage1_back", "stage1_back_sprite", m_pRenderer);
 	//TextureManager::GetInstance()->load("need for A+_stage2", "stage2_sprite", m_pRenderer);
 	//TextureManager::GetInstance()->load("need for A+_stage2_back", "stage2back_sprite", m_pRenderer);
 
