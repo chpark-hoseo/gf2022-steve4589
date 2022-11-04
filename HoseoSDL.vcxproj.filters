@@ -78,6 +78,9 @@
     <ClCompile Include="src\GameObject\HealthBar.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="src\Animation\BackScroll.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\main.h">
@@ -150,6 +153,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="include\HealthBar.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="include\BackScroll.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

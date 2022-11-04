@@ -26,6 +26,7 @@
 #define SCREEN_HEIGHT 1080
 
 #define MAX_HP 50;
+#define MAX_ENERGY 50;
 
 typedef TextureManager TheTextureManager; //자료형 별칭 생성
 
@@ -56,13 +57,16 @@ private:
 	bool isTimer = true;
 
 	const int max_Hp = MAX_HP;
+	const int max_Energy = MAX_ENERGY;
 	int hp = max_Hp;
+	int energy = max_Energy;
  
 	//MainCharacter 
 	Player* player = new Player(new LoaderParams(0, 0, 240, 240, 0, 0, "mainCharacter_sprite"));
 	//HpSet
 	SDLGameObject* hpBar_Back = new SDLGameObject(new LoaderParams(0, 0, 48, 192, 1, 0, "healthBarPack_sprite"));
-	HealthBar* hpBar = new HealthBar(new LoaderParams(0, 0, 48, 192, 0, 0, "healthBarPack_sprite"));
+	HealthBar* hpBar = new HealthBar(new LoaderParams(0, 0, 48, 192, 0, 0, "healthBarPack_sprite"), "HpBar", 12);
+	HealthBar* energyBar = new HealthBar(new LoaderParams(0, 0, 48, 192, 2, 0, "healthBarPack_sprite"), "EnergyBar", 1);
 	//HealthBar* energyBar = new HealthBar(new LoaderParams(0, 0, 48, 192, 0, 0, "healthBarPack_sprite"));
 
 	//NotePads
@@ -77,13 +81,18 @@ private:
 	NoteShooter* NoteShooter1 = new NoteShooter(new LoaderParams(0, 0, 192, 192, 0, 0, "noteShooter_stage1_idle_sprite"));
 	//NoteShooter* NoteShooter3 = new NoteShooter(new LoaderParams(0, 0, 144, 144, 0, 3, "notesPad_sprite"));
 	//Back
-	GameObject* back1 = new SDLGameObject(new LoaderParams(0/*back의 x크기*/, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "stage1_sprite"));
+	GameObject* back_stage1 = new SDLGameObject(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "stage1_sprite"));
+	GameObject* back_stage1_back1 = new SDLGameObject(new LoaderParams(0, 0, 384, SCREEN_HEIGHT, 0, 0, "stage1_back_sprite"));
+	GameObject* back_stage1_back2 = new SDLGameObject(new LoaderParams(0, 0, 384, SCREEN_HEIGHT, 0, 1, "stage1_back_sprite"));
+
 	//GameObject* back2 = new SDLGameObject(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "stage1_sprite"));
 
 	vector<GameObject*> m_gameObjects;
 	//object Manage
 	vector<GameObject*> collisionObjects; //충돌할 수 있는 오브젝트 
 	map<const char*, vector<GameObject* >> objects; //모든 오브젝트
+
+	void GameOver();
 public:
 	Game() { }
 	~Game() { }
@@ -134,6 +143,18 @@ public:
 	{
 		if (hp + heal > max_Hp) { hp = MAX_HP; }
 		else { hp += heal; }
+	}
+
+	int GetEnergy() { return energy; }
+	void DamagedEnergy(int damagedEnergy)
+	{
+		if (energy - damagedEnergy < 0) { energy = 0; }
+		else { energy -= damagedEnergy; }
+	}
+	void HealEnergy(int heal)
+	{
+		if (energy + heal > max_Energy) { hp = MAX_ENERGY; }
+		else { energy += heal; }
 	}
 
 	/*void DamagedEnergy(int damagedEnergy) { energy -= damagedEnergy; }

@@ -3,6 +3,8 @@
 #include <Animation.h>
 #include <Timer.h>
 
+#define Minimum 0.005f
+
 typedef struct PlayerSetPosData //1 ~ 4 -> 기본 루트, 5, 6 -> 에너지루트 
 {
 	Vector2D mainPos = Vector2D(0.5f + 640, 750);
@@ -19,7 +21,6 @@ public:
 	virtual void clean() {}
 
 	void SetState();
-
 	void Pop_Down();
 
 	//Main, Play Pos
@@ -41,6 +42,8 @@ public:
 	void PressOut_Up();
 	void PressOut_Down();
 	void PressOut_Space();
+
+	void SetDead(bool onOff) { isDead = onOff; }
 private:
 	Animation* m_animation = new Animation();
 	pSetPosData pSetPosData;
@@ -50,16 +53,31 @@ private:
 	void Idle_Play();
 	void LeftPop();
 	void RightPop();
+	void Panic() {}
+	void Dead();
 
 	void PopLife();
 
-	bool popLeft = false;
-	bool popRight = false;
-	bool idle = true;
+	void Gravity(); //어차피 중력은 여기서밖에 안쓰므로 따로 클래스로 만들진 않았습니다 
+	void Power();
+	void KnockBack();
+
+	float powerX = 4;
+	float powerY = 10;
+	float gravityPower = 4;
+	bool isGrounded = false;
+
+	bool ispopLeft = false;
+	bool ispopRight = false;
+	bool isidle = true;
+	bool ismain = false;
+	bool isPanic = false; 
+	bool isDead = false;
 
 	bool isPop = false;
-
 	bool turn = false;
+
+	bool isGravity = false;
 	//Input
 	bool isPressIn_Left = true;
 	bool isPressIn_Right = true;

@@ -1,9 +1,11 @@
 #include <HealthBar.h>
 #include <Game.h>
 
-HealthBar::HealthBar(const LoaderParams* pParams) : SDLGameObject(pParams) 
+HealthBar::HealthBar(const LoaderParams* pParams, string getTag, int frameCount) : SDLGameObject(pParams) 
 {
-	animation->SetProp(m_textureID, 0.01f, 0, 12);
+	tag = getTag;
+
+	animation->SetProp(m_textureID, 0.01f, m_currentRow, frameCount);
 
 	animation->StartAnimation();
 	animation->SetAnimPause(true);

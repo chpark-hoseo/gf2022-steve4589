@@ -1,7 +1,7 @@
 #include <Player.h>
 #include <InputHandler.h>
 
-Player::Player(const LoaderParams* pParams) : SDLGameObject(pParams) 
+Player::Player(const LoaderParams* pParams) : SDLGameObject(pParams)
 {
 	Idle_Play();
 }
@@ -16,71 +16,84 @@ void Player::update()
 
 	m_animation->Update();
 	SetState();
-
 	if (m_animation->GetAnimationOnce() == false && isPop)
 	{
 		m_animation->SetAnimPause(true);
 		isPop = false;
-		idle = true;
+		isidle = true;
 	}
+
 	SDLGameObject::update();
+	Gravity();
 }
 
 void Player::SetState()
 {
-	if (idle == true)
+	if (isidle == true)
 	{
 		Idle_Play();
 	}
-	if (popLeft == true)
+	if (ispopLeft == true)
 	{
 		LeftPop();
 	}
-	if (popRight == true)
+	if (ispopRight == true)
 	{
 		RightPop();
+	}
+	if (isDead == true)
+	{
+		Dead();
 	}
 }
 void Player::Idle_Play()
 {
-	idle = false;
+	isidle = false;
 	m_animation->SetProp(m_textureID, 0.005f, 1, 12);
 
 	m_animation->SetAnimPause(true);
 }
 void Player::LeftPop()
 {
-	popLeft = false;
+	ispopLeft = false;
 	m_animation->SetProp(m_textureID, 0.01f, 2, 3);
 	PopLife();
 }
 void Player::RightPop()
 {
-	popRight = false;
+	ispopRight = false;
 	m_animation->SetProp(m_textureID, 0.01f, 3, 3);
 	PopLife();
 }
-void Player::PopLife() 
+void Player::PopLife()
 {
 	isPop = true;
 
 	m_animation->SetAnimPause(true);
 	m_animation->AnimationOnce(true);
 }
-void Player::Pop_Down() 
+void Player::Pop_Down()
 {
 	m_animation->StartAnimation();
 
 	if (turn == true)
 	{
-		popRight = true;
+		ispopRight = true;
 		turn = false;
 	}
 	else
 	{
-		popLeft = true;
+		ispopLeft = true;
 		turn = true;
 	}
+}
+void Player::Dead()
+{
+	isDead = false;
+	m_animation->StartAnimation();
+	m_animation->AnimationOnce(true);
+
+	m_animation->SetProp(m_textureID, 0.008f, 4, 9);
 }
 
 void Player::PressIn_Left()
@@ -154,7 +167,42 @@ void Player::PressOut_Space()
 	isPressOut_Space = false;
 	isPressIn_Space = true;
 }
+//Physics
+void Player::Gravity()
+{
+	//if (isGrounded)return;
 
+	Power();
+	if (m_position.getY() > pSetPosData.playerPos.getY())
+	{
+		powerX = 0;
+		m_velocity.setX(0);
+		m_velocity.setY(0);
+		m_position.setY(pSetPosData.playerPos.getY());
+		//isGrounded = true;
+		return;
+	}
+	float gravityX = powerX;
+	float gravityY = gravityPower - powerY;
+
+	m_velocity.setX(gravityX);
+	m_velocity.setY(gravityY);
+}
+//Minimum => 0.05f
+//0.2
+//0.10
+void Player::Power()
+{
+	if (powerX > 0) powerX = powerX - (Minimum * 2); //
+	else powerX = 0;
+
+	if (powerY > 0) powerY = powerY - (Minimum * 10 * 2); //0.1f * dirPowerY
+	else powerY = 0;
+}
+void Player::KnockBack()
+{
+
+}
 /*void Player::Input_Play() //각 키마다 따로 있어야 될듯..
 {
 	//KeyDown

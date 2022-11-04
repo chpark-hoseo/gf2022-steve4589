@@ -9,19 +9,18 @@ public:
 };
 class ICLICK
 {
-public :
+public:
 	virtual void IsPressed(bool _isPush) = 0;
 };
 class SDLGameObject : public GameObject {
 public:
 	SDLGameObject(const LoaderParams* pParams);
 	virtual void draw();
-	virtual void update() 
-	{ 
+	virtual void update()
+	{
 		m_position += m_velocity;
-		//m_position.setX(m_position.getX() - m_width * 0.5f);
-		//m_position.setY(m_position.getY() - m_height * 0.5f);
-	} //m_velocity += m_acceleration;
+		m_velocity += m_acceleration;
+	}   
 	virtual void clean() {}
 	virtual ~SDLGameObject() {}
 
@@ -39,7 +38,7 @@ public:
 	virtual void OnEnable() {}
 protected:
 	Vector2D m_position;
-	Vector2D m_velocity; 
+	Vector2D m_velocity;
 	Vector2D m_acceleration;
 	float speed = 0.5;
 

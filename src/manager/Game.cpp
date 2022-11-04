@@ -16,7 +16,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 			m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, 0);
 			if (m_pRenderer != 0) {
 				//Start_initialize();
-				SDL_SetRenderDrawColor(m_pRenderer, 0, 0, 0, 0);
+				SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 0, 0);
 			}
 			else {
 				return false; // 랜더러 생성 실패
@@ -53,7 +53,7 @@ void Game::Awake()
 	//TextureManager::GetInstance()->load("need for A+_stage2_back", "stage2back_sprite", m_pRenderer);
 
 	//메인캐릭터 
-	TextureManager::GetInstance()->load("need for A+_main", "mainCharacter_sprite", m_pRenderer); //(240x240)
+	TextureManager::GetInstance()->load("need for A+_main", "mainCharacter_sprite", m_pRenderer); //need for A+_main_dead
 
 	//노트
 	TextureManager::GetInstance()->load("need for A+_notes", "notes_sprite", m_pRenderer); 
@@ -80,9 +80,10 @@ void Game::Awake()
 
 	//체력바 
 	TextureManager::GetInstance()->load("need for A+_healthBarPack", "healthBarPack_sprite", m_pRenderer);
-	
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-	m_gameObjects.push_back(back1);
+	m_gameObjects.push_back(back_stage1_back1);
+	m_gameObjects.push_back(back_stage1_back2);
+	m_gameObjects.push_back(back_stage1);
 
 	m_gameObjects.push_back(player);
 
@@ -97,7 +98,8 @@ void Game::Awake()
 	m_gameObjects.push_back(NoteShooter1); //SetPos 
 
 	m_gameObjects.push_back(hpBar_Back);
-	m_gameObjects.push_back(hpBar);
+	m_gameObjects.push_back(hpBar); 
+	m_gameObjects.push_back(energyBar);
 	//ObjectPool
 	InitPool();
 	std::cout << "ObjectSize => " << m_gameObjects.size() << "\n\n";
@@ -120,6 +122,8 @@ void Game::Awake()
 
 	hpBar_Back->SetPosition(Vector2D(640, 750));
 	hpBar->SetPosition(Vector2D(640, 750));
+
+	energyBar->SetPosition(Vector2D(830, 750));
 
 	NoteManager::GetInstance()->SetPowerNotePads(powerNotePad1);
 	NoteManager::GetInstance()->SetPowerNotePads(powerNotePad2);
@@ -257,6 +261,7 @@ void Game::Input_Play()
 		powerNotePad1->IsPressed(true);
 		powerNotePad2->IsPressed(true);
 		player->PressIn_Space();
+		GameOver(); //임시 
 	}
 	//KeyUp
 	if (!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_LEFT)) {
@@ -281,6 +286,7 @@ void Game::Input_Play()
 		player->PressOut_Space();
 	}
 }
+void Game::GameOver() { player->SetDead(true);}
 /*
 void Game::MainMove(State state)
 {

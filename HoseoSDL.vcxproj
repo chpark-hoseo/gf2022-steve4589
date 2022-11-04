@@ -143,6 +143,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Animation\Animation.cpp" />
+    <ClCompile Include="src\Animation\BackScroll.cpp" />
     <ClCompile Include="src\GameObject\HealthBar.cpp" />
     <ClCompile Include="src\GameObject\Player.cpp" />
     <ClCompile Include="src\physics\Collider2D.cpp" />
@@ -166,6 +167,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Animation.h" />
+    <ClInclude Include="include\BackScroll.h" />
     <ClInclude Include="include\Collider2D.h" />
     <ClInclude Include="include\EnergyNote.h" />
     <ClInclude Include="include\Game.h" />

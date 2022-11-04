@@ -4,11 +4,8 @@
 
 void Animation::Update()
 {
-	if (!m_animRunning)
-	{
-		m_currentFrame = 0;
-		return;
-	}
+	if (!m_animRunning) { return; }
+
 	double curTime = SDL_GetTicks();
 	m_currentFrame = (Uint32)((curTime - startTimer) * m_speed) % m_frameCount; 
 

@@ -61,10 +61,10 @@ void TextureManager::drawFrame(string id, int x, int y, int width, int height, i
 	float m_percent = (2 * percent) * 0.01f;
 
 	srcRect.w = width;
-	srcRect.h = m_percent * height;
+	srcRect.h = (int)(m_percent * height);
 
 	destRect.w = width;
-	destRect.h = m_percent * height;
+	destRect.h = (int)(m_percent * height);
 
 	srcRect.x = width * currentFrame;
 	srcRect.y = height * currentRow;
