@@ -13,6 +13,8 @@
 //GameObject
 #include <GameObject.h>
 #include <Player.h>
+//UI
+#include <LerpPanel.h>
 #include <HealthBar.h>
 //Controller
 #include <InputHandler.h>
@@ -60,6 +62,8 @@ private:
 	const int max_Energy = MAX_ENERGY;
 	int hp = max_Hp;
 	int energy = max_Energy;
+
+	bool isGameOver = false;
  
 	//MainCharacter 
 	Player* player = new Player(new LoaderParams(0, 0, 240, 240, 0, 0, "mainCharacter_sprite"));
@@ -67,7 +71,6 @@ private:
 	SDLGameObject* hpBar_Back = new SDLGameObject(new LoaderParams(0, 0, 48, 192, 1, 0, "healthBarPack_sprite"));
 	HealthBar* hpBar = new HealthBar(new LoaderParams(0, 0, 48, 192, 0, 0, "healthBarPack_sprite"), "HpBar", 12);
 	HealthBar* energyBar = new HealthBar(new LoaderParams(0, 0, 48, 192, 2, 0, "healthBarPack_sprite"), "EnergyBar", 1);
-	//HealthBar* energyBar = new HealthBar(new LoaderParams(0, 0, 48, 192, 0, 0, "healthBarPack_sprite"));
 
 	//NotePads
 	NotePad* notePad = new NotePad(new LoaderParams(0, 0, 144, 144, 0, 0, "notesPad_sprite"), "Note");
@@ -84,6 +87,8 @@ private:
 	GameObject* back_stage1 = new SDLGameObject(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "stage1_sprite"));
 	GameObject* back_stage1_back1 = new SDLGameObject(new LoaderParams(0, 0, 384, SCREEN_HEIGHT, 0, 0, "stage1_back_sprite"));
 	GameObject* back_stage1_back2 = new SDLGameObject(new LoaderParams(0, 0, 384, SCREEN_HEIGHT, 0, 1, "stage1_back_sprite"));
+	//UI 
+	LerpPanel* lerpPanel = new LerpPanel(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "fadePanel_sprite"));
 
 	//GameObject* back2 = new SDLGameObject(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "stage1_sprite"));
 

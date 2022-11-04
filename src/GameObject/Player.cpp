@@ -15,6 +15,11 @@ void Player::update()
 	if (!onOff) return;
 
 	m_animation->Update();
+	SDLGameObject::update();
+
+	if (isKnockBack == true) { Gravity(); }
+
+	if (isDead == true) return; 
 	SetState();
 	if (m_animation->GetAnimationOnce() == false && isPop)
 	{
@@ -22,9 +27,6 @@ void Player::update()
 		isPop = false;
 		isidle = true;
 	}
-
-	SDLGameObject::update();
-	Gravity();
 }
 
 void Player::SetState()
@@ -40,10 +42,6 @@ void Player::SetState()
 	if (ispopRight == true)
 	{
 		RightPop();
-	}
-	if (isDead == true)
-	{
-		Dead();
 	}
 }
 void Player::Idle_Play()
@@ -89,11 +87,13 @@ void Player::Pop_Down()
 }
 void Player::Dead()
 {
-	isDead = false;
-	m_animation->StartAnimation();
-	m_animation->AnimationOnce(true);
+	isDead = true;
+	isKnockBack = true;
 
 	m_animation->SetProp(m_textureID, 0.008f, 4, 9);
+
+	m_animation->StartAnimation();
+	m_animation->AnimationOnce(true);
 }
 
 void Player::PressIn_Left()
@@ -170,9 +170,7 @@ void Player::PressOut_Space()
 //Physics
 void Player::Gravity()
 {
-	//if (isGrounded)return;
-
-	Power();
+	KnockBack();
 	if (m_position.getY() > pSetPosData.playerPos.getY())
 	{
 		powerX = 0;
@@ -191,7 +189,7 @@ void Player::Gravity()
 //Minimum => 0.05f
 //0.2
 //0.10
-void Player::Power()
+void Player::KnockBack()
 {
 	if (powerX > 0) powerX = powerX - (Minimum * 2); //
 	else powerX = 0;
@@ -199,18 +197,3 @@ void Player::Power()
 	if (powerY > 0) powerY = powerY - (Minimum * 10 * 2); //0.1f * dirPowerY
 	else powerY = 0;
 }
-void Player::KnockBack()
-{
-
-}
-/*void Player::Input_Play() //각 키마다 따로 있어야 될듯..
-{
-	//KeyDown
-	if (((TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_LEFT) || TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_RIGHT) ||
-		TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_DOWN) || TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_UP) ||
-		TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_SPACE)) && isChange == false))
-	{
-		Pop_Down();
-		isChange = true;
-	}
-}*/

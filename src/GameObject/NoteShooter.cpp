@@ -10,6 +10,7 @@ NoteShooter::NoteShooter(const LoaderParams* pParams) : SDLGameObject(pParams)
 
 void NoteShooter::draw()
 {
+	if (!onOff) return;
 	m_animation->Draw(m_position.getX(), m_position.getY(), m_width, m_height);
 }
 void NoteShooter::update()
@@ -40,10 +41,10 @@ void NoteShooter::Shot(float speed, Vector2D disPos)
 }
 void NoteShooter::SetIdle()
 {
-	m_animation->SetProp("noteShooter_stage1_idle_sprite", 0, 0, 2);
+	m_animation->SetProp(m_textureID, 0.01f, m_currentRow, 2);
 
-	m_animation->StartAnimation(); 
 	m_animation->SetAnimPause(false);
+	m_animation->StartAnimation(); 
 }
 void NoteShooter::SetPop()
 {

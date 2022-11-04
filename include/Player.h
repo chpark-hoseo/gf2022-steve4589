@@ -43,7 +43,8 @@ public:
 	void PressOut_Down();
 	void PressOut_Space();
 
-	void SetDead(bool onOff) { isDead = onOff; }
+	void Dead();
+	void KnockBack();
 private:
 	Animation* m_animation = new Animation();
 	pSetPosData pSetPosData;
@@ -54,15 +55,12 @@ private:
 	void LeftPop();
 	void RightPop();
 	void Panic() {}
-	void Dead();
 
 	void PopLife();
 
 	void Gravity(); //어차피 중력은 여기서밖에 안쓰므로 따로 클래스로 만들진 않았습니다 
-	void Power();
-	void KnockBack();
 
-	float powerX = 4;
+	float powerX = 3.5f;
 	float powerY = 10;
 	float gravityPower = 4;
 	bool isGrounded = false;
@@ -72,7 +70,9 @@ private:
 	bool isidle = true;
 	bool ismain = false;
 	bool isPanic = false; 
+
 	bool isDead = false;
+	bool isKnockBack = false;
 
 	bool isPop = false;
 	bool turn = false;

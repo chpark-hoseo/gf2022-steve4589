@@ -8,7 +8,6 @@ void Animation::Update()
 
 	double curTime = SDL_GetTicks();
 	m_currentFrame = (Uint32)((curTime - startTimer) * m_speed) % m_frameCount; 
-
 	if ((m_animationOnce && m_currentFrame == m_frameCount - 1))  //애니메이션 한번만 작동
 	{
 		m_animRunning = false;
@@ -19,6 +18,7 @@ void Animation::Update()
 void Animation::StartAnimation()
 {
 	startTimer = SDL_GetTicks();
+	m_currentFrame = 0;
 }
 
 void Animation::SetAnimPause(bool onOff) { m_animRunning = onOff; }

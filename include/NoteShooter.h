@@ -1,7 +1,6 @@
 #pragma once
 #include <SDLGameObject.h>
 #include <Animation.h>
-#include <Vector2D.h>
 
 class NoteShooter : public SDLGameObject
 {

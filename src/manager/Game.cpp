@@ -37,9 +37,14 @@ void Game::update()
 	for (int i = 0; i < m_gameObjects.size(); i++) {
 		m_gameObjects[i]->update();
 	}
-	//플레이 버튼 클릭
-	//if(Player::GetInstance()->GetHp() > 0)*/
-	NoteManager::GetInstance()->ReadSpawnNotes(); //추가 필요--> 1스테이지 버튼 => 1스테이지 시트, 2스테이지 버튼 => 2스테이지 시트 
+
+	//GameOver;
+	if (hp <= 0 && !isGameOver) { GameOver(); }
+	//State N
+	if (isGameOver == false)
+	{
+		NoteManager::GetInstance()->ReadSpawnNotes(); //추가 필요--> 1스테이지 버튼 => 1스테이지 시트, 2스테이지 버튼 => 2스테이지 시트 
+	}
 }
 
 void Game::Awake()
@@ -56,12 +61,12 @@ void Game::Awake()
 	TextureManager::GetInstance()->load("need for A+_main", "mainCharacter_sprite", m_pRenderer); //need for A+_main_dead
 
 	//노트
-	TextureManager::GetInstance()->load("need for A+_notes", "notes_sprite", m_pRenderer); 
-	TextureManager::GetInstance()->load("need for A+_PowerNote", "powerNotes_sprite", m_pRenderer); 
-	
+	TextureManager::GetInstance()->load("need for A+_notes", "notes_sprite", m_pRenderer);
+	TextureManager::GetInstance()->load("need for A+_PowerNote", "powerNotes_sprite", m_pRenderer);
+
 	//노트 패드
 	TextureManager::GetInstance()->load("need for A+_notesPad", "notesPad_sprite", m_pRenderer);
-	TextureManager::GetInstance()->load("need for A+_PowernotePad", "powerNotesPad_sprite", m_pRenderer); 
+	TextureManager::GetInstance()->load("need for A+_PowernotePad", "powerNotesPad_sprite", m_pRenderer);
 
 	//폭발 애니메이션  
 	TextureManager::GetInstance()->load("need for A+_noteBoom", "notesBoom_sprite", m_pRenderer);
@@ -71,12 +76,13 @@ void Game::Awake()
 	TextureManager::GetInstance()->load("need for A+_missBoom", "playerMissBoom_sprite", m_pRenderer);
 
 	//노트 슈터 애니메이션
-	TextureManager::GetInstance()->load("need for A+_noteShooter_stage1_idle", "noteShooter_stage1_idle_sprite", m_pRenderer); 
+	TextureManager::GetInstance()->load("need for A+_noteShooter_stage1_idle", "noteShooter_stage1_idle_sprite", m_pRenderer);
 	TextureManager::GetInstance()->load("need for A+_noteShooter_stage1_pop", "noteShooter_stage1_pop_sprite", m_pRenderer);
 	//TextureManager::GetInstance()->load("need for A+_noteShooter_stage2", "noteShooter_stage2_sprite", m_pRenderer);
 
-	//메뉴 
-	TextureManager::GetInstance()->load("need for A+_selectMenu", "selectMenu_sprite", m_pRenderer);
+	//UI 
+	TextureManager::GetInstance()->load("need for A+_selectMenu", "selectMenu_sprite", m_pRenderer); 
+	TextureManager::GetInstance()->load("need for A+_fadePanel", "fadePanel_sprite", m_pRenderer);
 
 	//체력바 
 	TextureManager::GetInstance()->load("need for A+_healthBarPack", "healthBarPack_sprite", m_pRenderer);
@@ -84,8 +90,6 @@ void Game::Awake()
 	m_gameObjects.push_back(back_stage1_back1);
 	m_gameObjects.push_back(back_stage1_back2);
 	m_gameObjects.push_back(back_stage1);
-
-	m_gameObjects.push_back(player);
 
 	m_gameObjects.push_back(notePad);
 	m_gameObjects.push_back(notePad1);
@@ -98,8 +102,12 @@ void Game::Awake()
 	m_gameObjects.push_back(NoteShooter1); //SetPos 
 
 	m_gameObjects.push_back(hpBar_Back);
-	m_gameObjects.push_back(hpBar); 
+	m_gameObjects.push_back(hpBar);
 	m_gameObjects.push_back(energyBar);
+
+	m_gameObjects.push_back(lerpPanel);
+
+	m_gameObjects.push_back(player);
 	//ObjectPool
 	InitPool();
 	std::cout << "ObjectSize => " << m_gameObjects.size() << "\n\n";
@@ -108,10 +116,10 @@ void Game::Awake()
 	//Setting
 	NoteManager::GetInstance()->ReadLineToTxt("stage1");
 	//Position
-	notePad->SetPosition(Vector2D(1536 * 0.5f - 250, 550)); 
+	notePad->SetPosition(Vector2D(1536 * 0.5f - 250, 550));
 	notePad1->SetPosition(Vector2D(1536 * 0.5f - 100, 550));
 	notePad2->SetPosition(Vector2D(1536 * 0.5f + 50, 550));
-	notePad3->SetPosition(Vector2D(1536 * 0.5f + 200, 550)); 
+	notePad3->SetPosition(Vector2D(1536 * 0.5f + 200, 550));
 
 	powerNotePad1->SetPosition(Vector2D(1536 * 0.5f - 550, 550));
 	powerNotePad2->SetPosition(Vector2D(1536 * 0.5f - 400, 400));
@@ -128,7 +136,7 @@ void Game::Awake()
 	NoteManager::GetInstance()->SetPowerNotePads(powerNotePad1);
 	NoteManager::GetInstance()->SetPowerNotePads(powerNotePad2);
 	//해당 스테이지가 시작할때 추가 하도록 변경
-	NoteManager::GetInstance()->SetNoteShooters(NoteShooter1); 
+	NoteManager::GetInstance()->SetNoteShooters(NoteShooter1);
 }
 
 void Game::render()
@@ -147,6 +155,7 @@ bool Game::running()
 void Game::handleEvents()
 {
 	TheInputHandler::Instance()->update();
+	if (isGameOver) return;
 	handleInput();
 }
 void Game::clean()
@@ -196,7 +205,7 @@ GameObject* Game::CreateObjects(const char* name)
 		gameObject = new NoteBoom(new LoaderParams(0, 0, 192, 192, 0, 0, "notesBoom1_sprite"), 5);
 	}
 	else if (name == "BoomTrashA") {
-		gameObject = new PowerNote(new LoaderParams(0, 0, 48, 48, 0, 0, "BoomTrash_sprite")); 
+		gameObject = new PowerNote(new LoaderParams(0, 0, 48, 48, 0, 0, "BoomTrash_sprite"));
 	}
 	else if (name == "BoomTrashF") {
 		gameObject = new PowerNote(new LoaderParams(0, 0, 48, 48, 0, 0, "BoomTrash_sprite"));
@@ -261,7 +270,6 @@ void Game::Input_Play()
 		powerNotePad1->IsPressed(true);
 		powerNotePad2->IsPressed(true);
 		player->PressIn_Space();
-		GameOver(); //임시 
 	}
 	//KeyUp
 	if (!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_LEFT)) {
@@ -286,7 +294,12 @@ void Game::Input_Play()
 		player->PressOut_Space();
 	}
 }
-void Game::GameOver() { player->SetDead(true);}
+void Game::GameOver() 
+{
+	lerpPanel->SetActive(true);
+	player->Dead();
+	isGameOver = true;
+}
 /*
 void Game::MainMove(State state)
 {

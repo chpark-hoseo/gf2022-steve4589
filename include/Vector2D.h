@@ -21,10 +21,6 @@ public:
 	//둘모두 함수 오버로딩에 의해 double외의 다른 자료형 사용 가능
 	float length() { return sqrt(m_x * m_x + m_y * m_y); } //둘다 10, 10이면 200 = 16.xxxxx
 
-	//선형보간, 두 값을 섞음
-	//여기서 많이 쓰임 ==> Material
-	//Lerp(A, B, Alpha) = A x (1 - Alpha) + B x Alpha
-
 	Vector2D operator+(const Vector2D& v2) const;
 	Vector2D operator-(const Vector2D& v2) const;
 	Vector2D operator*(float scalar);

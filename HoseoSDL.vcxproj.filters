@@ -39,9 +39,6 @@
     <ClCompile Include="src\GameObject\Note.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObject\EnergyNote.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="src\GameObject\SDLGameObject.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -75,10 +72,13 @@
     <ClCompile Include="src\Animation\Animation.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObject\HealthBar.cpp">
+    <ClCompile Include="src\UI\HealthBar.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="src\Animation\BackScroll.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UI\LerpPanel.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -111,9 +111,6 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="include\Note.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="include\EnergyNote.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="include\LoaderParams.h">
@@ -156,6 +153,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="include\BackScroll.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="include\LerpPanel.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
