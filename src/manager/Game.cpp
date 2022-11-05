@@ -1,6 +1,6 @@
 #pragma once
-#include <Game.h>
 #include <SDLGameObject.h>
+#include <Game.h>
 
 Game* Game::s_pInstance = 0;
 
@@ -87,8 +87,14 @@ void Game::Awake()
 	//체력바 
 	TextureManager::GetInstance()->load("need for A+_healthBarPack", "healthBarPack_sprite", m_pRenderer);
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-	m_gameObjects.push_back(back_stage1_back1);
-	m_gameObjects.push_back(back_stage1_back2);
+	m_gameObjects.push_back(back_stage_back1);
+
+	m_gameObjects.push_back(backScroll);
+	m_gameObjects.push_back(back_stage_back_frame2);
+	m_gameObjects.push_back(back_stage_back_frame1);
+	m_gameObjects.push_back(back_stage_back_frame);
+
+	m_gameObjects.push_back(back_stage_back2);
 	m_gameObjects.push_back(back_stage1);
 
 	m_gameObjects.push_back(notePad);
@@ -97,7 +103,7 @@ void Game::Awake()
 	m_gameObjects.push_back(notePad3);
 
 	m_gameObjects.push_back(powerNotePad1);
-	m_gameObjects.push_back(powerNotePad2);
+	m_gameObjects.push_back(powerNotePad2); 
 
 	m_gameObjects.push_back(NoteShooter1); //SetPos 
 
@@ -220,6 +226,7 @@ GameObject* Game::CreateObjects(const char* name)
 	gameObject->SetActive(false);
 	//All Objects
 	m_gameObjects.emplace_back(gameObject);
+	allObjects.emplace_back(gameObject);
 	//ObjectPool, collision Object
 	objects[name].emplace_back(gameObject);
 	if (gameObject->getTag() == "Note" || gameObject->getTag() == "PowerNote") collisionObjects.emplace_back(gameObject);
@@ -240,7 +247,6 @@ GameObject* Game::GetObject(Vector2D spawnPos, const char* name)
 void Game::handleInput()
 {
 	//Command Pattern - 메인화면, 플레이 
-	//SetCommand(NoteInput)
 	Input_Play();
 }
 void Game::Input_Play()
@@ -251,51 +257,41 @@ void Game::Input_Play()
 	}
 	//KeyDown
 	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_LEFT)) {
-		notePad->IsPressed(true);
-		player->PressIn_Left();
+		leftButton->Pressed();
 	}
 	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_UP)) {
-		notePad1->IsPressed(true);
-		player->PressIn_Up();
+		upButton->Pressed();
 	}
 	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_DOWN)) {
-		notePad2->IsPressed(true);
-		player->PressIn_Down();
+		downButton->Pressed();
 	}
 	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_RIGHT)) {
-		notePad3->IsPressed(true);
-		player->PressIn_Right();
+		rightButton->Pressed();
 	}
 	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_SPACE)) {
-		powerNotePad1->IsPressed(true);
-		powerNotePad2->IsPressed(true);
-		player->PressIn_Space();
+		spaceButton->Pressed();
 	}
 	//KeyUp
 	if (!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_LEFT)) {
-		notePad->PressOut(false);
-		player->PressOut_Left();
+		leftButton->UnPressed();
 	}
 	if (!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_UP)) {
-		notePad1->PressOut(false);
-		player->PressOut_Up();
+		upButton->UnPressed();
 	}
 	if (!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_DOWN)) {
-		notePad2->PressOut(false);
-		player->PressOut_Down();
+		downButton->UnPressed();
 	}
 	if (!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_RIGHT)) {
-		notePad3->PressOut(false);
+		rightButton->UnPressed();
 		player->PressOut_Right();
 	}
 	if (!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_SPACE)) {
-		powerNotePad1->PressOut(false);
-		powerNotePad2->PressOut(false);
-		player->PressOut_Space();
+		spaceButton->UnPressed();
 	}
 }
 void Game::GameOver() 
 {
+	OffObjects();
 	lerpPanel->SetActive(true);
 	player->Dead();
 	isGameOver = true;

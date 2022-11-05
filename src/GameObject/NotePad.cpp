@@ -1,9 +1,11 @@
 #include <NotePad.h>
 #include <Game.h>
+#include <algorithm>
 
-NotePad::NotePad(const LoaderParams* pParams, string noteTag) : SDLGameObject(pParams)
+NotePad::NotePad(const LoaderParams* pParams, string thisTag, string noteTag) : SDLGameObject(pParams)
 {
 	getTag = noteTag;
+	tag = thisTag;
 }
 
 void NotePad::update()
@@ -32,7 +34,7 @@ void NotePad::DetectCollider()
 			Game::GetInstance()->GetObject(ExitgameObject[i]->GetPosition(), "MissBoom");
 			ExitgameObject[i]->SetActive(false);
 
-			Game::GetInstance()->DamagedHp(4);
+			Game::GetInstance()->DamagedHp(8);
 		}
 	}
 }
@@ -64,8 +66,14 @@ void NotePad::OffNote()
 
 		Game::GetInstance()->HealHp(1);
 	}
-	else 
+	else
 	{
+		if (getTag == "PowerNote" /* && otherPads도 실패했다면 */) 
+		{
+			Game::GetInstance()->GetObject(playerPos, "PlayerMiss");
+			Game::GetInstance()->DamagedEnergy(17);
+			return;
+		}
 		Game::GetInstance()->GetObject(playerPos, "PlayerMiss");
 		Game::GetInstance()->DamagedHp(4);
 	}

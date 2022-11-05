@@ -9,9 +9,11 @@ public:
 };
 class ICLICK
 {
-public:
 	virtual void IsPressed(bool _isPush) = 0;
+	virtual void PressIn(bool) = 0;
+	virtual void PressOut(bool) = 0;
 };
+
 class SDLGameObject : public GameObject {
 public:
 	SDLGameObject(const LoaderParams* pParams);

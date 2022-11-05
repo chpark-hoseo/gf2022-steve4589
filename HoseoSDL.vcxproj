@@ -170,6 +170,7 @@
     <ClInclude Include="include\Animation.h" />
     <ClInclude Include="include\BackScroll.h" />
     <ClInclude Include="include\Collider2D.h" />
+    <ClInclude Include="include\Command.h" />
     <ClInclude Include="include\LerpPanel.h" />
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\GameObject.h" />

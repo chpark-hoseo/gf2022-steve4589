@@ -14,8 +14,10 @@
 #include <GameObject.h>
 #include <Player.h>
 //UI
+#include <Command.h>
 #include <LerpPanel.h>
 #include <HealthBar.h>
+#include <BackScroll.h>
 //Controller
 #include <InputHandler.h>
 //#include <PlayController.h>
@@ -73,20 +75,26 @@ private:
 	HealthBar* energyBar = new HealthBar(new LoaderParams(0, 0, 48, 192, 2, 0, "healthBarPack_sprite"), "EnergyBar", 1);
 
 	//NotePads
-	NotePad* notePad = new NotePad(new LoaderParams(0, 0, 144, 144, 0, 0, "notesPad_sprite"), "Note");
-	NotePad* notePad1 = new NotePad(new LoaderParams(0, 0, 144, 144, 0, 1, "notesPad_sprite"), "Note");
-	NotePad* notePad2 = new NotePad(new LoaderParams(0, 0, 144, 144, 0, 2, "notesPad_sprite"), "Note");
-	NotePad* notePad3 = new NotePad(new LoaderParams(0, 0, 144, 144, 0, 3, "notesPad_sprite"), "Note");
+	NotePad* notePad = new NotePad(new LoaderParams(0, 0, 144, 144, 0, 0, "notesPad_sprite"), "NotePad", "Note");
+	NotePad* notePad1 = new NotePad(new LoaderParams(0, 0, 144, 144, 0, 1, "notesPad_sprite"), "NotePad", "Note");
+	NotePad* notePad2 = new NotePad(new LoaderParams(0, 0, 144, 144, 0, 2, "notesPad_sprite"), "NotePad", "Note");
+	NotePad* notePad3 = new NotePad(new LoaderParams(0, 0, 144, 144, 0, 3, "notesPad_sprite"), "NotePad", "Note");
 	//PowerNotePads
-	NotePad* powerNotePad1 = new NotePad(new LoaderParams(0, 0, 144, 144, 0, 0, "powerNotesPad_sprite"), "PowerNote");
-	NotePad* powerNotePad2 = new NotePad(new LoaderParams(0, 0, 144, 144, 0, 0, "powerNotesPad_sprite"), "PowerNote");
+	NotePad* powerNotePad1 = new NotePad(new LoaderParams(0, 0, 144, 144, 0, 0, "powerNotesPad_sprite"), "PowerNotePad", "PowerNote");
+	NotePad* powerNotePad2 = new NotePad(new LoaderParams(0, 0, 144, 144, 0, 0, "powerNotesPad_sprite"), "PowerNotePad", "PowerNote");
 	//NoteShooter
 	NoteShooter* NoteShooter1 = new NoteShooter(new LoaderParams(0, 0, 192, 192, 0, 0, "noteShooter_stage1_idle_sprite"));
 	//NoteShooter* NoteShooter3 = new NoteShooter(new LoaderParams(0, 0, 144, 144, 0, 3, "notesPad_sprite"));
-	//Back
+	//Backs
 	GameObject* back_stage1 = new SDLGameObject(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "stage1_sprite"));
-	GameObject* back_stage1_back1 = new SDLGameObject(new LoaderParams(0, 0, 384, SCREEN_HEIGHT, 0, 0, "stage1_back_sprite"));
-	GameObject* back_stage1_back2 = new SDLGameObject(new LoaderParams(0, 0, 384, SCREEN_HEIGHT, 0, 1, "stage1_back_sprite"));
+	GameObject* back_stage_back1 = new SDLGameObject(new LoaderParams(0, 0, 384, SCREEN_HEIGHT, 0, 0, "stage1_back_sprite"));
+	GameObject* back_stage_back2 = new SDLGameObject(new LoaderParams(0, 0, 384, SCREEN_HEIGHT, 0, 1, "stage1_back_sprite")); //stage1_back_frame_sprite
+	//BackFrame
+	SDLGameObject* back_stage_back_frame = new SDLGameObject(new LoaderParams(0, 0, 1152, 432, 0, 0, "stage1_back_frame_sprite"));
+	SDLGameObject* back_stage_back_frame1 = new SDLGameObject(new LoaderParams(0, 0, 1152, 432, 0, 1, "stage1_back_frame_sprite"));
+	SDLGameObject* back_stage_back_frame2 = new SDLGameObject(new LoaderParams(0, 0, 1152, 432, 0, 2, "stage1_back_frame_sprite"));
+	BackScroll* backScroll = new BackScroll(new LoaderParams(0, 0, 0, 0, 0, 0, "stage1_back_frame_sprite"), back_stage_back_frame, back_stage_back_frame1, back_stage_back_frame2);
+	//
 	//UI 
 	LerpPanel* lerpPanel = new LerpPanel(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "fadePanel_sprite"));
 
@@ -95,6 +103,7 @@ private:
 	vector<GameObject*> m_gameObjects;
 	//object Manage
 	vector<GameObject*> collisionObjects; //충돌할 수 있는 오브젝트 
+	vector<GameObject*> allObjects;
 	map<const char*, vector<GameObject* >> objects; //모든 오브젝트
 
 	void GameOver();
@@ -126,6 +135,24 @@ public:
 	void handleInput();
 	void Input_Play();
 	void Input_Menu() {}
+	//InputCommand
+	Command* upCommand = new UpCommand();
+	Command* downCommand = new DownCommand();
+	Command* rightCommand = new RightCommand();
+	Command* leftCommend = new LeftCommand();
+	Command* spaceCommand = new SpaceCommand();
+
+	Command* up_NoteCommand = new Up_NoteCommand(notePad1, player);
+	Command* down_NoteCommand = new Down_NoteCommand(notePad2, player);
+	Command* right_NoteCommand = new Right_NoteCommand(notePad3, player);
+	Command* left_NoteCommend = new Left_NoteCommand(notePad, player);
+	Command* space_NoteCommand = new Space_NoteCommand(powerNotePad1, powerNotePad2, player);
+
+	Button* upButton = new Button(up_NoteCommand);
+	Button* downButton = new Button(down_NoteCommand);
+	Button* rightButton = new Button(right_NoteCommand); 
+	Button* leftButton = new Button(left_NoteCommend);
+	Button* spaceButton = new Button(space_NoteCommand);
 
 	//else
 	//void DhrowBorder();
@@ -136,6 +163,13 @@ public:
 	GameObject* CreateObjects(const char* tag);
 	GameObject* GetObject(Vector2D spawnPos, const char* name);
 	void ReturnPool(const char name[20], GameObject* getGameObject) { objects[name].emplace_back(getGameObject); }
+	void OffObjects()
+	{
+		for (GameObject* gameObject : allObjects)
+		{
+			if (gameObject->activeSelf()) gameObject->SetActive(false);
+		}
+	}
 
 	//Hp, Energy
 	int GetHp() { return hp; }

@@ -14,7 +14,12 @@ HealthBar::HealthBar(const LoaderParams* pParams, string getTag, int frameCount)
 void HealthBar::draw()
 {
 	if (!onOff) return;
-	animation->Draw(m_position.getX(), m_position.getY(), m_width, m_height, Game::GetInstance()->GetHp());
+
+	int damaged = 0;
+	if (tag == "HpBar") damaged = Game::GetInstance()->GetHp();
+	else damaged= Game::GetInstance()->GetEnergy();
+
+	animation->Draw(m_position.getX(), m_position.getY(), m_width, m_height, damaged);
 }
 void HealthBar::update()
 {
