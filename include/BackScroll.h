@@ -11,6 +11,7 @@ private:
 	virtual void clean() {}
 
 	void Scroll();
+	void ChangeSprites(string sprite1, string sprite2, string sprite3);
 
 	vector<SDLGameObject*> backs;
 	float speed[3] = { 0.3f, 0.45f, 0.6f };

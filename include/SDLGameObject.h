@@ -34,6 +34,8 @@ public:
 
 	const char* GetName() { return name; }
 	void SetName(const char* getName) { name = getName; }
+
+	void SetSpriteId(string getId) { getId = m_textureID; }
 	//KeyBoard
 	virtual void IsPressed(bool isPush) {}
 
