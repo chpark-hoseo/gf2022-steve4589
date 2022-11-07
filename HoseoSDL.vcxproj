@@ -144,6 +144,8 @@
   <ItemGroup>
     <ClCompile Include="src\Animation\Animation.cpp" />
     <ClCompile Include="src\Animation\BackScroll.cpp" />
+    <ClCompile Include="src\Game\State_Play.cpp" />
+    <ClCompile Include="src\Game\State_StartLogo.cpp" />
     <ClCompile Include="src\physics\CustomPhysics.cpp" />
     <ClCompile Include="src\UI\LerpPanel.cpp" />
     <ClCompile Include="src\UI\HealthBar.cpp" />
@@ -160,8 +162,8 @@
     <ClCompile Include="src\manager\ObjectManager.cpp" />
     <ClCompile Include="src\timer\Timer.cpp" />
     <ClCompile Include="src\physics\Transform.cpp" />
-    <ClCompile Include="src\manager\Game.cpp" />
-    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Game\Game.cpp" />
+    <ClCompile Include="src\Game\Main.cpp" />
     <ClCompile Include="src\manager\NoteManager.cpp" />
     <ClCompile Include="src\manager\TextureManager.cpp" />
     <ClCompile Include="src\physics\Vector2D.cpp" />
@@ -171,6 +173,7 @@
     <ClInclude Include="include\BackScroll.h" />
     <ClInclude Include="include\Collider2D.h" />
     <ClInclude Include="include\Command.h" />
+    <ClInclude Include="include\GameState.h" />
     <ClInclude Include="include\LerpPanel.h" />
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\GameObject.h" />
@@ -188,6 +191,8 @@
     <ClInclude Include="include\PowerNote.h" />
     <ClInclude Include="include\SDLGameObject.h" />
     <ClInclude Include="include\Spawn.h" />
+    <ClInclude Include="include\State_Play.h" />
+    <ClInclude Include="include\State_StartLogo.h" />
     <ClInclude Include="include\TextureManager.h" />
     <ClInclude Include="include\Timer.h" />
     <ClInclude Include="include\Transform.h" />

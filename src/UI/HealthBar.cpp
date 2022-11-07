@@ -1,7 +1,7 @@
 #include <HealthBar.h>
-#include <Game.h>
+#include <State_Play.h>
 
-HealthBar::HealthBar(const LoaderParams* pParams, string getTag, int frameCount) : SDLGameObject(pParams) 
+HealthBar::HealthBar(const LoaderParams* pParams, string getTag, int frameCount) : SDLGameObject(pParams)
 {
 	tag = getTag;
 
@@ -16,8 +16,8 @@ void HealthBar::draw()
 	if (!onOff) return;
 
 	int damaged = 0;
-	if (tag == "HpBar") damaged = Game::GetInstance()->GetHp();
-	else damaged= Game::GetInstance()->GetEnergy();
+	if (tag == "HpBar") damaged = State_Play::GetInstance()->GetHp();
+	else damaged = State_Play::GetInstance()->GetEnergy();
 
 	animation->Draw(m_position.getX(), m_position.getY(), m_width, m_height, damaged);
 }

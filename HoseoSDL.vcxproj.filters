@@ -15,10 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\main.cpp">
+    <ClCompile Include="src\Game\Main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="src\manager\Game.cpp">
+    <ClCompile Include="src\Game\Game.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="src\manager\NoteManager.cpp">
@@ -82,6 +82,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="src\physics\CustomPhysics.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\State_StartLogo.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\State_Play.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -162,6 +168,15 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="include\Command.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GameState.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="include\State_StartLogo.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="include\State_Play.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

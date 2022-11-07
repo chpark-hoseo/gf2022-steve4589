@@ -1,54 +1,8 @@
-#pragma once
-#include <SDLGameObject.h>
-#include <Game.h>
+#include <State_Play.h>
 
-Game* Game::s_pInstance = 0;
-
-//----------------------------------------------------------------------------
-//MainCode
-bool Game::init(const char* title, int xpos, int ypos, int width, int height, int flags)
+void State_Play::Awake()
 {
-	if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
-		m_pWindow = SDL_CreateWindow(
-			title, xpos, ypos, width, height, flags);
-		//SDL_SetWindowFullscreen(m_pWindow, SDL_WINDOW_FULLSCREEN);
-		if (m_pWindow != 0) {
-			m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, 0);
-			if (m_pRenderer != 0) {
-				//Start_initialize();
-				SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 0, 0);
-			}
-			else {
-				return false; // 랜더러 생성 실패
-			}
-		}
-		else {
-			return false; // 윈도우 생성 실패 
-		}
-	}
-	else {
-		return false; // SDL 초기화 실패
-	}
-	m_bRunning = true;
-	return true;
-}
-void Game::update()
-{
-	for (int i = 0; i < m_gameObjects.size(); i++) {
-		m_gameObjects[i]->update();
-	}
-
-	//GameOver;
-	if (hp <= 0 && !isGameOver) { GameOver(); }
-	//State N
-	if (isGameOver == false)
-	{
-		NoteManager::GetInstance()->ReadSpawnNotes(); //추가 필요--> 1스테이지 버튼 => 1스테이지 시트, 2스테이지 버튼 => 2스테이지 시트 
-	}
-}
-
-void Game::Awake()
-{
+	//game->ChangeState( CPlayState::Instance() );
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	//스테이지 배경
 	TextureManager::GetInstance()->load("need for A+_stage1", "stage1_sprite", m_pRenderer);
@@ -81,7 +35,7 @@ void Game::Awake()
 	//TextureManager::GetInstance()->load("need for A+_noteShooter_stage2", "noteShooter_stage2_sprite", m_pRenderer);
 
 	//UI 
-	TextureManager::GetInstance()->load("need for A+_selectMenu", "selectMenu_sprite", m_pRenderer); 
+	TextureManager::GetInstance()->load("need for A+_selectMenu", "selectMenu_sprite", m_pRenderer);
 	TextureManager::GetInstance()->load("need for A+_fadePanel", "fadePanel_sprite", m_pRenderer);
 
 	//체력바 
@@ -103,7 +57,7 @@ void Game::Awake()
 	m_gameObjects.push_back(notePad3);
 
 	m_gameObjects.push_back(powerNotePad1);
-	m_gameObjects.push_back(powerNotePad2); 
+	m_gameObjects.push_back(powerNotePad2);
 
 	m_gameObjects.push_back(NoteShooter1); //SetPos 
 
@@ -144,8 +98,20 @@ void Game::Awake()
 	//해당 스테이지가 시작할때 추가 하도록 변경
 	NoteManager::GetInstance()->SetNoteShooters(NoteShooter1);
 }
-
-void Game::render()
+void State_Play::update(Game* game)
+{
+	for (int i = 0; i < m_gameObjects.size(); i++) {
+		m_gameObjects[i]->update();
+	}
+	//GameOver;
+	if (hp <= 0 && !isGameOver) { GameOver(); }
+	//State N
+	if (isGameOver == false)
+	{
+		NoteManager::GetInstance()->ReadSpawnNotes(); //추가 필요--> 1스테이지 버튼 => 1스테이지 시트, 2스테이지 버튼 => 2스테이지 시트 
+	}
+}
+void State_Play::render(Game* game)
 {
 	SDL_RenderClear(m_pRenderer);
 
@@ -154,19 +120,14 @@ void Game::render()
 	}
 	SDL_RenderPresent(m_pRenderer);
 }
-bool Game::running()
-{
-	return m_bRunning;
-}
-void Game::handleEvents()
+void State_Play::handleEvents(Game* game)
 {
 	TheInputHandler::Instance()->update();
-	if (isGameOver) return;
 	handleInput();
 }
-void Game::clean()
+void State_Play::clean()
 {
-	TheTextureManager::GetInstance()->TextureAllClean();
+	TextureManager::GetInstance()->TextureAllClean();
 	TheInputHandler::Instance()->clean();
 	SDL_DestroyWindow(m_pWindow);
 	SDL_DestroyRenderer(m_pRenderer);
@@ -174,7 +135,7 @@ void Game::clean()
 }
 //----------------------------------------------------------------------------
 //ObjectPool
-void Game::InitPool()
+void State_Play::InitPool()
 {
 	Pool* pools[11] = { new Pool("LeftNote", 10), new Pool("UpNote", 10), new Pool("DownNote" ,10), new Pool("RightNote", 10) , new Pool("PowerNote", 10), new Pool("WinBoom", 13), new Pool("MissBoom", 13), new Pool("BoomTrashA", 15), new Pool("BoomTrashF", 15), new Pool("PowerNoteStartBoom", 10), new Pool("PlayerMiss", 10) };
 	for (Pool* pool : pools) //이중 값을 가져오기 위해 포인터 형식사용
@@ -185,7 +146,7 @@ void Game::InitPool()
 		}
 	}
 }
-GameObject* Game::CreateObjects(const char* name)
+GameObject* State_Play::CreateObjects(const char* name)
 {
 	GameObject* gameObject = NULL;
 
@@ -233,7 +194,7 @@ GameObject* Game::CreateObjects(const char* name)
 
 	return gameObject;
 }
-GameObject* Game::GetObject(Vector2D spawnPos, const char* name)
+GameObject* State_Play::GetObject(Vector2D spawnPos, const char* name)
 {
 	GameObject* gameObject = objects[name].back();
 	gameObject->SetActive(true);
@@ -244,18 +205,35 @@ GameObject* Game::GetObject(Vector2D spawnPos, const char* name)
 }
 //----------------------------------------------------------------------
 //PlayInput
-void Game::handleInput()
+void State_Play::handleInput()
 {
 	//Command Pattern - 메인화면, 플레이 
 	Input_Play();
 }
-void Game::Input_Play()
+void State_Play::Input_Play()
 {
-	//Quit
+	//Quit 
 	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_ESCAPE)) {
-		m_bRunning = false;
+		//m_bRunning = false; game->Quit();
+	}
+	//KeyUp
+	if (!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_LEFT)) {
+		leftButton->UnPressed();
+	}
+	if (!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_UP)) {
+		upButton->UnPressed();
+	}
+	if (!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_DOWN)) {
+		downButton->UnPressed();
+	}
+	if (!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_RIGHT)) {
+		rightButton->UnPressed();
+	}
+	if (!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_SPACE)) {
+		spaceButton->UnPressed();
 	}
 	//KeyDown
+	if (isGameOver) return;
 	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_LEFT)) {
 		leftButton->Pressed();
 	}
@@ -271,75 +249,11 @@ void Game::Input_Play()
 	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_SPACE)) {
 		spaceButton->Pressed();
 	}
-	//KeyUp
-	if (!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_LEFT)) {
-		leftButton->UnPressed();
-	}
-	if (!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_UP)) {
-		upButton->UnPressed();
-	}
-	if (!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_DOWN)) {
-		downButton->UnPressed();
-	}
-	if (!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_RIGHT)) {
-		rightButton->UnPressed();
-		player->PressOut_Right();
-	}
-	if (!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_SPACE)) {
-		spaceButton->UnPressed();
-	}
 }
-void Game::GameOver() 
+void State_Play::GameOver()
 {
 	OffObjects();
 	lerpPanel->SetActive(true);
 	player->Dead();
 	isGameOver = true;
 }
-/*
-void Game::MainMove(State state)
-{
-	int speed = state;
-	speed = curFlip == SDL_FLIP_HORIZONTAL ? -speed : speed;
-
-	if (SDL_GetTicks() % 8 == 0)
-	{
-		sprite1->m_destinationRectangle.x += speed;
-		sprite2->m_destinationRectangle.x += speed;
-	}
-}
-void Game::MainAnimation(State state)
-{
-	switch (state)
-	{
-	case idle:
-		SDL_RenderCopyEx(m_pRenderer, sprite1->texture, &sprite1->m_sourceRectangle, &sprite1->m_destinationRectangle, NULL, NULL, curFlip);
-		break;
-	case walk:
-		SDL_RenderCopyEx(m_pRenderer, sprite2->texture, &sprite2->m_sourceRectangle, &sprite2->m_destinationRectangle, NULL, NULL, curFlip);
-		break;
-	}
-}
-void Game::DhrowBorder()
-{
-	SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 255, 255);
-	//SDL_RenderClear(m_pRenderer);
-
-	SDL_Rect fillRect = { SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 }; //x, y, w, h
-	SDL_SetRenderDrawColor(m_pRenderer, 255, 0, 0, 255);
-	SDL_RenderFillRect(m_pRenderer, &fillRect); //속이 꽉찬 사각형
-
-	SDL_Rect outlineRect = { SCREEN_WIDTH / 6, SCREEN_HEIGHT / 6, SCREEN_WIDTH * 2 / 3, SCREEN_HEIGHT * 2 / 3 };
-	SDL_SetRenderDrawColor(m_pRenderer, 0, 255, 0, 255);
-	SDL_RenderDrawRect(m_pRenderer, &outlineRect); //속이 빈 사각형
-
-	SDL_SetRenderDrawColor(m_pRenderer, 0, 0, 255, 255);
-	SDL_RenderDrawLine(m_pRenderer, 0, SCREEN_HEIGHT / 2, SCREEN_WIDTH, SCREEN_HEIGHT / 2); //선
-
-	SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 0, 255);
-	for (int i = 0; i < SCREEN_HEIGHT; i += 4)
-	{
-		SDL_RenderDrawPoint(m_pRenderer, SCREEN_WIDTH / 2, i); //점선
-	}
-}
-*/

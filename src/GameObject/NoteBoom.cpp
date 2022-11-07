@@ -1,5 +1,5 @@
 #include <NoteBoom.h>
-#include <Game.h> //#include <ObjectManager>
+#include <State_Play.h> //#include <ObjectManager>
 
 NoteBoom::NoteBoom(const LoaderParams* pParams, int frame) : SDLGameObject(pParams) { lastFrame = frame; }
 
@@ -27,5 +27,5 @@ void NoteBoom::OnceAnimation()
 }
 void NoteBoom::OnDisable()
 {
-	Game::GetInstance()->ReturnPool(GetName(), this);
+	State_Play::GetInstance()->ReturnPool(GetName(), this);
 }

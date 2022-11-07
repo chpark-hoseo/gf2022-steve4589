@@ -1,5 +1,5 @@
 #include <NotePad.h>
-#include <Game.h>
+#include <State_Play.h>
 #include <algorithm>
 
 NotePad::NotePad(const LoaderParams* pParams, string thisTag, string noteTag) : SDLGameObject(pParams)
@@ -30,11 +30,11 @@ void NotePad::DetectCollider()
 	{
 		if (ExitgameObject[i]->activeSelf())
 		{
-			Game::GetInstance()->GetObject(ExitgameObject[i]->GetPosition(), "BoomTrashA");
-			Game::GetInstance()->GetObject(ExitgameObject[i]->GetPosition(), "MissBoom");
+			State_Play::GetInstance()->GetObject(ExitgameObject[i]->GetPosition(), "BoomTrashA");
+			State_Play::GetInstance()->GetObject(ExitgameObject[i]->GetPosition(), "MissBoom");
 			ExitgameObject[i]->SetActive(false);
 
-			Game::GetInstance()->DamagedHp(8);
+			State_Play::GetInstance()->DamagedHp(8);
 		}
 	}
 }
@@ -61,20 +61,20 @@ void NotePad::OffNote()
 {
 	if (EntergameObject != NULL)
 	{
-		Game::GetInstance()->GetObject(EntergameObject->GetPosition(), "WinBoom");
+		State_Play::GetInstance()->GetObject(EntergameObject->GetPosition(), "WinBoom");
 		EntergameObject->SetActive(false);
 
-		Game::GetInstance()->HealHp(1);
+		State_Play::GetInstance()->HealHp(1);
 	}
 	else
 	{
 		if (getTag == "PowerNote" /* && otherPads도 실패했다면 */) 
 		{
-			Game::GetInstance()->GetObject(playerPos, "PlayerMiss");
-			Game::GetInstance()->DamagedEnergy(17);
+			State_Play::GetInstance()->GetObject(playerPos, "PlayerMiss");
+			State_Play::GetInstance()->DamagedEnergy(17);
 			return;
 		}
-		Game::GetInstance()->GetObject(playerPos, "PlayerMiss");
-		Game::GetInstance()->DamagedHp(4);
+		State_Play::GetInstance()->GetObject(playerPos, "PlayerMiss");
+		State_Play::GetInstance()->DamagedHp(4);
 	}
 }

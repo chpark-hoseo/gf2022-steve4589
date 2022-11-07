@@ -1,5 +1,5 @@
 #include<PowerNote.h>
-#include<Game.h>
+#include<State_Play.h>
 
 PowerNote::PowerNote(const LoaderParams* pParams) : SDLGameObject(pParams) { tag = "PowerNote"; }
 
@@ -20,5 +20,5 @@ void PowerNote::move()
 }
 void PowerNote::OnDisable()
 {
-	Game::GetInstance()->ReturnPool(tag.c_str(), this);
+	State_Play::GetInstance()->ReturnPool(tag.c_str(), this);
 }

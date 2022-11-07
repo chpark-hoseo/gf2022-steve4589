@@ -1,4 +1,4 @@
-#include <Game.h>
+#include <State_Play.h>
 #include <Collider2D.h>
 
 GameObject* Collider2D::OnCollision2D(std::string tag)
@@ -72,7 +72,7 @@ vector <GameObject*> Collider2D::OnCollisionExit2D(std::string tag)
 }
 void Collider2D::SetPosition(float x, float y, int h, int w)
 {
-	colliders = Game::GetInstance()->GetColliders();
+	colliders = State_Play::GetInstance()->GetColliders();
 	b.w = colliders[0]->getWidth(); //어차피 모양은 다 똑같으므로 
 	b.h = colliders[0]->getHeight();
 	a.x = x;

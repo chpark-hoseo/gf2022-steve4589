@@ -2,7 +2,7 @@
 #include <Note.h>
 #include <NoteBoom.h>
 #include <iostream>
-#include <Game.h>
+#include <State_Play.h>
 
 Note::Note(const LoaderParams* pParams, const char* name) : SDLGameObject(pParams)
 {
@@ -27,6 +27,6 @@ void Note::move()
 }
 void Note::OnDisable()
 {
-	Game::GetInstance()->ReturnPool(tag.c_str(), this);
+	State_Play::GetInstance()->ReturnPool(tag.c_str(), this);
 	m_position.setXY(0, 0);
 }

@@ -104,7 +104,7 @@ public:
     }
     virtual void execute() {
         notePad->IsPressed(true);
-        player->PressIn_Left();
+        player->PressIn_Down();
     }
     virtual void Undo() {
         notePad->PressOut(false);

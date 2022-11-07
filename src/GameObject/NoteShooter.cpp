@@ -1,5 +1,5 @@
 #include <NoteShooter.h>
-#include <Game.h>
+#include <State_Play.h>
 #include <PowerNote.h>
 
 NoteShooter::NoteShooter(const LoaderParams* pParams) : SDLGameObject(pParams) 
@@ -24,7 +24,7 @@ void NoteShooter::Shot(float speed, Vector2D disPos)
 {
 	SetPop();
 
-	GameObject* gameObject = Game::GetInstance()->GetObject(m_position, "PowerNote");
+	GameObject* gameObject = State_Play::GetInstance()->GetObject(m_position, "PowerNote");
 
 	Vector2D shotPos = gameObject->GetPosition();
 
@@ -37,7 +37,7 @@ void NoteShooter::Shot(float speed, Vector2D disPos)
 	gameObject->SetSpeed(speed);
 	gameObject->SetDirVec(setDirVec);
 
-	Game::GetInstance()->GetObject(m_position, "PowerNoteStartBoom");
+	State_Play::GetInstance()->GetObject(m_position, "PowerNoteStartBoom");
 }
 void NoteShooter::SetIdle()
 {

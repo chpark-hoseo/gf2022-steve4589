@@ -1,7 +1,7 @@
 #pragma once
 #include "NoteManager.h"
 #include "Vector2D.h"
-#include <Game.h>
+#include <State_Play.h>
 #include <Timer.h>
 
 using namespace std;
@@ -89,19 +89,19 @@ void NoteManager::spawnNotes()
 		return;
 	case 0:
 		spawnPos = noteData.pos;
-		gameObject = Game::GetInstance()->GetObject(spawnPos, "LeftNote");
+		gameObject = State_Play::GetInstance()->GetObject(spawnPos, "LeftNote");
 		break;
 	case 1:
 		spawnPos = noteData.pos1;
-		gameObject = Game::GetInstance()->GetObject(spawnPos, "UpNote");
+		gameObject = State_Play::GetInstance()->GetObject(spawnPos, "UpNote");
 		break;
 	case 2:
 		spawnPos = noteData.pos2;
-		gameObject = Game::GetInstance()->GetObject(spawnPos, "DownNote");
+		gameObject = State_Play::GetInstance()->GetObject(spawnPos, "DownNote");
 		break;
 	case 3:
 		spawnPos = noteData.pos3;
-		gameObject = Game::GetInstance()->GetObject(spawnPos, "RightNote");
+		gameObject = State_Play::GetInstance()->GetObject(spawnPos, "RightNote");
 		break;
 	}
 	gameObject->SetSpeed(speed);

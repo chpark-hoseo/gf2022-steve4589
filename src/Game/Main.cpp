@@ -1,5 +1,5 @@
-﻿#pragma once
-#include "Game.h"
+﻿#include "Game.h"
+#include <State_Play.h>
 
 const int FPS = 60;
 const float DELAY_TIME = 1000.0f / FPS;
@@ -11,6 +11,7 @@ int main(int argc, char* argv[])
     {
         frameStart = SDL_GetTicks();    
         Game::GetInstance()->Awake();
+        Game::GetInstance()->ChangeState(State_Play::GetInstance());
 
         while (Game::GetInstance()->running())
         {
