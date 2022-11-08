@@ -1,5 +1,7 @@
 #include <State_Play.h>
 
+State_Play* State_Play::instance = 0;
+
 void State_Play::Awake()
 {
 	//game->ChangeState( CPlayState::Instance() );
@@ -65,9 +67,10 @@ void State_Play::Awake()
 	m_gameObjects.push_back(hpBar);
 	m_gameObjects.push_back(energyBar);
 
-	m_gameObjects.push_back(lerpPanel);
+	m_gameObjects.push_back(player); //musicSelect
 
-	m_gameObjects.push_back(player);
+	m_gameObjects.push_back(musicSelect);
+	m_gameObjects.push_back(lerpPanel);
 	//ObjectPool
 	InitPool();
 	std::cout << "ObjectSize => " << m_gameObjects.size() << "\n\n";
@@ -83,14 +86,14 @@ void State_Play::Awake()
 
 	powerNotePad1->SetPosition(Vector2D(1536 * 0.5f - 550, 550));
 	powerNotePad2->SetPosition(Vector2D(1536 * 0.5f - 400, 400));
-
-	NoteShooter1->SetPosition(Vector2D(1300, 800));
+	NoteShooter1->SetPosition(Vector2D(1300, 800)); 
 
 	player->PosTrigger();
 
+	musicSelect->SetPosition(Vector2D(800, 300));
+
 	hpBar_Back->SetPosition(Vector2D(640, 750));
 	hpBar->SetPosition(Vector2D(640, 750));
-
 	energyBar->SetPosition(Vector2D(830, 750));
 
 	NoteManager::GetInstance()->SetPowerNotePads(powerNotePad1);
@@ -233,7 +236,7 @@ void State_Play::Input_Play()
 		spaceButton->UnPressed();
 	}
 	//KeyDown
-	if (isGameOver) return;
+	if (isKeyStop) return;
 	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_LEFT)) {
 		leftButton->Pressed();
 	}
@@ -255,5 +258,6 @@ void State_Play::GameOver()
 	OffObjects();
 	lerpPanel->SetActive(true);
 	player->Dead();
+	isKeyStop = true;
 	isGameOver = true;
 }

@@ -13,7 +13,6 @@ public:
 	virtual void handleEvents(Game* game) = 0;
 
 	virtual void clean() = 0;
-	virtual void quit() = 0;
 
 	//Input
 	virtual void handleInput() = 0;

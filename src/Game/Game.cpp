@@ -33,7 +33,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 	m_bRunning = true;
 	return true;
 }
-void Game::Cleanup()
+void Game::clean()
 {
 	// cleanup the all states
 	while (!m_gameStates.empty()) {

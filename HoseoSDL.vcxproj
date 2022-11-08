@@ -144,6 +144,7 @@
   <ItemGroup>
     <ClCompile Include="src\Animation\Animation.cpp" />
     <ClCompile Include="src\Animation\BackScroll.cpp" />
+    <ClCompile Include="src\GameObject\MusicSelectPanel.cpp" />
     <ClCompile Include="src\Game\State_Play.cpp" />
     <ClCompile Include="src\Game\State_StartLogo.cpp" />
     <ClCompile Include="src\physics\CustomPhysics.cpp" />
@@ -181,6 +182,7 @@
     <ClInclude Include="include\InputHandler.h" />
     <ClInclude Include="include\LoaderParams.h" />
     <ClInclude Include="include\main.h" />
+    <ClInclude Include="include\MusicSelectPanel.h" />
     <ClInclude Include="include\NoteBoom.h" />
     <ClInclude Include="include\NoteManager.h" />
     <ClInclude Include="include\NotePad.h" />

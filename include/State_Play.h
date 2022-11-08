@@ -15,6 +15,7 @@
 //GameObject
 #include <GameObject.h>
 #include <Player.h>
+#include <MusicSelectPanel.h>
 //UI
 #include <Command.h>
 #include <LerpPanel.h>
@@ -30,6 +31,9 @@
 #define MAX_HP 50;
 #define MAX_ENERGY 50;
 
+#define SCREEN_WIDTH 1536
+#define SCREEN_HEIGHT 1080
+
 class Game;
 
 class Pool //각각의 다른 게임오브젝트를 구별하기 위한 구조체처럼 사용합니다
@@ -38,6 +42,28 @@ public:
 	Pool(const char name[20], int size) : m_name(name), m_size(size) {}
 	const char* m_name;
 	int m_size;
+};
+
+struct Stage0SpritesData //Tutorial
+{
+
+	string backFrame = "";
+	string backFrame = "";
+	string backFrame = "";
+};
+struct Stage1SpritesData
+{
+
+	string backFrame = "";
+	string backFrame = "";
+	string backFrame = "";
+};
+struct Stage1SpritesData
+{
+
+	string backFrame = "";
+	string backFrame = "";
+	string backFrame = "";
 };
 
 class State_Play : public GameState
@@ -58,7 +84,6 @@ public:
 	virtual void handleEvents(Game* game);
 
 	virtual void clean();
-	virtual void quit();
 
 	//Input
 	virtual void handleInput();
@@ -129,6 +154,7 @@ private:
 	int hp = max_Hp;
 	int energy = max_Energy;
 
+	bool isKeyStop = false;
 	bool isGameOver = false;
 
 	//MainCharacter 
@@ -179,6 +205,7 @@ private:
 
 	//UI 
 	LerpPanel* lerpPanel = new LerpPanel(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "fadePanel_sprite"));
+	MusicSelectPanel* musicSelect = new MusicSelectPanel(new LoaderParams(0, 0, 720, 720, 0, 0, "selectMenu_sprite"));
 
 	//GameObject* back2 = new SDLGameObject(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "stage1_sprite"));
 

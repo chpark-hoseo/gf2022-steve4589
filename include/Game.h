@@ -38,16 +38,14 @@ public:
 
 	/* Main Frame */
 	bool init(const char* title, int, int, int, int, int flags);
-	virtual void Awake();
 
 	void render();
 	void update();
 	bool running();
 	void handleEvents();
 
-	void Cleanup();
-
 	void clean();
+
 	void quit() { m_bRunning = false; }
 
 
