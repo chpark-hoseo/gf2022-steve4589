@@ -6,7 +6,7 @@ class GameObject {
 public:
 	virtual  void load(float x, float y, int width, int height,
 		std::string textureID);
-	virtual  void draw(SDL_Renderer* pRenderer);
+	virtual  void draw(SDL_Renderer* pRenderer); //ds
 	virtual  void update() {};
 	virtual  void clean() {};
 
