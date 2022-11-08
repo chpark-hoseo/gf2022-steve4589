@@ -1,7 +1,7 @@
 #include <GameObject.h>
 #include <SDL2/SDL.h>
 
-void GameObject::load(int x, int y, int width, int height, std::string textureID)
+void GameObject::load(float x, float y, int width, int height, std::string textureID)
 {
     m_x = x;
     m_y = y;
@@ -20,8 +20,4 @@ void GameObject::draw(SDL_Renderer* pRenderer)
             m_currentRow,
             m_currentFrame,
             pRenderer);
-}
-void GameObject::update()
-{
-    m_x += 1;
 }

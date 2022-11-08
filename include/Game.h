@@ -4,6 +4,7 @@
 #include <SDL2/SDL_keyboard.h>
 #include <TextureManager.h>
 #include <Player.h>
+#include <Monster.h>
 #include <vector>
 
 #define SCREEN_WIDTH 1024
@@ -34,4 +35,12 @@ private:
 	int m_currentFrame;
 
 	std::vector<GameObject*> m_gameObjects;
+
+	Player* m_go = new Player(3);
+	Player* m_player = new Player(-3); //Monster
+
+	Monster* m_Monster_diagonal = new Monster();
+	Monster* m_Monster_swim = new Monster();
+	Monster* m_Monster_wave = new Monster();
+
 };

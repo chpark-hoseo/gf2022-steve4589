@@ -19,7 +19,7 @@ bool TextureManager::load(string fileName, string id, SDL_Renderer* pRenderer)
 	}
 	return false;
 }
-void TextureManager::TextureClean(string id) //사용하지 않는 텍스쳐를 삭제하는 코드 추가하기 
+void TextureManager::TextureClean(string id) 
 {
 	m_textureMap.erase(id);
 }
@@ -43,7 +43,7 @@ void TextureManager::TextureAllClean()
 	m_textureMap.clear();*/
 }
 
-void TextureManager::draw(string id, int x, int y, int width, int height, SDL_Renderer* pRenderer, SDL_RendererFlip flip)
+void TextureManager::draw(string id, float x, float y, int width, int height, SDL_Renderer* pRenderer, SDL_RendererFlip flip)
 {
 	SDL_Rect srcRect;
 	SDL_Rect destRect;
@@ -62,13 +62,13 @@ void TextureManager::draw(string id, int x, int y, int width, int height, SDL_Re
 	srcRect.x = 0;
 	srcRect.y = 0;
 
-	destRect.x = x;
-	destRect.y = y;
+	destRect.x = (int)x;
+	destRect.y = (int)y;
 
 	SDL_RenderCopyEx(pRenderer, m_textureMap[id], &srcRect, &destRect, 0, 0, flip);
 }
 
-void TextureManager::drawFrame(string id, int x, int y, int width, int height, int currentRow, int currentFrame, SDL_Renderer* pRenderer, SDL_RendererFlip flip)
+void TextureManager::drawFrame(string id, float x, float y, int width, int height, int currentRow, int currentFrame, SDL_Renderer* pRenderer, SDL_RendererFlip flip)
 {
 	SDL_Rect srcRect;
 	SDL_Rect destRect;
@@ -77,8 +77,8 @@ void TextureManager::drawFrame(string id, int x, int y, int width, int height, i
 	srcRect.y = height * currentRow;
 	srcRect.w = destRect.w = width;
 	srcRect.h = destRect.h = height;
-	destRect.x = x;
-	destRect.y = y;
+	destRect.x = (int)x;
+	destRect.y = (int)y;
 
 	SDL_RenderCopyEx(pRenderer, m_textureMap[id], &srcRect, &destRect, 0, 0, flip);
 }

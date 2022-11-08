@@ -3,6 +3,7 @@
 #include "iostream"
 #include "string.h"
 #include "GameObject.h"
+#include <algorithm>
 
 bool Game::init(const char* title, int xpos, int ypos, int width, int height, int flags)
 {
@@ -22,13 +23,17 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 				TheTextureManager::GetInstance()->load("textureManager_test", "dog1_sprite", m_pRenderer);
 				TheTextureManager::GetInstance()->load("textureManager_test", "dogBack_sprite", m_pRenderer);
 
-				GameObject* m_go = new GameObject();
-				GameObject* m_player = new Player();
-
-				m_go->load(100, 100, 128, 82, "dog_animate"); 
+				m_go->load(100, 100, 128, 82, "dog_animate");
 				m_player->load(300, 300, 128, 82, "dog_animate");
+				m_Monster_diagonal->load(0, 0, 128, 82, "dog_animate");
+				m_Monster_swim->load(0, 300, 128, 82, "dog_animate");
+				m_Monster_wave->load(300, 300, 128, 82, "dog_animate");
+
 				m_gameObjects.push_back(m_go);
 				m_gameObjects.push_back(m_player);
+
+				m_go->GoSwim();
+				m_player->GoWave();
 			}
 			else {
 				return false; // 랜더러 생성 실패
@@ -46,10 +51,8 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 }
 void Game::update()
 {
-	for (int i = 0; i < m_gameObjects.size(); i++)
-	{
-		m_gameObjects[i]->update();
-	}
+	//과제1. for_each 사용해보기 
+	for_each(m_gameObjects.begin(), m_gameObjects.end(), [](GameObject*& gameObject) {gameObject->update(); }); //3번째 인자에 람다식을 썼습니다
 }
 
 void Game::render()
