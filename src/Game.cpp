@@ -29,11 +29,15 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 				m_Monster_swim->load(0, 300, 128, 82, "dog_animate");
 				m_Monster_wave->load(300, 300, 128, 82, "dog_animate");
 
+				m_Monster_swim->GoSwim();
+				m_Monster_wave->GoWave();
+
 				m_gameObjects.push_back(m_go);
 				m_gameObjects.push_back(m_player);
 
-				m_go->GoSwim();
-				m_player->GoWave();
+				m_gameObjects.push_back(m_Monster_diagonal);
+				m_gameObjects.push_back(m_Monster_swim);
+				m_gameObjects.push_back(m_Monster_wave);
 			}
 			else {
 				return false; // 랜더러 생성 실패
