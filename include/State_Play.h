@@ -46,10 +46,14 @@ public:
 
 struct Stage0SpritesData //Tutorial
 {
+	string stagetName = "stage0";
+
+	string back1 = "";
+	string back2 = "";
 
 	string backFrame = "";
-	string backFrame = "";
-	string backFrame = "";
+	string backFrame1 = "";
+	string backFrame2 = "";
 };
 struct Stage1SpritesData
 {
