@@ -19,7 +19,7 @@ void Player::update()
 
 	if (isKnockBack == true) { Gravity(); }
 
-	if (isDead == true) return; 
+	if (isDead == true || isPanic == true) return;
 	SetState();
 	if (m_animation->GetAnimationOnce() == false && isPop)
 	{
@@ -47,7 +47,8 @@ void Player::SetState()
 void Player::Idle_Play()
 {
 	isidle = false;
-	m_animation->SetProp(m_textureID, 0.005f, 1, 12);
+	std::cout << "isidle_Play ==>" << isidle_Play << "\n";
+	m_animation->SetProp(m_textureID, 0.005f, isidle_Play, 12);
 
 	m_animation->SetAnimPause(true);
 }
@@ -85,10 +86,32 @@ void Player::Pop_Down()
 		turn = true;
 	}
 }
+void Player::PanicOn()
+{
+	if (isPanic) return;
+	isPanic = true;
+
+	//수초후 HealEnergy(50);
+
+	m_animation->SetProp(m_textureID, 0.008f, 5, 3);
+
+	m_animation->StartAnimation();
+	m_animation->AnimationOnce(true); //이거 끝나면 다시 false로 바꾸기 
+}
+void Player::PanicOff()
+{
+	if (!isPanic) return;
+	isPanic = false;
+	m_animation->SetProp(m_textureID, 0.01f, 5, 2);
+
+	m_animation->StartAnimation();
+	m_animation->AnimationOnce(false);
+}
 void Player::Dead()
 {
 	isDead = true;
 	isKnockBack = true;
+	isPanic = false;
 
 	m_animation->SetProp(m_textureID, 0.008f, 4, 9);
 

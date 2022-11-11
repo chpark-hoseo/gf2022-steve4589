@@ -24,10 +24,16 @@ public:
 	void Pop_Down();
 
 	//Main, Play Pos
-	void PosTrigger()
+	void PosTrigger(bool isMain)
 	{
-		if (m_position.getY() == pSetPosData.mainPos.getY()) m_position = pSetPosData.playerPos;
-		else m_position = pSetPosData.mainPos;
+		if (isMain){
+			m_position = pSetPosData.playerPos;
+		}
+		else{
+			m_position = pSetPosData.mainPos;
+		}
+		isidle_Play = isMain;
+		Idle_Play();
 	}
 
 	//Input
@@ -44,7 +50,18 @@ public:
 	void PressOut_Space();
 
 	void Dead();
+	void DeadOff() 
+	{
+		isDead = false;
+
+		m_animation->StartAnimation();
+		m_animation->SetAnimPause(true);
+		m_animation->AnimationOnce(false);
+	}
 	void KnockBack();
+
+	void PanicOn();
+	void PanicOff();
 private:
 	Animation* m_animation = new Animation();
 	pSetPosData pSetPosData;
@@ -54,7 +71,6 @@ private:
 	void Idle_Play();
 	void LeftPop();
 	void RightPop();
-	void Panic() {}
 
 	void PopLife();
 
@@ -68,6 +84,7 @@ private:
 	bool ispopLeft = false;
 	bool ispopRight = false;
 	bool isidle = true;
+	bool isidle_Play = false;
 	bool ismain = false;
 	bool isPanic = false; 
 

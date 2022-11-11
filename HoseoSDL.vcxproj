@@ -143,10 +143,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Animation\Animation.cpp" />
-    <ClCompile Include="src\Animation\BackScroll.cpp" />
+    <ClCompile Include="src\Controller\BackScroll.cpp" />
+    <ClCompile Include="src\Button\NormalButton.cpp" />
+    <ClCompile Include="src\Controller\StageControl.cpp" />
+    <ClCompile Include="src\Controller\StageController.cpp" />
     <ClCompile Include="src\GameObject\MusicSelectPanel.cpp" />
-    <ClCompile Include="src\Game\State_Play.cpp" />
-    <ClCompile Include="src\Game\State_StartLogo.cpp" />
+    <ClCompile Include="src\Button\PowerNotePad.cpp" />
+    <ClCompile Include="src\Button\PowerNotePadButton.cpp" />
+    <ClCompile Include="src\Scene\State_Play.cpp" />
+    <ClCompile Include="src\Scene\State_StartLogo.cpp" />
     <ClCompile Include="src\physics\CustomPhysics.cpp" />
     <ClCompile Include="src\UI\LerpPanel.cpp" />
     <ClCompile Include="src\UI\HealthBar.cpp" />
@@ -158,7 +163,7 @@
     <ClCompile Include="src\GameObject\PowerNote.cpp" />
     <ClCompile Include="src\GameObject\SDLGameObject.cpp" />
     <ClCompile Include="src\Controller\InputHandler.cpp" />
-    <ClCompile Include="src\GameObject\NotePad.cpp" />
+    <ClCompile Include="src\Button\NotePad.cpp" />
     <ClCompile Include="src\GameObject\NoteBoom.cpp" />
     <ClCompile Include="src\manager\ObjectManager.cpp" />
     <ClCompile Include="src\timer\Timer.cpp" />
@@ -172,6 +177,12 @@
   <ItemGroup>
     <ClInclude Include="include\Animation.h" />
     <ClInclude Include="include\BackScroll.h" />
+    <ClInclude Include="include\NormalButton.h" />
+    <ClInclude Include="include\PowerNotePad.h" />
+    <ClInclude Include="include\PowerNotePadButton.h" />
+    <ClInclude Include="include\StageControl.h" />
+    <ClInclude Include="include\StageController.h" />
+    <ClInclude Include="include\TemplateButton.h" />
     <ClInclude Include="include\Collider2D.h" />
     <ClInclude Include="include\Command.h" />
     <ClInclude Include="include\GameState.h" />

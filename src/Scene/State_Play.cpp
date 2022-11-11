@@ -24,6 +24,9 @@ void State_Play::Awake()
 	TextureManager::GetInstance()->load("need for A+_notesPad", "notesPad_sprite", m_pRenderer);
 	TextureManager::GetInstance()->load("need for A+_PowernotePad", "powerNotesPad_sprite", m_pRenderer);
 
+	//노말 버튼
+	TextureManager::GetInstance()->load("need for A+_upDownCok", "nomalButton_sprite", m_pRenderer);
+
 	//폭발 애니메이션  
 	TextureManager::GetInstance()->load("need for A+_noteBoom", "notesBoom_sprite", m_pRenderer);
 	TextureManager::GetInstance()->load("need for A+_noteBoom1", "notesBoom1_sprite", m_pRenderer);
@@ -37,9 +40,10 @@ void State_Play::Awake()
 	//TextureManager::GetInstance()->load("need for A+_noteShooter_stage2", "noteShooter_stage2_sprite", m_pRenderer);
 
 	//UI 
+	TextureManager::GetInstance()->load("need for A+_selectMenu_music", "selectMenu_music_sprite", m_pRenderer);
 	TextureManager::GetInstance()->load("need for A+_selectMenu", "selectMenu_sprite", m_pRenderer);
 	TextureManager::GetInstance()->load("need for A+_fadePanel", "fadePanel_sprite", m_pRenderer); 
-	TextureManager::GetInstance()->load("need for A+_upDownCok", "upDownCok_sprite", m_pRenderer);
+	TextureManager::GetInstance()->load("need for A+_upDownCok", "upDownCok_sprite", m_pRenderer); 
 
 	//체력바 
 	TextureManager::GetInstance()->load("need for A+_healthBarPack", "healthBarPack_sprite", m_pRenderer);
@@ -59,26 +63,34 @@ void State_Play::Awake()
 	m_gameObjects.push_back(notePad2);
 	m_gameObjects.push_back(notePad3);
 
+	m_gameObjects.push_back(normalButton1);
+	m_gameObjects.push_back(normalButton2);
+
 	m_gameObjects.push_back(powerNotePad1);
 	m_gameObjects.push_back(powerNotePad2);
 
-	m_gameObjects.push_back(NoteShooter1); //SetPos 
+	m_gameObjects.push_back(NoteShooter1); 
 
 	m_gameObjects.push_back(hpBar_Back);
 	m_gameObjects.push_back(hpBar);
 	m_gameObjects.push_back(energyBar);
 
-	m_gameObjects.push_back(player); //musicSelect
+	m_gameObjects.push_back(gameOverPanel);
 
-	m_gameObjects.push_back(musicSelect);
-	m_gameObjects.push_back(lerpPanel);
+	m_gameObjects.push_back(player); 
+
+	m_gameObjects.push_back(musicSelect_music);
+	m_gameObjects.push_back(musicSelect); 
+	//m_gameObjects.push_back(lerpPanel);
 	//ObjectPool
 	InitPool();
 	std::cout << "ObjectSize => " << m_gameObjects.size() << "\n\n";
 
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	//Setting
-	NoteManager::GetInstance()->ReadLineToTxt("stage1");
+	SetCommand(nullCommand, upCommand, downCommand, nullCommand, nullCommand);
+	//stageController->StageDataInit();
+	//NoteManager::GetInstance()->ReadLineToTxt("stage1");
 	//Position
 	notePad->SetPosition(Vector2D(1536 * 0.5f - 250, 550));
 	notePad1->SetPosition(Vector2D(1536 * 0.5f - 100, 550));
@@ -89,16 +101,20 @@ void State_Play::Awake()
 	powerNotePad2->SetPosition(Vector2D(1536 * 0.5f - 400, 400));
 	NoteShooter1->SetPosition(Vector2D(1300, 800)); 
 
-	player->PosTrigger();
+	normalButton1->SetPosition(Vector2D(1100, 50));
+	normalButton2->SetPosition(Vector2D(1100, 850));
 
-	musicSelect->SetPosition(Vector2D(800, 300));
+	OnOffStageSetting(false);
+
+	musicSelect->SetPosition(Vector2D(800, 150));
+	musicSelect_music->SetPosition(Vector2D(814, 220));
 
 	hpBar_Back->SetPosition(Vector2D(640, 750));
 	hpBar->SetPosition(Vector2D(640, 750));
 	energyBar->SetPosition(Vector2D(830, 750));
 
 	NoteManager::GetInstance()->SetPowerNotePads(powerNotePad1);
-	NoteManager::GetInstance()->SetPowerNotePads(powerNotePad2);
+	NoteManager::GetInstance()->SetPowerNotePads(powerNotePad1);
 	//해당 스테이지가 시작할때 추가 하도록 변경
 	NoteManager::GetInstance()->SetNoteShooters(NoteShooter1);
 }
@@ -110,9 +126,9 @@ void State_Play::update(Game* game)
 	//GameOver;
 	if (hp <= 0 && !isGameOver) { GameOver(); }
 	//State N
-	if (isGameOver == false)
+	if (isGameOver == false || isStageStart == false)
 	{
-		NoteManager::GetInstance()->ReadSpawnNotes(); //추가 필요--> 1스테이지 버튼 => 1스테이지 시트, 2스테이지 버튼 => 2스테이지 시트 
+		//NoteManager::GetInstance()->ReadSpawnNotes(); //추가 필요--> 1스테이지 버튼 => 1스테이지 시트, 2스테이지 버튼 => 2스테이지 시트 
 	}
 }
 void State_Play::render(Game* game)
@@ -220,6 +236,7 @@ void State_Play::Input_Play()
 	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_ESCAPE)) {
 		//m_bRunning = false; game->Quit();
 	}
+	if (isKeyStop) return; 
 	//KeyUp
 	if (!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_LEFT)) {
 		leftButton->UnPressed();
@@ -237,7 +254,7 @@ void State_Play::Input_Play()
 		spaceButton->UnPressed();
 	}
 	//KeyDown
-	if (isKeyStop) return;
+	if (isGameOver) return;
 	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_LEFT)) {
 		leftButton->Pressed();
 	}
@@ -257,7 +274,7 @@ void State_Play::Input_Play()
 void State_Play::GameOver()
 {
 	OffObjects();
-	lerpPanel->SetActive(true);
+	gameOverPanel->SetActive(true);
 	player->Dead();
 	isKeyStop = true;
 	isGameOver = true;

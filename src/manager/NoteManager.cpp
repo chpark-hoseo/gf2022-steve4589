@@ -109,7 +109,7 @@ void NoteManager::spawnNotes()
 void NoteManager::SpawnPowerNote(int getPoint)
 {
 	NoteShooter* noteShooter = NULL;
-	NotePad* notePad = NULL;
+	PowerNotePad* notePad = NULL;
 
 	Vector2D disPos = Vector2D(0, 0);
 

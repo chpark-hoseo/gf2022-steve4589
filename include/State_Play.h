@@ -1,11 +1,12 @@
 #pragma once
 #include <SDL2/SDL.h>
 #include <GameState.h>
-
 //Basic
 #include "iostream"
 #include "string.h"
 #include "algorithm"
+#include<sstream>
+#include <fstream> 
 //SDL
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL.h>
@@ -13,6 +14,7 @@
 #include <NoteManager.h>
 #include <TextureManager.h>
 //GameObject
+#include <PowerNotePadButton.h>
 #include <GameObject.h>
 #include <Player.h>
 #include <MusicSelectPanel.h>
@@ -27,6 +29,8 @@
 #include <Note.h>
 #include <PowerNote.h>
 #include <NoteBoom.h>
+//StageData
+#include <StageController.h>
 
 #define MAX_HP 50;
 #define MAX_ENERGY 50;
@@ -44,32 +48,6 @@ public:
 	int m_size;
 };
 
-struct Stage0SpritesData //Tutorial
-{
-	string stagetName = "stage0";
-
-	string back1 = "";
-	string back2 = "";
-
-	string backFrame = "";
-	string backFrame1 = "";
-	string backFrame2 = "";
-};
-struct Stage1SpritesData
-{
-
-	string backFrame = "";
-	string backFrame = "";
-	string backFrame = "";
-};
-struct Stage1SpritesData
-{
-
-	string backFrame = "";
-	string backFrame = "";
-	string backFrame = "";
-};
-
 class State_Play : public GameState
 {
 public:
@@ -80,13 +58,10 @@ public:
 		}
 		return instance;
 	}
-
 	virtual void Awake();
-
 	virtual void render(Game* game);
 	virtual void update(Game* game);
 	virtual void handleEvents(Game* game);
-
 	virtual void clean();
 
 	//Input
@@ -98,6 +73,12 @@ public:
 	void PopState();
 	void PushState(GameState*);
 	void ChangeState(GameState*);
+
+	void KeyStop(bool onOff) { isKeyStop = onOff; }
+
+	//StageStart
+	void StateStart();
+	void StateEnd();
 
 	//void DhrowBorder();
 	vector<GameObject*> GetColliders() { return collisionObjects; }
@@ -130,7 +111,12 @@ public:
 	int GetEnergy() { return energy; }
 	void DamagedEnergy(int damagedEnergy)
 	{
-		if (energy - damagedEnergy < 0) { energy = 0; }
+		if (energy - damagedEnergy < 0)
+		{
+			player->PanicOn();
+			KeyStop(true);
+			energy = 0;
+		}
 		else { energy -= damagedEnergy; }
 	}
 	void HealEnergy(int heal)
@@ -138,12 +124,55 @@ public:
 		if (energy + heal > max_Energy) { hp = MAX_ENERGY; }
 		else { energy += heal; }
 	}
+
+	void OnOffStageSetting(bool onOff)
+	{
+		if (onOff)
+		{
+			OnOffStage_Main_Objects(false);
+			OnOffStage_Play_Objects(true);
+		}
+		else
+		{
+
+			OnOffStage_Main_Objects(true);
+			OnOffStage_Play_Objects(false);
+		}
+
+		gameOverPanel->SetActive(false);
+		player->PosTrigger(onOff);
+		player->DeadOff();
+		isKeyStop = false;
+		isGameOver = false;
+	}
+	void OnOffStage_Main_Objects(bool onOff)
+	{
+		musicSelect->SetActive(onOff);
+		musicSelect_music->SetActive(onOff);
+
+		normalButton1->SetActive(onOff);
+		normalButton2->SetActive(onOff);
+	}
+	void OnOffStage_Play_Objects(bool onOff)
+	{
+		hpBar_Back->SetActive(onOff);
+		hpBar->SetActive(onOff);
+		energyBar->SetActive(onOff);
+
+		notePad->SetActive(onOff);
+		notePad1->SetActive(onOff);
+		notePad2->SetActive(onOff);
+		notePad3->SetActive(onOff);
+
+		powerNotePad1->SetActive(onOff);
+		powerNotePad2->SetActive(onOff);
+	}
 private:
 	SDL_Renderer* m_pRenderer = Game::GetInstance()->getRenderer();
-	SDL_Window * m_pWindow = Game::GetInstance()->getWindow();
+	SDL_Window* m_pWindow = Game::GetInstance()->getWindow();
 	SDL_RendererFlip curFlip;
 
-	static State_Play * instance;
+	static State_Play* instance;
 
 	int transform_x = SCREEN_WIDTH / 2;
 	int transform_y = 500;
@@ -158,8 +187,11 @@ private:
 	int hp = max_Hp;
 	int energy = max_Energy;
 
+	bool isStageStart = false;
 	bool isKeyStop = false;
 	bool isGameOver = false;
+
+	//StateData
 
 	//MainCharacter 
 	Player* player = new Player(new LoaderParams(0, 0, 240, 240, 0, 0, "mainCharacter_sprite"));
@@ -174,32 +206,43 @@ private:
 	NotePad* notePad2 = new NotePad(new LoaderParams(0, 0, 144, 144, 0, 2, "notesPad_sprite"), "NotePad", "Note");
 	NotePad* notePad3 = new NotePad(new LoaderParams(0, 0, 144, 144, 0, 3, "notesPad_sprite"), "NotePad", "Note");
 	//PowerNotePads
-	NotePad* powerNotePad1 = new NotePad(new LoaderParams(0, 0, 144, 144, 0, 0, "powerNotesPad_sprite"), "PowerNotePad", "PowerNote");
-	NotePad* powerNotePad2 = new NotePad(new LoaderParams(0, 0, 144, 144, 0, 0, "powerNotesPad_sprite"), "PowerNotePad", "PowerNote");
+	PowerNotePadButton* powerNotePadButton = new PowerNotePadButton(2, powerNotePad1, powerNotePad1, powerNotePad2);
+	PowerNotePad* powerNotePad1 = new PowerNotePad(new LoaderParams(0, 0, 144, 144, 0, 0, "powerNotesPad_sprite"), "PowerNotePad", "PowerNote");
+	PowerNotePad* powerNotePad2 = new PowerNotePad(new LoaderParams(0, 0, 144, 144, 0, 0, "powerNotesPad_sprite"), "PowerNotePad", "PowerNote");
+	//NormalButton
+	NormalButton* normalButton1 = new NormalButton(new LoaderParams(0, 0, 96, 96, 0, 0, "nomalButton_sprite"), stageController/*, musicSelect, musicSelect_music*/);
+	NormalButton* normalButton2 = new NormalButton(new LoaderParams(0, 0, 96, 96, 0, 1, "nomalButton_sprite"), stageController/*, musicSelect, musicSelect_music */);
+	StageController* stageController = new StageController(musicSelect, musicSelect_music);
 	//NoteShooter
 	NoteShooter* NoteShooter1 = new NoteShooter(new LoaderParams(0, 0, 192, 192, 0, 0, "noteShooter_stage1_idle_sprite"));
+	//NoteShooter* NoteShooter2 = new NoteShooter(new LoaderParams(0, 0, 144, 144, 0, 3, "notesPad_sprite"));
 	//NoteShooter* NoteShooter3 = new NoteShooter(new LoaderParams(0, 0, 144, 144, 0, 3, "notesPad_sprite"));
-	//Backs
+	//Backs  selectMenu_music_sprite
 	GameObject* back_stage1 = new SDLGameObject(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "stage1_sprite"));
 	GameObject* back_stage_back1 = new SDLGameObject(new LoaderParams(0, 0, 384, SCREEN_HEIGHT, 0, 0, "stage1_back_sprite"));
 	GameObject* back_stage_back2 = new SDLGameObject(new LoaderParams(0, 0, 384, SCREEN_HEIGHT, 0, 1, "stage1_back_sprite")); //stage1_back_frame_sprite
-	//BackFrame
+	//BackFrame, UI
+	SDLGameObject* musicSelect_music = new SDLGameObject(new LoaderParams(0, 0, 672, 384, 0, 0, "selectMenu_music_sprite"));
 	SDLGameObject* back_stage_back_frame = new SDLGameObject(new LoaderParams(0, 0, 1152, 432, 0, 0, "stage1_back_frame_sprite"));
 	SDLGameObject* back_stage_back_frame1 = new SDLGameObject(new LoaderParams(0, 0, 1152, 432, 0, 1, "stage1_back_frame_sprite"));
 	SDLGameObject* back_stage_back_frame2 = new SDLGameObject(new LoaderParams(0, 0, 1152, 432, 0, 2, "stage1_back_frame_sprite"));
-	BackScroll* backScroll = new BackScroll(new LoaderParams(0, 0, 0, 0, 0, 0, "stage1_back_frame_sprite"), back_stage_back_frame, back_stage_back_frame1, back_stage_back_frame2);
-	
+
+	LerpPanel* lerpPanel = new LerpPanel(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "fadePanel_sprite"));
+	LerpPanel* gameOverPanel = new LerpPanel(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "fadePanel_sprite"));
+	SDLGameObject* musicSelect = new MusicSelectPanel(new LoaderParams(0, 0, 720, 720, 0, 0, "selectMenu_sprite"));
+	BackScroll* backScroll = new BackScroll(new LoaderParams(0, 0, 0, 0, 0, 0, ""), back_stage_back_frame, back_stage_back_frame1, back_stage_back_frame2);
+	//StageControl
+
 	//InputCommand
-	Command* upCommand = new UpCommand();
-	Command* downCommand = new DownCommand();
-	Command* rightCommand = new RightCommand();
-	Command* leftCommend = new LeftCommand();
-	Command* spaceCommand = new SpaceCommand();
+	Command* nullCommand = new NULLCommand();
+	Command* upCommand = new UpCommand(normalButton1);
+	Command* downCommand = new DownCommand(normalButton2);
+
 	Command* up_NoteCommand = new Up_NoteCommand(notePad1, player);
 	Command* down_NoteCommand = new Down_NoteCommand(notePad2, player);
 	Command* right_NoteCommand = new Right_NoteCommand(notePad3, player);
 	Command* left_NoteCommend = new Left_NoteCommand(notePad, player);
-	Command* space_NoteCommand = new Space_NoteCommand(powerNotePad1, powerNotePad2, player);
+	Command* space_NoteCommand = new Space_NoteCommand(powerNotePadButton, player);
 
 	Button* upButton = new Button(up_NoteCommand);
 	Button* downButton = new Button(down_NoteCommand);
@@ -207,9 +250,20 @@ private:
 	Button* leftButton = new Button(left_NoteCommend);
 	Button* spaceButton = new Button(space_NoteCommand);
 
-	//UI 
-	LerpPanel* lerpPanel = new LerpPanel(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "fadePanel_sprite"));
-	MusicSelectPanel* musicSelect = new MusicSelectPanel(new LoaderParams(0, 0, 720, 720, 0, 0, "selectMenu_sprite"));
+	void SetCommand(Command* left, Command* up, Command* down, Command* right, Command* space)
+	{
+		delete leftButton;
+		delete upButton;
+		delete downButton;
+		delete rightButton;
+		delete spaceButton;
+
+		leftButton = new Button(left);
+		upButton = new Button(up);
+		downButton = new Button(down);
+		rightButton = new Button(right);
+		spaceButton = new Button(space);
+	}
 
 	//GameObject* back2 = new SDLGameObject(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "stage1_sprite"));
 
@@ -219,5 +273,6 @@ private:
 	vector<GameObject*> allObjects;
 	map<const char*, vector<GameObject* >> objects; //모든 오브젝트
 
+	void StageStart(string stageName);
 	void GameOver();
 };

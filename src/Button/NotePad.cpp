@@ -38,25 +38,6 @@ void NotePad::DetectCollider()
 		}
 	}
 }
-//Button
-void NotePad::PressIn(bool isPress)
-{
-	if (!isPressIn) return;
-	isPressIn = false;
-	isPressOut = true;
-
-	OffNote();
-
-	m_currentRow = isPress;
-}
-void NotePad::PressOut(bool isPress)
-{
-	if (!isPressOut) return;
-	isPressOut = false;
-	isPressIn = true;
-
-	m_currentRow = isPress;
-}
 void NotePad::OffNote()
 {
 	if (EntergameObject != NULL)
@@ -68,13 +49,16 @@ void NotePad::OffNote()
 	}
 	else
 	{
-		if (getTag == "PowerNote" /* && otherPads도 실패했다면 */) 
-		{
-			State_Play::GetInstance()->GetObject(playerPos, "PlayerMiss");
-			State_Play::GetInstance()->DamagedEnergy(17);
-			return;
-		}
 		State_Play::GetInstance()->GetObject(playerPos, "PlayerMiss");
 		State_Play::GetInstance()->DamagedHp(4);
 	}
+}
+void NotePad::PressInAct()
+{
+	OffNote();
+	m_currentRow = true;
+}
+void NotePad::PressOutAct()
+{
+	m_currentRow = false;
 }

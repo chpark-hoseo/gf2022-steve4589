@@ -10,7 +10,7 @@
 #include <SDL2/SDL_timer.h>
 
 #include <NoteShooter.h>
-#include <NotePad.h>
+#include <PowerNotePad.h>
 #include <Spawn.h>
 
 using namespace std;
@@ -28,7 +28,7 @@ public:
 	void ReadSpawnNotes();
 
 	void SetNoteShooters(NoteShooter* noteShooter) { noteShooters.emplace_back(noteShooter); }
-	void SetPowerNotePads(NotePad* powerNotePad) { powerNotePads.emplace_back(powerNotePad); }
+	void SetPowerNotePads(PowerNotePad* powerNotePad) { powerNotePads.emplace_back(powerNotePad); }
 
 	queue<string> GetSpawnQueue();
 	map<int, string*> GetSpawnQueue_; //int -> n번째 스테이지
@@ -48,7 +48,7 @@ private:
 	double m_curTime = 0;
 
 	vector<NoteShooter*> noteShooters;
-	vector<NotePad*> powerNotePads;
+	vector<PowerNotePad*> powerNotePads;
 
 	queue<Spawn> spawnQueue;
 	queue<string> spawnQueue_test;

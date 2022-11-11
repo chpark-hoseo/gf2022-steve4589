@@ -29,13 +29,14 @@ public:
 	void SetPosition(Vector2D getPos) { m_position = getPos; }
 	const Vector2D GetPosition() { return m_position; }
 
-	float GetSpeed() { return speed; }
-	void SetSpeed(float getSpeed) { speed = getSpeed; }
-
 	const char* GetName() { return name; }
-	void SetName(const char* getName) { name = getName; }
+	float GetSpeed() { return speed; }
 
-	void SetSpriteId(string getId) { getId = m_textureID; }
+	void SetSpeed(float getSpeed) { speed = getSpeed; }
+	void SetSpriteId(string getId) { m_textureID = getId; }
+	void SetSpriteRow(int getRow) { m_currentRow = getRow; }
+	void SetSpriteFrame(int getFrame) { m_currentFrame = getFrame; }
+	void SetName(const char* getName) { name = getName; }
 	//KeyBoard
 	virtual void IsPressed(bool isPush) {}
 

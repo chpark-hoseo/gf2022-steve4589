@@ -45,7 +45,7 @@
     <ClCompile Include="src\Controller\InputHandler.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObject\NotePad.cpp">
+    <ClCompile Include="src\Button\NotePad.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="src\Controller\PlayController.cpp">
@@ -75,7 +75,7 @@
     <ClCompile Include="src\UI\HealthBar.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="src\Animation\BackScroll.cpp">
+    <ClCompile Include="src\Controller\BackScroll.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="src\UI\LerpPanel.cpp">
@@ -84,13 +84,28 @@
     <ClCompile Include="src\physics\CustomPhysics.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="src\Game\State_StartLogo.cpp">
+    <ClCompile Include="src\Scene\State_StartLogo.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="src\Game\State_Play.cpp">
+    <ClCompile Include="src\Scene\State_Play.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="src\GameObject\MusicSelectPanel.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Button\PowerNotePad.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Button\PowerNotePadButton.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Button\NormalButton.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Controller\StageControl.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Controller\StageController.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -183,6 +198,24 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="include\MusicSelectPanel.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TemplateButton.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PowerNotePadButton.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PowerNotePad.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="include\NormalButton.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="include\StageControl.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="include\StageController.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

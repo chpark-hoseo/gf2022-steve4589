@@ -1,6 +1,9 @@
 #pragma once
 #include <NotePad.h>
+#include <NormalButton.h>
+#include <PowerNotePadButton.h>
 #include <Player.h>
+
 class Command
 {
 public:
@@ -29,51 +32,66 @@ public:
     }
 };
 //Main
+class NULLCommand : public Command {
+public:
+    virtual void execute() {}
+    virtual void Undo() {}
+};
 class UpCommand : public Command {
 public:
+    UpCommand(NormalButton* getNormalButton) { normalButton = getNormalButton; }
     virtual void execute() {
-        
+        normalButton->IsPressed(true); 
     }
-    virtual void Undo(){
-
+    virtual void Undo() {
+        normalButton->PressOut(false);
     }
+private:
+    NormalButton* normalButton;
 };
 class DownCommand : public Command {
 public:
+    DownCommand(NormalButton* getNormalButton) { normalButton = getNormalButton; }
     virtual void execute() {
-       
+        normalButton->IsPressed(true);
     }
-    virtual void Undo(){
-
+    virtual void Undo() {
+        normalButton->PressOut(false);
     }
+private:
+    NormalButton* normalButton;
 };
 class LeftCommand : public Command {
 public:
-    LeftCommand() {}
+    LeftCommand(NormalButton* getNormalButton) { normalButton = getNormalButton; }
     virtual void execute() {
-        
     }
     virtual void Undo(){
-
     }
+private :
+    NormalButton* normalButton;
 };
 class RightCommand : public Command {
 public:
+    RightCommand(NormalButton* getNormalButton) { normalButton = getNormalButton; }
     virtual void execute() {
-       
     }
-    virtual void Undo(){
-
+    virtual void Undo() {
     }
+private:
+    NormalButton* normalButton;
 };
 class SpaceCommand : public Command {
 public:
+    SpaceCommand(NormalButton* getNormalButton) { normalButton = getNormalButton; }
     virtual void execute() {
-       
+        normalButton->PressIn(true);
     }
-    virtual void Undo(){
-        
+    virtual void Undo() {
+        normalButton->PressIn(false);
     }
+private:
+    NormalButton* normalButton;
 };
 //Play
 class Up_NoteCommand : public Command {
@@ -154,24 +172,20 @@ private:
 };
 class Space_NoteCommand : public Command {
 public:
-    Space_NoteCommand(NotePad* getNotePad, NotePad* getNotePad1, Player* getPlayer)
+    Space_NoteCommand(PowerNotePadButton* getNotePad, Player* getPlayer)
     {
         notePad = getNotePad;
-        notePad1 = getNotePad1;
         player = getPlayer;
     }
     virtual void execute() {
         notePad->IsPressed(true);
-        notePad1->IsPressed(true);
         player->PressIn_Space();
     }
     virtual void Undo() {
         notePad->PressOut(false);
-        notePad1->PressOut(false);
         player->PressOut_Space();
     }
 private:
-    NotePad* notePad;
-    NotePad* notePad1;
+    PowerNotePadButton* notePad;
     Player* player;
 };

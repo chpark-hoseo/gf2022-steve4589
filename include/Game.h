@@ -48,7 +48,6 @@ public:
 
 	void quit() { m_bRunning = false; }
 
-
 	void PopState();
 	void PushState(GameState*);
 	void ChangeState(GameState*);

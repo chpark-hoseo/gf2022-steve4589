@@ -27,10 +27,3 @@ void BackScroll::Scroll()
 		backs[i]->SetPosition(MovePos);
 	}
 }
-
-void BackScroll::ChangeSprites(string sprite1, string sprite2, string sprite3)
-{
-	backs[0]->SetSpriteId(sprite1);
-	backs[1]->SetSpriteId(sprite2);
-	backs[2]->SetSpriteId(sprite3);
-}
