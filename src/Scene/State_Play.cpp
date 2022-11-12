@@ -7,6 +7,10 @@ void State_Play::Awake()
 	//game->ChangeState( CPlayState::Instance() );
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	//스테이지 배경
+	TextureManager::GetInstance()->load("need for A+_stage0", "stage0_sprite", m_pRenderer);
+	TextureManager::GetInstance()->load("need for A+_stage0_back_frame", "stage0_back_frame_sprite", m_pRenderer);
+	TextureManager::GetInstance()->load("need for A+_stage0_back", "stage0_back_sprite", m_pRenderer);
+
 	TextureManager::GetInstance()->load("need for A+_stage1", "stage1_sprite", m_pRenderer);
 	TextureManager::GetInstance()->load("need for A+_stage1_back_frame", "stage1_back_frame_sprite", m_pRenderer);
 	TextureManager::GetInstance()->load("need for A+_stage1_back", "stage1_back_sprite", m_pRenderer);
@@ -89,7 +93,7 @@ void State_Play::Awake()
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	//Setting
 	SetCommand(nullCommand, upCommand, downCommand, nullCommand, nullCommand);
-	//stageController->StageDataInit();
+	stageController->StageDataInit();
 	//NoteManager::GetInstance()->ReadLineToTxt("stage1");
 	//Position
 	notePad->SetPosition(Vector2D(1536 * 0.5f - 250, 550));

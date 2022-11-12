@@ -102,9 +102,6 @@
     <ClCompile Include="src\Button\NormalButton.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="src\Controller\StageControl.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="src\Controller\StageController.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -210,9 +207,6 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="include\NormalButton.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="include\StageControl.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="include\StageController.h">

@@ -145,7 +145,6 @@
     <ClCompile Include="src\Animation\Animation.cpp" />
     <ClCompile Include="src\Controller\BackScroll.cpp" />
     <ClCompile Include="src\Button\NormalButton.cpp" />
-    <ClCompile Include="src\Controller\StageControl.cpp" />
     <ClCompile Include="src\Controller\StageController.cpp" />
     <ClCompile Include="src\GameObject\MusicSelectPanel.cpp" />
     <ClCompile Include="src\Button\PowerNotePad.cpp" />
@@ -180,7 +179,6 @@
     <ClInclude Include="include\NormalButton.h" />
     <ClInclude Include="include\PowerNotePad.h" />
     <ClInclude Include="include\PowerNotePadButton.h" />
-    <ClInclude Include="include\StageControl.h" />
     <ClInclude Include="include\StageController.h" />
     <ClInclude Include="include\TemplateButton.h" />
     <ClInclude Include="include\Collider2D.h" />

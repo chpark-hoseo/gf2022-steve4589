@@ -39,6 +39,14 @@
 #define SCREEN_HEIGHT 1080
 
 class Game;
+using namespace std;
+
+struct AllBackGroundsID
+{
+	string stage_back_spriteID;
+	string stage_spriteID;
+	string stage_back_frame_spriteID;
+}typedef allBackID;
 
 class Pool //각각의 다른 게임오브젝트를 구별하기 위한 구조체처럼 사용합니다
 {
@@ -209,29 +217,30 @@ private:
 	PowerNotePadButton* powerNotePadButton = new PowerNotePadButton(2, powerNotePad1, powerNotePad1, powerNotePad2);
 	PowerNotePad* powerNotePad1 = new PowerNotePad(new LoaderParams(0, 0, 144, 144, 0, 0, "powerNotesPad_sprite"), "PowerNotePad", "PowerNote");
 	PowerNotePad* powerNotePad2 = new PowerNotePad(new LoaderParams(0, 0, 144, 144, 0, 0, "powerNotesPad_sprite"), "PowerNotePad", "PowerNote");
-	//NormalButton
-	NormalButton* normalButton1 = new NormalButton(new LoaderParams(0, 0, 96, 96, 0, 0, "nomalButton_sprite"), stageController/*, musicSelect, musicSelect_music*/);
-	NormalButton* normalButton2 = new NormalButton(new LoaderParams(0, 0, 96, 96, 0, 1, "nomalButton_sprite"), stageController/*, musicSelect, musicSelect_music */);
-	StageController* stageController = new StageController(musicSelect, musicSelect_music);
 	//NoteShooter
 	NoteShooter* NoteShooter1 = new NoteShooter(new LoaderParams(0, 0, 192, 192, 0, 0, "noteShooter_stage1_idle_sprite"));
 	//NoteShooter* NoteShooter2 = new NoteShooter(new LoaderParams(0, 0, 144, 144, 0, 3, "notesPad_sprite"));
 	//NoteShooter* NoteShooter3 = new NoteShooter(new LoaderParams(0, 0, 144, 144, 0, 3, "notesPad_sprite"));
 	//Backs  selectMenu_music_sprite
-	GameObject* back_stage1 = new SDLGameObject(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "stage1_sprite"));
-	GameObject* back_stage_back1 = new SDLGameObject(new LoaderParams(0, 0, 384, SCREEN_HEIGHT, 0, 0, "stage1_back_sprite"));
-	GameObject* back_stage_back2 = new SDLGameObject(new LoaderParams(0, 0, 384, SCREEN_HEIGHT, 0, 1, "stage1_back_sprite")); //stage1_back_frame_sprite
+	SDLGameObject* back_stage1 = new SDLGameObject(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "stage1_sprite"));
+	SDLGameObject* back_stage_back1 = new SDLGameObject(new LoaderParams(0, 0, 384, SCREEN_HEIGHT, 0, 0, "stage1_back_sprite"));
+	SDLGameObject* back_stage_back2 = new SDLGameObject(new LoaderParams(0, 0, 384, SCREEN_HEIGHT, 0, 1, "stage1_back_sprite")); //stage1_back_frame_sprite
 	//BackFrame, UI
-	SDLGameObject* musicSelect_music = new SDLGameObject(new LoaderParams(0, 0, 672, 384, 0, 0, "selectMenu_music_sprite"));
 	SDLGameObject* back_stage_back_frame = new SDLGameObject(new LoaderParams(0, 0, 1152, 432, 0, 0, "stage1_back_frame_sprite"));
 	SDLGameObject* back_stage_back_frame1 = new SDLGameObject(new LoaderParams(0, 0, 1152, 432, 0, 1, "stage1_back_frame_sprite"));
 	SDLGameObject* back_stage_back_frame2 = new SDLGameObject(new LoaderParams(0, 0, 1152, 432, 0, 2, "stage1_back_frame_sprite"));
+	SDLGameObject* musicSelect_music = new SDLGameObject(new LoaderParams(0, 0, 672, 384, 0, 0, "selectMenu_music_sprite"));
 
 	LerpPanel* lerpPanel = new LerpPanel(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "fadePanel_sprite"));
 	LerpPanel* gameOverPanel = new LerpPanel(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "fadePanel_sprite"));
-	SDLGameObject* musicSelect = new MusicSelectPanel(new LoaderParams(0, 0, 720, 720, 0, 0, "selectMenu_sprite"));
+	SDLGameObject* musicSelect = new SDLGameObject(new LoaderParams(0, 0, 720, 720, 0, 0, "selectMenu_sprite"));
 	BackScroll* backScroll = new BackScroll(new LoaderParams(0, 0, 0, 0, 0, 0, ""), back_stage_back_frame, back_stage_back_frame1, back_stage_back_frame2);
 	//StageControl
+	StageController* stageController = new StageController(musicSelect, musicSelect_music, back_stage1, back_stage_back1, back_stage_back2, 
+		back_stage_back_frame, back_stage_back_frame1, back_stage_back_frame2);
+	//NormalButton
+	NormalButton* normalButton1 = new NormalButton(new LoaderParams(0, 0, 96, 96, 0, 0, "nomalButton_sprite"), stageController, true);
+	NormalButton* normalButton2 = new NormalButton(new LoaderParams(0, 0, 96, 96, 0, 1, "nomalButton_sprite"), stageController, false);
 
 	//InputCommand
 	Command* nullCommand = new NULLCommand();
