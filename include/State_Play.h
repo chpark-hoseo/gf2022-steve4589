@@ -18,6 +18,7 @@
 #include <GameObject.h>
 #include <Player.h>
 #include <MusicSelectPanel.h>
+#include <SpaceButton.h>
 //UI
 #include <Command.h>
 #include <LerpPanel.h>
@@ -129,7 +130,7 @@ public:
 	}
 	void HealEnergy(int heal)
 	{
-		if (energy + heal > max_Energy) { hp = MAX_ENERGY; }
+		if (energy + heal > max_Energy) { energy = MAX_ENERGY; }
 		else { energy += heal; }
 	}
 
@@ -142,24 +143,25 @@ public:
 		}
 		else
 		{
-
 			OnOffStage_Main_Objects(true);
 			OnOffStage_Play_Objects(false);
-		}
 
-		gameOverPanel->SetActive(false);
+			player->DeadOff();
+			gameOverPanel->SetActive(false);
+			isKeyStop = false;
+			isGameOver = false;
+		}
 		player->PosTrigger(onOff);
-		player->DeadOff();
-		isKeyStop = false;
-		isGameOver = false;
 	}
 	void OnOffStage_Main_Objects(bool onOff)
 	{
 		musicSelect->SetActive(onOff);
 		musicSelect_music->SetActive(onOff);
+		mainScore_grade->SetActive(onOff);
 
 		normalButton1->SetActive(onOff);
 		normalButton2->SetActive(onOff);
+		spaceButton1->SetActive(onOff);
 	}
 	void OnOffStage_Play_Objects(bool onOff)
 	{
@@ -175,6 +177,8 @@ public:
 		powerNotePad1->SetActive(onOff);
 		powerNotePad2->SetActive(onOff);
 	}
+
+	void StageStart(string stageName);
 private:
 	SDL_Renderer* m_pRenderer = Game::GetInstance()->getRenderer();
 	SDL_Window* m_pWindow = Game::GetInstance()->getWindow();
@@ -200,7 +204,7 @@ private:
 	bool isGameOver = false;
 
 	//StateData
-
+	string noteDataPath = "";
 	//MainCharacter 
 	Player* player = new Player(new LoaderParams(0, 0, 240, 240, 0, 0, "mainCharacter_sprite"));
 	//HpSet
@@ -214,9 +218,9 @@ private:
 	NotePad* notePad2 = new NotePad(new LoaderParams(0, 0, 144, 144, 0, 2, "notesPad_sprite"), "NotePad", "Note");
 	NotePad* notePad3 = new NotePad(new LoaderParams(0, 0, 144, 144, 0, 3, "notesPad_sprite"), "NotePad", "Note");
 	//PowerNotePads
-	PowerNotePadButton* powerNotePadButton = new PowerNotePadButton(2, powerNotePad1, powerNotePad1, powerNotePad2);
 	PowerNotePad* powerNotePad1 = new PowerNotePad(new LoaderParams(0, 0, 144, 144, 0, 0, "powerNotesPad_sprite"), "PowerNotePad", "PowerNote");
 	PowerNotePad* powerNotePad2 = new PowerNotePad(new LoaderParams(0, 0, 144, 144, 0, 0, "powerNotesPad_sprite"), "PowerNotePad", "PowerNote");
+	PowerNotePadButton* powerNotePadButton = new PowerNotePadButton(2, powerNotePad1, powerNotePad1, powerNotePad2);
 	//NoteShooter
 	NoteShooter* NoteShooter1 = new NoteShooter(new LoaderParams(0, 0, 192, 192, 0, 0, "noteShooter_stage1_idle_sprite"));
 	//NoteShooter* NoteShooter2 = new NoteShooter(new LoaderParams(0, 0, 144, 144, 0, 3, "notesPad_sprite"));
@@ -236,16 +240,19 @@ private:
 	SDLGameObject* musicSelect = new SDLGameObject(new LoaderParams(0, 0, 720, 720, 0, 0, "selectMenu_sprite"));
 	BackScroll* backScroll = new BackScroll(new LoaderParams(0, 0, 0, 0, 0, 0, ""), back_stage_back_frame, back_stage_back_frame1, back_stage_back_frame2);
 	//StageControl
-	StageController* stageController = new StageController(musicSelect, musicSelect_music, back_stage1, back_stage_back1, back_stage_back2, 
+	SDLGameObject* mainScore_grade = new SDLGameObject(new LoaderParams(0, 0, 240, 240, 0, 0, "grade_sprite"));
+	StageController* stageController = new StageController(musicSelect, musicSelect_music, mainScore_grade, back_stage1, back_stage_back1, back_stage_back2,
 		back_stage_back_frame, back_stage_back_frame1, back_stage_back_frame2);
-	//NormalButton
+	//Button
 	NormalButton* normalButton1 = new NormalButton(new LoaderParams(0, 0, 96, 96, 0, 0, "nomalButton_sprite"), stageController, true);
 	NormalButton* normalButton2 = new NormalButton(new LoaderParams(0, 0, 96, 96, 0, 1, "nomalButton_sprite"), stageController, false);
+	SpaceButton* spaceButton1 = new SpaceButton(new LoaderParams(0, 0, 96, 96, 0, 0, "spaceButton_sprite"), stageController);
 
 	//InputCommand
 	Command* nullCommand = new NULLCommand();
 	Command* upCommand = new UpCommand(normalButton1);
 	Command* downCommand = new DownCommand(normalButton2);
+	Command* spaceCommand = new SpaceCommand(spaceButton1);
 
 	Command* up_NoteCommand = new Up_NoteCommand(notePad1, player);
 	Command* down_NoteCommand = new Down_NoteCommand(notePad2, player);
@@ -253,11 +260,11 @@ private:
 	Command* left_NoteCommend = new Left_NoteCommand(notePad, player);
 	Command* space_NoteCommand = new Space_NoteCommand(powerNotePadButton, player);
 
-	Button* upButton = new Button(up_NoteCommand);
-	Button* downButton = new Button(down_NoteCommand);
-	Button* rightButton = new Button(right_NoteCommand);
-	Button* leftButton = new Button(left_NoteCommend);
-	Button* spaceButton = new Button(space_NoteCommand);
+	Button* upButton = new Button(upCommand);
+	Button* downButton = new Button(downCommand);
+	Button* rightButton = new Button(nullCommand);
+	Button* leftButton = new Button(nullCommand);
+	Button* spaceButton = new Button(spaceCommand);
 
 	void SetCommand(Command* left, Command* up, Command* down, Command* right, Command* space)
 	{
@@ -282,6 +289,5 @@ private:
 	vector<GameObject*> allObjects;
 	map<const char*, vector<GameObject* >> objects; //모든 오브젝트
 
-	void StageStart(string stageName);
 	void GameOver();
 };

@@ -143,9 +143,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Animation\Animation.cpp" />
+    <ClCompile Include="src\Button\SpaceButton.cpp" />
+    <ClCompile Include="src\Camera\Camera.cpp" />
     <ClCompile Include="src\Controller\BackScroll.cpp" />
     <ClCompile Include="src\Button\NormalButton.cpp" />
     <ClCompile Include="src\Controller\StageController.cpp" />
+    <ClCompile Include="src\GameObject\LoadingCircle.cpp" />
     <ClCompile Include="src\GameObject\MusicSelectPanel.cpp" />
     <ClCompile Include="src\Button\PowerNotePad.cpp" />
     <ClCompile Include="src\Button\PowerNotePadButton.cpp" />
@@ -176,9 +179,12 @@
   <ItemGroup>
     <ClInclude Include="include\Animation.h" />
     <ClInclude Include="include\BackScroll.h" />
+    <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\LoadingCircle.h" />
     <ClInclude Include="include\NormalButton.h" />
     <ClInclude Include="include\PowerNotePad.h" />
     <ClInclude Include="include\PowerNotePadButton.h" />
+    <ClInclude Include="include\SpaceButton.h" />
     <ClInclude Include="include\StageController.h" />
     <ClInclude Include="include\TemplateButton.h" />
     <ClInclude Include="include\Collider2D.h" />

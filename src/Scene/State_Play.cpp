@@ -28,8 +28,9 @@ void State_Play::Awake()
 	TextureManager::GetInstance()->load("need for A+_notesPad", "notesPad_sprite", m_pRenderer);
 	TextureManager::GetInstance()->load("need for A+_PowernotePad", "powerNotesPad_sprite", m_pRenderer);
 
-	//노말 버튼
+	//버튼
 	TextureManager::GetInstance()->load("need for A+_upDownCok", "nomalButton_sprite", m_pRenderer);
+	TextureManager::GetInstance()->load("need for A+_spaceButton", "spaceButton_sprite", m_pRenderer);
 
 	//폭발 애니메이션  
 	TextureManager::GetInstance()->load("need for A+_noteBoom", "notesBoom_sprite", m_pRenderer);
@@ -46,12 +47,15 @@ void State_Play::Awake()
 	//UI 
 	TextureManager::GetInstance()->load("need for A+_selectMenu_music", "selectMenu_music_sprite", m_pRenderer);
 	TextureManager::GetInstance()->load("need for A+_selectMenu", "selectMenu_sprite", m_pRenderer);
-	TextureManager::GetInstance()->load("need for A+_fadePanel", "fadePanel_sprite", m_pRenderer); 
-	TextureManager::GetInstance()->load("need for A+_upDownCok", "upDownCok_sprite", m_pRenderer); 
+	TextureManager::GetInstance()->load("need for A+_fadePanel", "fadePanel_sprite", m_pRenderer);
+	TextureManager::GetInstance()->load("need for A+_upDownCok", "upDownCok_sprite", m_pRenderer);
+	TextureManager::GetInstance()->load("need for A+_grade", "grade_sprite", m_pRenderer);
+	TextureManager::GetInstance()->load("need for A+_loadingCircle", "loadingCircle_sprite", m_pRenderer);
 
 	//체력바 
 	TextureManager::GetInstance()->load("need for A+_healthBarPack", "healthBarPack_sprite", m_pRenderer);
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	//배치 순서대로 그리기 때문에 조심히 넣기 
 	m_gameObjects.push_back(back_stage_back1);
 
 	m_gameObjects.push_back(backScroll);
@@ -73,7 +77,7 @@ void State_Play::Awake()
 	m_gameObjects.push_back(powerNotePad1);
 	m_gameObjects.push_back(powerNotePad2);
 
-	m_gameObjects.push_back(NoteShooter1); 
+	m_gameObjects.push_back(NoteShooter1);
 
 	m_gameObjects.push_back(hpBar_Back);
 	m_gameObjects.push_back(hpBar);
@@ -81,10 +85,13 @@ void State_Play::Awake()
 
 	m_gameObjects.push_back(gameOverPanel);
 
-	m_gameObjects.push_back(player); 
+	m_gameObjects.push_back(player);
 
 	m_gameObjects.push_back(musicSelect_music);
-	m_gameObjects.push_back(musicSelect); 
+	m_gameObjects.push_back(musicSelect);
+	m_gameObjects.push_back(mainScore_grade);
+
+	m_gameObjects.push_back(spaceButton1);
 	//m_gameObjects.push_back(lerpPanel);
 	//ObjectPool
 	InitPool();
@@ -92,9 +99,7 @@ void State_Play::Awake()
 
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	//Setting
-	SetCommand(nullCommand, upCommand, downCommand, nullCommand, nullCommand);
-	stageController->StageDataInit();
-	//NoteManager::GetInstance()->ReadLineToTxt("stage1");
+	OnOffStageSetting(false);
 	//Position
 	notePad->SetPosition(Vector2D(1536 * 0.5f - 250, 550));
 	notePad1->SetPosition(Vector2D(1536 * 0.5f - 100, 550));
@@ -103,12 +108,11 @@ void State_Play::Awake()
 
 	powerNotePad1->SetPosition(Vector2D(1536 * 0.5f - 550, 550));
 	powerNotePad2->SetPosition(Vector2D(1536 * 0.5f - 400, 400));
-	NoteShooter1->SetPosition(Vector2D(1300, 800)); 
+	NoteShooter1->SetPosition(Vector2D(1300, 800));
 
 	normalButton1->SetPosition(Vector2D(1100, 50));
 	normalButton2->SetPosition(Vector2D(1100, 850));
-
-	OnOffStageSetting(false);
+	spaceButton1->SetPosition(Vector2D(806, 595));
 
 	musicSelect->SetPosition(Vector2D(800, 150));
 	musicSelect_music->SetPosition(Vector2D(814, 220));
@@ -116,6 +120,8 @@ void State_Play::Awake()
 	hpBar_Back->SetPosition(Vector2D(640, 750));
 	hpBar->SetPosition(Vector2D(640, 750));
 	energyBar->SetPosition(Vector2D(830, 750));
+
+	mainScore_grade->SetPosition(Vector2D(1265, 605));
 
 	NoteManager::GetInstance()->SetPowerNotePads(powerNotePad1);
 	NoteManager::GetInstance()->SetPowerNotePads(powerNotePad1);
@@ -130,9 +136,9 @@ void State_Play::update(Game* game)
 	//GameOver;
 	if (hp <= 0 && !isGameOver) { GameOver(); }
 	//State N
-	if (isGameOver == false || isStageStart == false)
+	if (isGameOver == false && isStageStart == true)
 	{
-		//NoteManager::GetInstance()->ReadSpawnNotes(); //추가 필요--> 1스테이지 버튼 => 1스테이지 시트, 2스테이지 버튼 => 2스테이지 시트 
+		NoteManager::GetInstance()->ReadSpawnNotes(/*noteDataPath*/); //추가 필요--> 1스테이지 버튼 => 1스테이지 시트, 2스테이지 버튼 => 2스테이지 시트 
 	}
 }
 void State_Play::render(Game* game)
@@ -240,7 +246,7 @@ void State_Play::Input_Play()
 	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_ESCAPE)) {
 		//m_bRunning = false; game->Quit();
 	}
-	if (isKeyStop) return; 
+	if (isKeyStop) return;
 	//KeyUp
 	if (!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_LEFT)) {
 		leftButton->UnPressed();
@@ -275,11 +281,33 @@ void State_Play::Input_Play()
 		spaceButton->Pressed();
 	}
 }
+void State_Play::StageStart(string stageName)
+{
+	noteDataPath = stageName;
+	if (stageName != "")
+	{
+		OnOffStageSetting(true);
+
+		hp = MAX_HP;
+		energy = MAX_ENERGY;
+
+		NoteManager::GetInstance()->ReadLineToTxt(noteDataPath);
+		SetCommand(left_NoteCommend, up_NoteCommand, down_NoteCommand, right_NoteCommand, space_NoteCommand);
+
+		isStageStart = true;
+	}
+	else {
+		OnOffStageSetting(false);
+		SetCommand(nullCommand, upCommand, downCommand, nullCommand, spaceCommand);
+	}
+}
 void State_Play::GameOver()
 {
 	OffObjects();
 	gameOverPanel->SetActive(true);
 	player->Dead();
+
+	isStageStart = false;
 	isKeyStop = true;
 	isGameOver = true;
 }

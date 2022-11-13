@@ -1,12 +1,15 @@
 #include <StageController.h>
 #include <SDLGameObject.h>
+#include <State_Play.h>
 
-StageController::StageController(SDLGameObject* getSelectMusic, SDLGameObject* getSelectMusicPanel, SDLGameObject* getBack_stage1,
+StageController::StageController(SDLGameObject* getSelectMusic, SDLGameObject* getSelectMusicPanel, SDLGameObject* getMainScore_Grade, SDLGameObject* getBack_stage1,
 	SDLGameObject* getBack_stage_back1, SDLGameObject* getBack_stage_back2, SDLGameObject* getStage_back_frame1,
 	SDLGameObject* getStage_back_frame2, SDLGameObject* getStage_back_frame3)
 {
 	selectMusic = getSelectMusic;
 	selectMusic_music = getSelectMusicPanel;
+
+	mainScore_Grade =  getMainScore_Grade;
 
 	back_stage1 = getBack_stage1;
 	back_stage_back1 = getBack_stage_back1;
@@ -14,12 +17,15 @@ StageController::StageController(SDLGameObject* getSelectMusic, SDLGameObject* g
 	back_stage_back_frame = getStage_back_frame1;
 	back_stage_back_frame1 = getStage_back_frame2;
 	back_stage_back_frame2 = getStage_back_frame3;
+
+	StageDataInit();
 }
 
-bool StageController::SelectMusic()
+void StageController::SelectMusic()
 {
-	return false;
+	State_Play::GetInstance()->StageStart(stageData.stageName);
 	//배경음 다시 시작 
+
 }
 void StageController::NextMusic()
 {
@@ -28,8 +34,9 @@ void StageController::NextMusic()
 	++passMusicIndex;
 
 	ChangeStageData();
+	ChangeGradeSprite();
 	selectMusic_music->SetSpriteRow(passMusicIndex);
-	//배경음 바꾸기
+	//배경음 upper
 }
 void StageController::PreviousMusic()
 {
@@ -38,8 +45,9 @@ void StageController::PreviousMusic()
 	--passMusicIndex;
 
 	ChangeStageData();
+	ChangeGradeSprite();
 	selectMusic_music->SetSpriteRow(passMusicIndex);
-	//배경음 바꾸기
+	//배경음 lower
 }
 void StageController::Select()
 {
@@ -58,6 +66,11 @@ void StageController::Select()
 	selectMusic_music->SetSpriteRow(index);
 	*/
 }
+void StageController::ChangeGradeSprite()
+{
+	std::cout << "그레이드 : " << stageData.Grade << "\n";
+	mainScore_Grade->SetSpriteFrame(stageData.Grade);
+}
 void StageController::ChangeSprites()
 {
 	back_stage1->SetSpriteId(stageData.stage_sprite);
@@ -66,9 +79,4 @@ void StageController::ChangeSprites()
 	back_stage_back_frame->SetSpriteId(stageData.stage_back_frame_sprite);
 	back_stage_back_frame1->SetSpriteId(stageData.stage_back_frame_sprite);
 	back_stage_back_frame2->SetSpriteId(stageData.stage_back_frame_sprite);
-}
-void StageController::OnOffPanel(bool onOff)
-{
-	selectMusic->SetActive(onOff);
-	selectMusic_music->SetActive(onOff);
 }

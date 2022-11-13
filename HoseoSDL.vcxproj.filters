@@ -105,6 +105,15 @@
     <ClCompile Include="src\Controller\StageController.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="src\GameObject\LoadingCircle.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Button\SpaceButton.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Camera\Camera.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\main.h">
@@ -210,6 +219,15 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="include\StageController.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="include\LoadingCircle.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SpaceButton.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Camera.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

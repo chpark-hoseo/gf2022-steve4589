@@ -8,6 +8,7 @@ NormalButton::NormalButton(const LoaderParams* pParams, StageController* control
 
 void NormalButton::PressInAct()
 {
+	if (onOff == false) return;
 	stageController->NextPreviousMusic(isUpDown);
 	m_currentRow = 1;
 }

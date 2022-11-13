@@ -9,6 +9,7 @@ PowerNotePad::PowerNotePad(const LoaderParams* pParams, string thisTag, string n
 
 void PowerNotePad::update()
 {
+	if (onOff == false) return;
 	DetectCollider();
 }
 void PowerNotePad::SetPosition(Vector2D getPos)

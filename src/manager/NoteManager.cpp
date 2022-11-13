@@ -10,10 +10,10 @@ NoteManager* NoteManager::s_pInstance = NULL;
 
 typedef struct NoteData //1 ~ 4 -> 기본 루트, 5, 6 -> 에너지루트 
 {
-	Vector2D pos = Vector2D(SCREEN_WIDTH * 0.5f - 200, -96);
+	Vector2D pos = Vector2D(SCREEN_WIDTH * 0.5f - 250, -96);
 	Vector2D pos1 = Vector2D(SCREEN_WIDTH * 0.5f - 100, -96);
-	Vector2D pos2 = Vector2D(SCREEN_WIDTH * 0.5f, -96);
-	Vector2D pos3 = Vector2D(SCREEN_WIDTH * 0.5f + 100, -96);
+	Vector2D pos2 = Vector2D(SCREEN_WIDTH * 0.5f + 50, -96);
+	Vector2D pos3 = Vector2D(SCREEN_WIDTH * 0.5f + 200, -96);
 }noteData;
 
 //GameManager -> static int curStage;

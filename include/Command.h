@@ -1,6 +1,7 @@
 #pragma once
 #include <NotePad.h>
 #include <NormalButton.h>
+#include <SpaceButton.h>
 #include <PowerNotePadButton.h>
 #include <Player.h>
 
@@ -83,15 +84,15 @@ private:
 };
 class SpaceCommand : public Command {
 public:
-    SpaceCommand(NormalButton* getNormalButton) { normalButton = getNormalButton; }
+    SpaceCommand(SpaceButton* getSpaceButton) { spaceButton = getSpaceButton; }
     virtual void execute() {
-        normalButton->PressIn(true);
+        spaceButton->IsPressed(true);
     }
     virtual void Undo() {
-        normalButton->PressIn(false);
+        spaceButton->PressOut(false);
     }
 private:
-    NormalButton* normalButton;
+    SpaceButton* spaceButton;
 };
 //Play
 class Up_NoteCommand : public Command {
