@@ -1,5 +1,6 @@
 #include <PowerNotePadButton.h>
 #include <State_Play.h>
+#include <ScoreManager.h>
 
 void PowerNotePadButton::PressInAct()
 {
@@ -14,5 +15,7 @@ void PowerNotePadButton::PressInAct()
 		//이펙트 추가 필요
 		State_Play::GetInstance()->GetObject(playerPos, "PlayerMiss");
 		State_Play::GetInstance()->DamagedEnergy(17);
+		ScoreManager::GetInstance()->MinusScore();
 	}
+	else { ScoreManager::GetInstance()->AddScore(); }
 }

@@ -1,6 +1,8 @@
 #include <StageController.h>
 #include <SDLGameObject.h>
 #include <State_Play.h>
+#include <ScoreManager.h>
+#include <NoteManager.h>
 
 StageController::StageController(SDLGameObject* getSelectMusic, SDLGameObject* getSelectMusicPanel, 
 	SDLGameObject* getMainScore_Grade, SDLGameObject* getBack_stage1,
@@ -25,8 +27,10 @@ StageController::StageController(SDLGameObject* getSelectMusic, SDLGameObject* g
 void StageController::SelectMusic()
 {
 	State_Play::GetInstance()->StageStart(stageData.stageName);
-	//배경음 다시 시작 
 
+	int allNoteNum = NoteManager::GetInstance()->GetAllNoteNum(); //ReadLineToTxt 작동하고 호출해야 가져옴
+	ScoreManager::GetInstance()->SetScoreGrade(allNoteNum);
+	//배경음 다시 시작 
 }
 void StageController::NextMusic()
 {
@@ -35,7 +39,6 @@ void StageController::NextMusic()
 	++passMusicIndex;
 
 	ChangeStageData();
-	ChangeGradeSprite();
 	selectMusic_music->SetSpriteRow(passMusicIndex);
 	//배경음 upper
 }
@@ -46,30 +49,11 @@ void StageController::PreviousMusic()
 	--passMusicIndex;
 
 	ChangeStageData();
-	ChangeGradeSprite();
 	selectMusic_music->SetSpriteRow(passMusicIndex);
 	//배경음 lower
 }
-void StageController::Select()
-{
-	/*
-	const char* stagename = getStageName.c_str();
-	int index = 0;
-
-	for (int i = 0; i < strlen(stagename); i++)
-	{
-		if (stagename[i] >= 48 && stagename[i] <= 57) // 0 - 9
-		{
-			index = (int)stagename[i] - 48;
-			break;
-		}
-	}
-	selectMusic_music->SetSpriteRow(index);
-	*/
-}
 void StageController::ChangeGradeSprite()
 {
-	std::cout << "그레이드 : " << stageData.Grade << "\n";
 	mainScore_Grade->SetSpriteFrame(stageData.Grade);
 }
 void StageController::ChangeSprites()

@@ -152,6 +152,7 @@
     <ClCompile Include="src\GameObject\MusicSelectPanel.cpp" />
     <ClCompile Include="src\Button\PowerNotePad.cpp" />
     <ClCompile Include="src\Button\PowerNotePadButton.cpp" />
+    <ClCompile Include="src\manager\ScoreManager.cpp" />
     <ClCompile Include="src\Scene\State_Play.cpp" />
     <ClCompile Include="src\Scene\State_StartLogo.cpp" />
     <ClCompile Include="src\physics\CustomPhysics.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="include\NormalButton.h" />
     <ClInclude Include="include\PowerNotePad.h" />
     <ClInclude Include="include\PowerNotePadButton.h" />
+    <ClInclude Include="include\ScoreManager.h" />
     <ClInclude Include="include\SpaceButton.h" />
     <ClInclude Include="include\StageController.h" />
     <ClInclude Include="include\TemplateButton.h" />

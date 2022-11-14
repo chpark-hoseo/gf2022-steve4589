@@ -6,6 +6,8 @@
 //SDL
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_mixer.h>
 
 #define SCREEN_WIDTH 1536
 #define SCREEN_HEIGHT 1080
@@ -18,6 +20,13 @@ private:
 	static Game* s_pInstance;
 	SDL_Window* m_pWindow;
 	SDL_Renderer* m_pRenderer;
+
+	SDL_Texture* m_pTexureText;
+	SDL_Rect m_RectText;
+
+	TTF_Font* g_pFont;
+	Mix_Chunk* g_pChunk;
+
 	bool m_bRunning;
 
 	SDL_RendererFlip curFlip;
@@ -46,7 +55,14 @@ public:
 
 	void clean();
 
-	void quit() { m_bRunning = false; }
+	void quit()
+	{
+		Mix_CloseAudio();
+		Mix_Quit();
+		TTF_CloseFont(g_pFont);
+		TTF_Quit();
+		SDL_Quit();
+	}
 
 	void PopState();
 	void PushState(GameState*);

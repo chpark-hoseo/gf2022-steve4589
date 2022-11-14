@@ -1,4 +1,5 @@
 #include <State_Play.h>
+#include <ScoreManager.h>
 
 State_Play* State_Play::instance = 0;
 
@@ -103,6 +104,7 @@ void State_Play::Awake()
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	//Setting
 	OnOffStageSetting(false);
+	ScoreManager::GetInstance()->AddScoreSprite(playScore_grade);
 	//Position
 	notePad->SetPosition(Vector2D(1536 * 0.5f - 250, 550));
 	notePad1->SetPosition(Vector2D(1536 * 0.5f - 100, 550));
@@ -131,6 +133,10 @@ void State_Play::Awake()
 	NoteManager::GetInstance()->SetPowerNotePads(powerNotePad1);
 	//해당 스테이지가 시작할때 추가 하도록 변경
 	NoteManager::GetInstance()->SetNoteShooters(NoteShooter1);
+
+	//m_pTexureText = SDL_CreateTextureFromSurface(m_pRenderer, pTempSurface);
+	//m_RectText = { 0, 0, pTempSurface->w, pTempSurface->h };
+	//SDL_FreeSurface(pTempSurface);
 }
 void State_Play::update(Game* game)
 {
@@ -142,7 +148,7 @@ void State_Play::update(Game* game)
 	//State N
 	if (isGameOver == false && isStageStart == true)
 	{
-		NoteManager::GetInstance()->ReadSpawnNotes(/*noteDataPath*/); //추가 필요--> 1스테이지 버튼 => 1스테이지 시트, 2스테이지 버튼 => 2스테이지 시트 
+		NoteManager::GetInstance()->ReadSpawnNotes(); 
 	}
 }
 void State_Play::render(Game* game)
@@ -285,30 +291,39 @@ void State_Play::Input_Play()
 		spaceButton->Pressed();
 	}
 }
-void State_Play::StageStart(string stageName)
+//----------------------------------------------------------------------
+//StageManage
+void State_Play::StageStart(string getStageName)
 {
-	noteDataPath = stageName;
-	if (stageName != "")
+	stageName = getStageName;
+	if (getStageName != "")
 	{
 		OnOffStageSetting(true);
 
 		hp = MAX_HP;
 		energy = MAX_ENERGY;
 
-		NoteManager::GetInstance()->ReadLineToTxt(noteDataPath);
+		NoteManager::GetInstance()->ReadLineToTxt(stageName);
 		SetCommand(left_NoteCommend, up_NoteCommand, down_NoteCommand, right_NoteCommand, space_NoteCommand);
 
 		isStageStart = true;
 	}
-	else {
-		OnOffStageSetting(false);
-		SetCommand(nullCommand, upCommand, downCommand, nullCommand, spaceCommand);
-	}
+}
+void State_Play::StageEnd()
+{
+	int grade = ScoreManager::GetInstance()->CaculateGrade();
+	stageController->SaveGrade(stageName, grade);
+
+	OnOffStageSetting(false);
+	SetCommand(nullCommand, upCommand, downCommand, nullCommand, spaceCommand);
 }
 void State_Play::GameOver()
 {
 	OffObjects();
 	gameOverPanel->SetActive(true);
+	playScore_grade->SetActive(false);
+
+	stageController->SaveGrade(stageName, 0);
 	player->Dead();
 
 	isStageStart = false;

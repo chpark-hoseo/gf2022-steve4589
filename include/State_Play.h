@@ -181,12 +181,19 @@ public:
 	}
 
 	void StageStart(string stageName);
+	void StageEnd();
 private:
 	SDL_Renderer* m_pRenderer = Game::GetInstance()->getRenderer();
 	SDL_Window* m_pWindow = Game::GetInstance()->getWindow();
 	SDL_RendererFlip curFlip;
 
 	static State_Play* instance;
+
+	SDL_Texture* m_pTexureText;
+	SDL_Rect m_RectText;
+
+	TTF_Font* g_pFont;
+	Mix_Chunk* g_pChunk;
 
 	int transform_x = SCREEN_WIDTH / 2;
 	int transform_y = 500;
@@ -206,7 +213,7 @@ private:
 	bool isGameOver = false;
 
 	//StateData
-	string noteDataPath = "";
+	string stageName = "";
 	//MainCharacter 
 	Player* player = new Player(new LoaderParams(0, 0, 240, 240, 0, 0, "mainCharacter_sprite"));
 	//HpSet

@@ -32,6 +32,8 @@ public:
 
 	queue<string> GetSpawnQueue();
 	map<int, string*> GetSpawnQueue_; //int -> n번째 스테이지
+
+	int GetAllNoteNum() { return allNoteNum; }
 private:
 	NoteManager() { }
 	~NoteManager() { }
@@ -46,6 +48,8 @@ private:
 	float speed;
 
 	double m_curTime = 0;
+
+	int allNoteNum;
 
 	vector<NoteShooter*> noteShooters;
 	vector<PowerNotePad*> powerNotePads;

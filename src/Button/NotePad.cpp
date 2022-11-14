@@ -1,6 +1,7 @@
 #include <NotePad.h>
 #include <State_Play.h>
 #include <algorithm>
+#include <ScoreManager.h>
 
 NotePad::NotePad(const LoaderParams* pParams, string thisTag, string noteTag) : SDLGameObject(pParams)
 {
@@ -42,6 +43,7 @@ void NotePad::OffNote()
 {
 	if (EntergameObject != NULL)
 	{
+		ScoreManager::GetInstance()->AddScore();
 		State_Play::GetInstance()->GetObject(EntergameObject->GetPosition(), "WinBoom");
 		EntergameObject->SetActive(false);
 
@@ -49,6 +51,7 @@ void NotePad::OffNote()
 	}
 	else
 	{
+		ScoreManager::GetInstance()->MinusScore();
 		State_Play::GetInstance()->GetObject(playerPos, "PlayerMiss");
 		State_Play::GetInstance()->DamagedHp(4);
 	}

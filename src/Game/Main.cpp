@@ -17,11 +17,15 @@ int main(int argc, char* argv[])
             Game::GetInstance()->handleEvents();
             Game::GetInstance()->update();
             Game::GetInstance()->render();
+
             frameTime = SDL_GetTicks() - frameStart;  //0부터 다시 카운트
             if (frameTime < DELAY_TIME) {
                 SDL_Delay((int)(DELAY_TIME - frameTime)); //60fps만큼 일정하게 작동
             }
         }
     }
+
+    Game::GetInstance()->quit();
+
     return 0;
 }

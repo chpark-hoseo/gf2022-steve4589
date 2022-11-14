@@ -22,6 +22,7 @@ void NoteManager::ReadLineToTxt(string data) //스테이지 시트 리필 1. 게임이 시작
 	string dataPath = "Assets/SpawnSheet_" + data + ".txt";
 	ifstream spawnSheet(dataPath.c_str(), std::ifstream::in);
 
+	allNoteNum = 0;
 	string line;
 	if (spawnSheet.is_open())
 	{
@@ -29,6 +30,8 @@ void NoteManager::ReadLineToTxt(string data) //스테이지 시트 리필 1. 게임이 시작
 		{
 			getline(spawnSheet, line); //getline(desline, buffer, '/');
 			spawnQueue_test.push(line);
+
+			allNoteNum++;
 		}
 		spawnSheet.close();
 		cout << "SpawnSheet Size ==> " << spawnQueue_test.size() << "\n";
