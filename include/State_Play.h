@@ -176,6 +176,8 @@ public:
 
 		powerNotePad1->SetActive(onOff);
 		powerNotePad2->SetActive(onOff);
+
+		playScore_grade->SetActive(onOff);
 	}
 
 	void StageStart(string stageName);
@@ -241,6 +243,7 @@ private:
 	BackScroll* backScroll = new BackScroll(new LoaderParams(0, 0, 0, 0, 0, 0, ""), back_stage_back_frame, back_stage_back_frame1, back_stage_back_frame2);
 	//StageControl
 	SDLGameObject* mainScore_grade = new SDLGameObject(new LoaderParams(0, 0, 240, 240, 0, 0, "grade_sprite"));
+	SDLGameObject* playScore_grade = new SDLGameObject(new LoaderParams(0, 0, 144, 192, 0, 0, "play_grade_sprite"));
 	StageController* stageController = new StageController(musicSelect, musicSelect_music, mainScore_grade, back_stage1, back_stage_back1, back_stage_back2,
 		back_stage_back_frame, back_stage_back_frame1, back_stage_back_frame2);
 	//Button

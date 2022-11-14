@@ -21,7 +21,8 @@ struct StageData
 class StageController //스테이지 데이터 저장 및 변경 / 스테이지 이미지 관리 및 변경
 {
 public:
-	StageController(SDLGameObject* getSelectMusic, SDLGameObject* getSelectMusicPanel, SDLGameObject* getMainScore_Grade, SDLGameObject* getBack_stage1,
+	StageController(SDLGameObject* getSelectMusic, SDLGameObject* getSelectMusicPanel, 
+		SDLGameObject* getMainScore_Grade, SDLGameObject* getBack_stage1,
 		SDLGameObject* getBack_stage_back1, SDLGameObject* getBack_stage_back2, SDLGameObject* getStage_back_frame_sprite,
 		SDLGameObject* getStage_back_frame_sprite1, SDLGameObject* getStage_back_frame_sprite2);
 

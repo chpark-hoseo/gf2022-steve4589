@@ -49,8 +49,10 @@ void State_Play::Awake()
 	TextureManager::GetInstance()->load("need for A+_selectMenu", "selectMenu_sprite", m_pRenderer);
 	TextureManager::GetInstance()->load("need for A+_fadePanel", "fadePanel_sprite", m_pRenderer);
 	TextureManager::GetInstance()->load("need for A+_upDownCok", "upDownCok_sprite", m_pRenderer);
+	TextureManager::GetInstance()->load("need for A+_loadingCircle", "loadingCircle_sprite", m_pRenderer); 
+
 	TextureManager::GetInstance()->load("need for A+_grade", "grade_sprite", m_pRenderer);
-	TextureManager::GetInstance()->load("need for A+_loadingCircle", "loadingCircle_sprite", m_pRenderer);
+	TextureManager::GetInstance()->load("need for A+_grade_play", "play_grade_sprite", m_pRenderer);
 
 	//Ã¼·Â¹Ù 
 	TextureManager::GetInstance()->load("need for A+_healthBarPack", "healthBarPack_sprite", m_pRenderer);
@@ -90,6 +92,7 @@ void State_Play::Awake()
 	m_gameObjects.push_back(musicSelect_music);
 	m_gameObjects.push_back(musicSelect);
 	m_gameObjects.push_back(mainScore_grade);
+	m_gameObjects.push_back(playScore_grade);
 
 	m_gameObjects.push_back(spaceButton1);
 	//m_gameObjects.push_back(lerpPanel);
@@ -122,6 +125,7 @@ void State_Play::Awake()
 	energyBar->SetPosition(Vector2D(830, 750));
 
 	mainScore_grade->SetPosition(Vector2D(1265, 605));
+	playScore_grade->SetPosition(Vector2D(1200, 10));
 
 	NoteManager::GetInstance()->SetPowerNotePads(powerNotePad1);
 	NoteManager::GetInstance()->SetPowerNotePads(powerNotePad1);
