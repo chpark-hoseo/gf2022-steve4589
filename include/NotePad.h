@@ -2,8 +2,9 @@
 #include <Collider2D.h>
 #include <cstdarg>
 #include <TemplateButton.h>
+#include <DirShot.h>
 
-class NotePad : public SDLGameObject, public TemplateButton
+class NotePad : public SDLGameObject, public TemplateButton, public DirShot
 {
 private:
 	std::string getTag;
@@ -13,6 +14,7 @@ private:
 
 	Vector2D playerPos = Vector2D(635.5f, 750);
 
+	void Shot(const char * objectName) { dirShot(3, m_position, Vector2D(1300, 50), objectName); }
 	void OffNote();
 public:
 	NotePad(const LoaderParams* pParams, string thisTag, string noteTag);

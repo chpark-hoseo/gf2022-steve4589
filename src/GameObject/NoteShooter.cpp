@@ -2,10 +2,12 @@
 #include <State_Play.h>
 #include <PowerNote.h>
 
-NoteShooter::NoteShooter(const LoaderParams* pParams) : SDLGameObject(pParams) 
+NoteShooter::NoteShooter(const LoaderParams* pParams, vector<NoteShooter *> noteShooters) : SDLGameObject(pParams)
 {
 	m_animation->SetProp(m_textureID, 0.01f, m_currentRow, 2);
 	m_animation->SetAnimPause(false);
+
+	noteShooters.emplace_back(this);
 }
 
 void NoteShooter::draw()
@@ -20,25 +22,13 @@ void NoteShooter::update()
 	m_animation->Update();
 	SDLGameObject::update();
 }
-void NoteShooter::Shot(float speed, Vector2D disPos)
+void NoteShooter::Shot(float speed, Vector2D disPos) { dirShot(speed, m_position, disPos, "PowerNote"); }
+void NoteShooter::dirShotAct() 
 {
-	SetPop();
-
-	GameObject* gameObject = State_Play::GetInstance()->GetObject(m_position, "PowerNote");
-
-	Vector2D shotPos = gameObject->GetPosition();
-
-	float x = disPos.getX() - shotPos.getX();
-	float y = disPos.getY() - shotPos.getY();
-
-	Vector2D setDirVec = Vector2D(x, y);
-	setDirVec.normalize();
-
-	gameObject->SetSpeed(speed);
-	gameObject->SetDirVec(setDirVec);
-
 	State_Play::GetInstance()->GetObject(m_position, "PowerNoteStartBoom");
+	SetPop();
 }
+
 void NoteShooter::SetIdle()
 {
 	m_animation->SetProp(m_textureID, 0.01f, m_currentRow, 2);

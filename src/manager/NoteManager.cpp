@@ -117,10 +117,10 @@ void NoteManager::SpawnPowerNote(int getPoint)
 	Vector2D disPos = Vector2D(0, 0);
 
 	//10으로 나눈 값 => 포인트, 나머지 => 쏘아보낼 위치
-	int point = getPoint / 10; 
-	int disPoint = getPoint % 10; 
+	int point = getPoint / 10;
+	int disPoint = getPoint % 10;
 
-	switch (point)
+	switch (point) //한 스테이지당 노트슈터는 총 2개 (증가도 가능)
 	{
 	default:
 		return;
@@ -134,11 +134,6 @@ void NoteManager::SpawnPowerNote(int getPoint)
 		break;
 	}
 	disPos = notePad->GetPosition();
-	//speed == 0 ==> 파워노트 처음쏠때 (시각적으로)
-	//speed == -1 ==> 파워노트를 이제 안쏜다는 뜻 (시각적으로)
-	if (speed == 0) noteShooter->SetPop();
-	else if (speed == -1)noteShooter->SetIdle();
-
-	else noteShooter->Shot(speed, disPos);
+	noteShooter->Shot(speed, disPos);
 }
 queue<string> NoteManager::GetSpawnQueue() { return spawnQueue_test; }

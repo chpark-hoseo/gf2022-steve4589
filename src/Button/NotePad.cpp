@@ -18,7 +18,6 @@ void NotePad::SetPosition(Vector2D getPos)
 	SDLGameObject::SetPosition(getPos);
 	collision.SetPosition(m_position.getX(), m_position.getY() - 15, m_width, m_height - 95);
 }
-
 //Collider
 void NotePad::DetectCollider()
 {
@@ -31,7 +30,7 @@ void NotePad::DetectCollider()
 	{
 		if (ExitgameObject[i]->activeSelf())
 		{
-			State_Play::GetInstance()->GetObject(ExitgameObject[i]->GetPosition(), "BoomTrashA");
+			Shot("BoomTrashF");
 			State_Play::GetInstance()->GetObject(ExitgameObject[i]->GetPosition(), "MissBoom");
 			ExitgameObject[i]->SetActive(false);
 
@@ -44,6 +43,7 @@ void NotePad::OffNote()
 	if (EntergameObject != NULL)
 	{
 		ScoreManager::GetInstance()->AddScore();
+		Shot("BoomTrashA");
 		State_Play::GetInstance()->GetObject(EntergameObject->GetPosition(), "WinBoom");
 		EntergameObject->SetActive(false);
 

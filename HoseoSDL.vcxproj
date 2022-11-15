@@ -148,11 +148,13 @@
     <ClCompile Include="src\Controller\BackScroll.cpp" />
     <ClCompile Include="src\Button\NormalButton.cpp" />
     <ClCompile Include="src\Controller\StageController.cpp" />
+    <ClCompile Include="src\GameObject\BoomTrash.cpp" />
     <ClCompile Include="src\GameObject\LoadingCircle.cpp" />
     <ClCompile Include="src\GameObject\MusicSelectPanel.cpp" />
     <ClCompile Include="src\Button\PowerNotePad.cpp" />
     <ClCompile Include="src\Button\PowerNotePadButton.cpp" />
     <ClCompile Include="src\manager\ScoreManager.cpp" />
+    <ClCompile Include="src\Pattern\DirShot.cpp" />
     <ClCompile Include="src\Scene\State_Play.cpp" />
     <ClCompile Include="src\Scene\State_StartLogo.cpp" />
     <ClCompile Include="src\physics\CustomPhysics.cpp" />
@@ -180,7 +182,9 @@
   <ItemGroup>
     <ClInclude Include="include\Animation.h" />
     <ClInclude Include="include\BackScroll.h" />
+    <ClInclude Include="include\BoomTrash.h" />
     <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\DirShot.h" />
     <ClInclude Include="include\LoadingCircle.h" />
     <ClInclude Include="include\NormalButton.h" />
     <ClInclude Include="include\PowerNotePad.h" />

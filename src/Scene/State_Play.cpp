@@ -100,7 +100,6 @@ void State_Play::Awake()
 	//ObjectPool
 	InitPool();
 	std::cout << "ObjectSize => " << m_gameObjects.size() << "\n\n";
-
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	//Setting
 	OnOffStageSetting(false);
@@ -212,10 +211,10 @@ GameObject* State_Play::CreateObjects(const char* name)
 		gameObject = new NoteBoom(new LoaderParams(0, 0, 192, 192, 0, 0, "notesBoom1_sprite"), 5);
 	}
 	else if (name == "BoomTrashA") {
-		gameObject = new PowerNote(new LoaderParams(0, 0, 48, 48, 0, 0, "BoomTrash_sprite"));
+		gameObject = new BoomTrash(new LoaderParams(0, 0, 48, 48, 0, 1, "BoomTrash_sprite"));
 	}
 	else if (name == "BoomTrashF") {
-		gameObject = new PowerNote(new LoaderParams(0, 0, 48, 48, 0, 0, "BoomTrash_sprite"));
+		gameObject = new BoomTrash(new LoaderParams(0, 0, 48, 48, 0, 0, "BoomTrash_sprite"));
 	}
 	else if (name == "PowerNoteStartBoom") {
 		gameObject = new NoteBoom(new LoaderParams(0, 0, 144, 144, 0, 0, "powerNoteStartBoom_sprite"), 3);

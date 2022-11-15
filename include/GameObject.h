@@ -52,8 +52,6 @@ public:
 protected:
 	GameObject(const LoaderParams* pParams) 
 	{
-		//나중에 getX랑 Y는 m_Position에서 받아와야 됨 
-		//초기값 
 		getRect.x = (int)pParams->getX();
 		getRect.y = (int)pParams->getY();
 		getRect.w = pParams->getWidth();
@@ -76,5 +74,5 @@ protected:
 	bool onOff = true;
 	bool onFirst = true;
 
-	Vector2D dirVec = Vector2D(0, 0);;
+	Vector2D dirVec = Vector2D(0, 0);
 };

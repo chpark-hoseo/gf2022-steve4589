@@ -31,7 +31,6 @@ void PowerNotePad::DetectCollider()
 	{
 		if (ExitgameObject[i]->activeSelf())
 		{
-			State_Play::GetInstance()->GetObject(ExitgameObject[i]->GetPosition(), "BoomTrashA");
 			State_Play::GetInstance()->GetObject(ExitgameObject[i]->GetPosition(), "MissBoom");
 			ExitgameObject[i]->SetActive(false);
 

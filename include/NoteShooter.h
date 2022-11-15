@@ -1,11 +1,13 @@
 #pragma once
 #include <SDLGameObject.h>
 #include <Animation.h>
+#include <DirShot.h>
+#include <vector>
 
-class NoteShooter : public SDLGameObject
+class NoteShooter : public SDLGameObject, public DirShot
 {
 public:
-	NoteShooter(const LoaderParams* pParams);
+	NoteShooter(const LoaderParams* pParams, vector<NoteShooter*> noteShooters);
 
 	virtual void draw();
 	virtual void update();
@@ -15,11 +17,8 @@ public:
 	//Anim
 	void SetIdle();
 	void SetPop();
-
-	void SetSetPos(Vector2D shotPos) {} //파워노트 나오는 곳, 생성자나 Awake()로 초기화 필요
 private:
 	Animation* m_animation = new Animation();
 
-	Vector2D dispos = Vector2D(0, 0);
-	Vector2D shotPos = Vector2D(0, 0);
+	virtual void dirShotAct();
 };

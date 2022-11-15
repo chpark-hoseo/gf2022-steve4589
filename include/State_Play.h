@@ -19,6 +19,7 @@
 #include <Player.h>
 #include <MusicSelectPanel.h>
 #include <SpaceButton.h>
+#include <BoomTrash.h>
 //UI
 #include <Command.h>
 #include <LerpPanel.h>
@@ -146,6 +147,8 @@ public:
 			OnOffStage_Main_Objects(true);
 			OnOffStage_Play_Objects(false);
 
+			//for (NoteShooter* noteShooter : noteShooters) { noteShooter->SetIdle(); }
+
 			player->DeadOff();
 			gameOverPanel->SetActive(false);
 			isKeyStop = false;
@@ -231,7 +234,7 @@ private:
 	PowerNotePad* powerNotePad2 = new PowerNotePad(new LoaderParams(0, 0, 144, 144, 0, 0, "powerNotesPad_sprite"), "PowerNotePad", "PowerNote");
 	PowerNotePadButton* powerNotePadButton = new PowerNotePadButton(2, powerNotePad1, powerNotePad1, powerNotePad2);
 	//NoteShooter
-	NoteShooter* NoteShooter1 = new NoteShooter(new LoaderParams(0, 0, 192, 192, 0, 0, "noteShooter_stage1_idle_sprite"));
+	NoteShooter* NoteShooter1 = new NoteShooter(new LoaderParams(0, 0, 192, 192, 0, 0, "noteShooter_stage1_idle_sprite"), noteShooters);
 	//NoteShooter* NoteShooter2 = new NoteShooter(new LoaderParams(0, 0, 144, 144, 0, 3, "notesPad_sprite"));
 	//NoteShooter* NoteShooter3 = new NoteShooter(new LoaderParams(0, 0, 144, 144, 0, 3, "notesPad_sprite"));
 	//Backs  selectMenu_music_sprite
@@ -294,7 +297,8 @@ private:
 	//GameObject* back2 = new SDLGameObject(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "stage1_sprite"));
 
 	vector<GameObject*> m_gameObjects;
-	//object Manage
+	//object Manager SetIdle();
+	vector<NoteShooter*> noteShooters;
 	vector<GameObject*> collisionObjects; //충돌할 수 있는 오브젝트 
 	vector<GameObject*> allObjects;
 	map<const char*, vector<GameObject* >> objects; //모든 오브젝트
