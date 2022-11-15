@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include <iostream>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_keyboard.h>
@@ -15,8 +16,14 @@ typedef TextureManager TheTextureManager; //자료형 별칭 생성
 class Game
 {
 public:
-	Game() { }
-	~Game() { }
+	static Game* Instance() {
+		if (s_pInstance == 0) {
+			s_pInstance = new Game();
+			return s_pInstance;
+		}
+		return s_pInstance;
+	}
+	SDL_Renderer* getRenderer() const { return m_pRenderer; }
 
 	bool init(const char* title, int, int, int, int, int flags);
 	void render();
@@ -28,6 +35,9 @@ public:
 	//void DhrowBorder();
 
 private:
+	Game() { }
+	~Game() { }
+
 	SDL_Window* m_pWindow;
 	SDL_Renderer* m_pRenderer;
 	bool m_bRunning;
@@ -43,4 +53,6 @@ private:
 	Monster* m_Monster_swim = new Monster();
 	Monster* m_Monster_wave = new Monster();
 
+	static Game* s_pInstance; // 정적 멤버변수 
 };
+typedef Game TheGame;
