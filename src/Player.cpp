@@ -1,15 +1,12 @@
 #include <Player.h>
 
-void Player::load(float x, float y, int width, int height, std::string textureID)
-{
-    GameObject::load(x, y, width, height, textureID);
-}
+Player::Player(const LoaderParams* pParams) : SDLGameObject(pParams) {}
 
-void Player::draw(SDL_Renderer* pRenderer)
+void Player::draw()
 {
-    GameObject::draw(pRenderer);
+	SDLGameObject::draw();
 }
 void Player::update()
 {
-    m_x -= dirSpeed;
 }
+void Player::clean() {}

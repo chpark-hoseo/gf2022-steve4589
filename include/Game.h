@@ -5,7 +5,7 @@
 #include <SDL2/SDL_keyboard.h>
 #include <TextureManager.h>
 #include <Player.h>
-#include <Monster.h>
+#include <Enemy.h>
 #include <vector>
 
 #define SCREEN_WIDTH 1024
@@ -46,13 +46,9 @@ private:
 
 	std::vector<GameObject*> m_gameObjects;
 
-	Player* m_go = new Player(3);
-	Player* m_player = new Player(-3); //Monster
+	Player* m_go;
+	Enemy* m_player;
 
-	Monster* m_Monster_diagonal = new Monster();
-	Monster* m_Monster_swim = new Monster();
-	Monster* m_Monster_wave = new Monster();
-
-	static Game* s_pInstance; // 정적 멤버변수 
+	static Game* s_pInstance; 
 };
 typedef Game TheGame;
