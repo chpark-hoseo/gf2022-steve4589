@@ -23,7 +23,6 @@ StageController::StageController(SDLGameObject* getSelectMusic, SDLGameObject* g
 
 	StageDataInit();
 }
-
 void StageController::SelectMusic()
 {
 	State_Play::GetInstance()->StageStart(stageData.stageName);
