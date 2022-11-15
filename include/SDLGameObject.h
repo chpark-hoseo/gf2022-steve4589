@@ -39,12 +39,11 @@ public:
 	void SetName(const char* getName) { name = getName; }
 	//KeyBoard
 	virtual void IsPressed(bool isPush) {}
-
-	virtual void OnEnable() {}
 protected:
 	Vector2D m_position;
 	Vector2D m_velocity;
 	Vector2D m_acceleration;
+
 	float speed = 0.5;
 
 	std::string m_textureID;

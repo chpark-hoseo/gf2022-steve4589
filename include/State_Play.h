@@ -185,18 +185,33 @@ public:
 
 	void StageStart(string stageName);
 	void StageEnd();
+
+	//Font
+	void font()
+	{
+		// SDL TTF
+		SDL_Surface* dialogue; //폰트를 담을 Surface
+#ifdef UNICODE
+		dialogue = TTF_RenderUNICODE_Shaded(Game::GetInstance()->getFont(), (Uint16*)L"HanGUL TEXTURE", //TTF_RenderUNICODE_Shaded(TTF_Font* gFont, Uint16* texture, SDL_Color* 꺼진 상태표현?, SDL_Color* 켜진상태 표현?)
+			SDL_Color{ 255, 255, 255 }, SDL_Color{ 255, 255, 255 });
+		SDL_FreeSurface(dialogue);
+#else
+		dialogue = TTF_RenderUTF8_Shaded(g_pFont, "HanGUL TEXTURE",
+			SDL_Color{ 0, 0, 255 }, SDL_Color{ 255, 255, 255 });
+		SDL_FreeSurface(dialogue);
+#endif
+		if (dialogue == NULL)
+		{
+			SDL_Log("TTF_Render 에러 : %s\n", TTF_GetError());
+			throw std::runtime_error("종료");
+		}
+	}
 private:
 	SDL_Renderer* m_pRenderer = Game::GetInstance()->getRenderer();
 	SDL_Window* m_pWindow = Game::GetInstance()->getWindow();
 	SDL_RendererFlip curFlip;
 
 	static State_Play* instance;
-
-	SDL_Texture* m_pTexureText;
-	SDL_Rect m_RectText;
-
-	TTF_Font* g_pFont;
-	Mix_Chunk* g_pChunk;
 
 	int transform_x = SCREEN_WIDTH / 2;
 	int transform_y = 500;

@@ -116,7 +116,7 @@ void State_Play::Awake()
 
 	normalButton1->SetPosition(Vector2D(1100, 50));
 	normalButton2->SetPosition(Vector2D(1100, 850));
-	spaceButton1->SetPosition(Vector2D(806, 595));
+	spaceButton1->SetPosition(Vector2D(1150, 595));
 
 	musicSelect->SetPosition(Vector2D(800, 150));
 	musicSelect_music->SetPosition(Vector2D(814, 220));
@@ -132,6 +132,8 @@ void State_Play::Awake()
 	NoteManager::GetInstance()->SetPowerNotePads(powerNotePad1);
 	//해당 스테이지가 시작할때 추가 하도록 변경
 	NoteManager::GetInstance()->SetNoteShooters(NoteShooter1);
+
+	font();
 
 	//m_pTexureText = SDL_CreateTextureFromSurface(m_pRenderer, pTempSurface);
 	//m_RectText = { 0, 0, pTempSurface->w, pTempSurface->h };

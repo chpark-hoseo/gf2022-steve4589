@@ -18,6 +18,12 @@ struct StageData
 	string stage_back_frame_sprite;
 }typedef stageData;
 
+struct StageInfoData
+{
+	string Info_Name;
+	string Info_Explan;
+}typedef stageInfoData;
+
 class StageController //스테이지 데이터 / 이미지 저장 및 관리 및 변경 
 {
 public:
@@ -132,6 +138,7 @@ public:
 	void ChangeSprites();
 private:
 	string stringData[3];
+	string stringInfoData[3]; 
 
 	SDLGameObject* selectMusic;
 	SDLGameObject* selectMusic_music;
@@ -146,6 +153,7 @@ private:
 	SDLGameObject* back_stage_back_frame2;
 
 	stageData stageData;
+	stageInfoData stageInfoData;
 
 	int musicIndex = 0;
 	int passMusicIndex = 0;

@@ -33,8 +33,6 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 	m_bRunning = true;
 
 	// SDL TTF
-	SDL_Surface* pTempSurface;
-
 	if (TTF_Init() < 0)
 	{
 		SDL_Log("TTF_Init Error: %s\n", TTF_GetError());
@@ -42,29 +40,12 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 	}
 	else
 	{
-		g_pFont = TTF_OpenFont("./assets/Font/SanstainaRegular-52e8.ttf", 20);
+		g_pFont = TTF_OpenFont("./assets/Font/NanumGothic.ttf", 100); //font, fontSize
 		if (g_pFont == NULL)
 		{
 			SDL_Log("TTF_OpenFont Error: %s\n", TTF_GetError());
 			return false;
 		}
-		else
-		{
-			// SDL TTF
-#ifdef UNICODE
-			pTempSurface = TTF_RenderUNICODE_Shaded(g_pFont, (Uint16*)L"HanGUL TEXTURE", //TTF_RenderUNICODE_Shaded(TTF_Font* gFont, Uint16* texture, SDL_Color* 꺼진 상태표현?, SDL_Color* 켜진상태 표현?)
-				SDL_Color{ 0, 0, 255 }, SDL_Color{ 255, 255, 255 });
-#else
-			pTempSurface = TTF_RenderUTF8_Shaded(g_pFont, "HanGUL TEXTURE",
-				SDL_Color{ 0, 0, 255 }, SDL_Color{ 255, 255, 255 });
-#endif
-			if (pTempSurface == NULL)
-			{
-				SDL_Log("TTF_Render Error: %s\n", TTF_GetError());
-				return false;
-			}
-		}
-
 	}
 	return true;
 }
