@@ -26,7 +26,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 				TheTextureManager::GetInstance()->load("textureManager_test", "dogBack_sprite", m_pRenderer);
 
 				m_gameObjects.push_back(new Player(new LoaderParams(100, 100, 128, 82, "dog_animate")));
-				m_gameObjects.push_back(new Enemy(new LoaderParams(100, 100, 128, 82, "dog_animate")));
+				m_gameObjects.push_back(new Enemy(new LoaderParams(100, 100, 128, 82, "dog_animate"))); //s
 			}
 			else {
 				return false; // 랜더러 생성 실패
