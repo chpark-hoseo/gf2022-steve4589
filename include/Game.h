@@ -21,9 +21,6 @@ private:
 	SDL_Window* m_pWindow;
 	SDL_Renderer* m_pRenderer;
 
-	SDL_Texture* m_pTexureText;
-	SDL_Rect m_RectText;
-
 	TTF_Font* g_pFont;
 	/*static*/ Mix_Chunk* g_pChunk;
 
@@ -46,8 +43,6 @@ public:
 	SDL_Window* getWindow() const { return m_pWindow; }
 
 	TTF_Font* getFont() const { return g_pFont; }
-
-	SDL_Texture* getTextureText() const { return m_pTexureText; }
 
 	/* Main Frame */
 	bool init(const char* title, int, int, int, int, int flags);

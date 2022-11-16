@@ -21,10 +21,10 @@ public:
 		GameState* state) {
 		game->ChangeState(state);
 	}
-private:
-	SDL_Texture* m_pTexureText;
-	SDL_Rect m_RectText;
-
+protected:
 	TTF_Font* g_pFont;
 	Mix_Chunk* g_pChunk;
+
+	SDL_Texture* m_pTexureText;
+	SDL_Rect m_RectText;
 };
