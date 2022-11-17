@@ -12,7 +12,6 @@ public:
 	void ChangeSongInfo(std::string getName)
 	{
 		songName = getName;
-		wsongName.assign(songName.begin(), songName.end()); //단점 : UTP-8 문자열(영어외 다른 언어들)은 불가 
 	}
 private:
 	void SongInfo();
@@ -20,5 +19,5 @@ private:
 	string songName;
 	std::wstring wsongName;
 
-	int textHeight = 25;
+	int textHeight = 30;
 };
