@@ -25,6 +25,7 @@
 #include <LerpPanel.h>
 #include <HealthBar.h>
 #include <BackScroll.h>
+#include <MusicPanel.h>
 //Controller
 #include <InputHandler.h>
 //Only ObjectPool
@@ -185,9 +186,6 @@ public:
 
 	void StageStart(string stageName);
 	void StageEnd();
-
-	//Font
-	void font();
 private:
 	SDL_Renderer* m_pRenderer = Game::GetInstance()->getRenderer();
 	SDL_Window* m_pWindow = Game::GetInstance()->getWindow();
@@ -246,7 +244,7 @@ private:
 
 	LerpPanel* lerpPanel = new LerpPanel(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "fadePanel_sprite"));
 	LerpPanel* gameOverPanel = new LerpPanel(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "fadePanel_sprite"));
-	SDLGameObject* musicSelect = new SDLGameObject(new LoaderParams(0, 0, 720, 720, 0, 0, "selectMenu_sprite"));
+	MusicPanel* musicSelect = new MusicPanel(new LoaderParams(0, 0, 720, 720, 0, 0, "selectMenu_sprite"));
 	BackScroll* backScroll = new BackScroll(new LoaderParams(0, 0, 0, 0, 0, 0, ""), back_stage_back_frame, back_stage_back_frame1, back_stage_back_frame2);
 	//StageControl
 	SDLGameObject* mainScore_grade = new SDLGameObject(new LoaderParams(0, 0, 240, 240, 0, 0, "grade_sprite"));
@@ -290,8 +288,6 @@ private:
 		rightButton = new Button(right);
 		spaceButton = new Button(space);
 	}
-
-	//GameObject* back2 = new SDLGameObject(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "stage1_sprite"));
 
 	vector<GameObject*> m_gameObjects;
 	//object Manager SetIdle();

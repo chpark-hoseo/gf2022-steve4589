@@ -74,3 +74,18 @@ void TextureManager::drawFrame(string id, int x, int y, int width, int height, i
 
 	SDL_RenderCopyEx(Game::GetInstance()->getRenderer(), m_textureMap[id], &srcRect, &destRect, 0, 0, flip);
 }
+void TextureManager::drawFont(const wchar_t* pBuff, int x, int y)
+{
+	SDL_Surface* dialogue;
+
+	dialogue = TTF_RenderUNICODE_Blended(Game::GetInstance()->getFont(), (Uint16*)pBuff,
+		SDL_Color{ 0, 0, 0 });
+	SDL_Texture * texture = SDL_CreateTextureFromSurface(Game::GetInstance()->getRenderer(), dialogue);
+
+	SDL_Rect m_RectText = { 0, 0, dialogue->w, dialogue->h };
+	SDL_Rect m_desRectText = { x, y, dialogue->w, dialogue->h };
+
+	SDL_FreeSurface(dialogue);
+
+	SDL_RenderCopy(Game::GetInstance()->getRenderer(), texture, &m_RectText, &m_desRectText);
+}

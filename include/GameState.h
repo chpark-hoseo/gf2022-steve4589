@@ -27,4 +27,5 @@ protected:
 
 	SDL_Texture* m_pTexureText;
 	SDL_Rect m_RectText;
+	SDL_Rect m_desRectText;
 };

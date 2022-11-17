@@ -3,8 +3,9 @@
 #include <State_Play.h>
 #include <ScoreManager.h>
 #include <NoteManager.h>
+#include <MusicPanel.h>
 
-StageController::StageController(SDLGameObject* getSelectMusic, SDLGameObject* getSelectMusicPanel, 
+StageController::StageController(MusicPanel* getSelectMusic, SDLGameObject* getSelectMusicPanel,
 	SDLGameObject* getMainScore_Grade, SDLGameObject* getBack_stage1,
 	SDLGameObject* getBack_stage_back1, SDLGameObject* getBack_stage_back2, SDLGameObject* getStage_back_frame1,
 	SDLGameObject* getStage_back_frame2, SDLGameObject* getStage_back_frame3)
@@ -38,6 +39,7 @@ void StageController::NextMusic()
 	++passMusicIndex;
 
 	ChangeStageData();
+	ChangeSongInfo(passMusicIndex);
 	selectMusic_music->SetSpriteRow(passMusicIndex);
 	//배경음 upper
 }
@@ -48,12 +50,17 @@ void StageController::PreviousMusic()
 	--passMusicIndex;
 
 	ChangeStageData();
+	ChangeSongInfo(passMusicIndex);
 	selectMusic_music->SetSpriteRow(passMusicIndex);
 	//배경음 lower
 }
 void StageController::ChangeGradeSprite()
 {
 	mainScore_Grade->SetSpriteFrame(stageData.Grade);
+}
+void StageController::ChangeSongInfo(int i)
+{	
+	selectMusic->ChangeSongInfo(stringInfoData[i]);
 }
 void StageController::ChangeSprites()
 {

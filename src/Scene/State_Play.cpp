@@ -133,12 +133,6 @@ void State_Play::Awake()
 	NoteManager::GetInstance()->SetPowerNotePads(powerNotePad1);
 	//해당 스테이지가 시작할때 추가 하도록 변경
 	NoteManager::GetInstance()->SetNoteShooters(NoteShooter1);
-
-	font();
-
-	//m_pTexureText = SDL_CreateTextureFromSurface(m_pRenderer, pTempSurface);
-	//m_RectText = { 0, 0, pTempSurface->w, pTempSurface->h };
-	//SDL_FreeSurface(pTempSurface);
 }
 void State_Play::update(Game* game)
 {
@@ -159,7 +153,6 @@ void State_Play::render(Game* game)
 	for (int i = 0; i < m_gameObjects.size(); i++) {
 		m_gameObjects[i]->draw();
 	}
-	font();
 	SDL_RenderPresent(m_pRenderer);
 }
 void State_Play::handleEvents(Game* game)
@@ -331,28 +324,4 @@ void State_Play::GameOver()
 	isStageStart = false;
 	isKeyStop = true;
 	isGameOver = true;
-}
-//TTF
-void State_Play::font()
-{
-	// SDL TTF
-	SDL_Surface* dialogue; //폰트를 담을 Surface
-#ifdef UNICODE
-	dialogue = TTF_RenderUNICODE_Shaded(Game::GetInstance()->getFont(), (Uint16*)L"HanGUL TEXTURE", //TTF_RenderUNICODE_Shaded(TTF_Font* gFont, Uint16* texture, SDL_Color* 꺼진 상태표현?, SDL_Color* 켜진상태 표현?)
-		SDL_Color{ 0, 0, 255 }, SDL_Color{ 255, 255, 255 });
-#else
-	dialogue = TTF_RenderUTF8_Shaded(g_pFont, "HanGUL TEXTURE",
-		SDL_Color{ 0, 0, 255 }, SDL_Color{ 255, 255, 255 });
-#endif
-	if (dialogue == NULL) {
-		SDL_Log("TTF_Render 에러 : %s\n", TTF_GetError());
-		throw std::runtime_error("종료");
-	}
-	else {
-		std::cout << "W ==> " << dialogue->w << "   H ==> " << dialogue->h;
-		m_pTexureText = SDL_CreateTextureFromSurface(Game::GetInstance()->getRenderer(), dialogue);
-		m_RectText = { 20, 20, dialogue->w, dialogue->h };
-		SDL_FreeSurface(dialogue);
-	}
-	SDL_RenderCopy(Game::GetInstance()->getRenderer(), m_pTexureText, &m_RectText, &m_RectText);
 }

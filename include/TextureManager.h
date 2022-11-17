@@ -3,6 +3,8 @@
 #include <SDL2/SDL_image.h>
 #include <string>
 #include <map> 
+#include <wchar.h>
+
 using namespace std;
 
 class TextureManager {
@@ -19,10 +21,11 @@ public:
 	void drawFrame(string id, int x, int y, int width, int height,
 		int currentRow, int currentFrame,
 		SDL_RendererFlip flip = SDL_FLIP_NONE);
-	void drawFrame(string id, int x, int y, int width, int height, 
-		int currentRow, int currentFrame, 
-		int percent, 
+	void drawFrame(string id, int x, int y, int width, int height,
+		int currentRow, int currentFrame,
+		int percent,
 		SDL_RendererFlip flip);
+	void drawFont(const wchar_t* pBuff, int x, int y);
 
 	void TextureAllClean();
 	void TextureClean(string id);

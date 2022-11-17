@@ -123,6 +123,9 @@
     <ClCompile Include="src\GameObject\BoomTrash.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="src\UI\MusicPanel.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\main.h">
@@ -246,6 +249,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="include\BoomTrash.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="include\MusicPanel.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

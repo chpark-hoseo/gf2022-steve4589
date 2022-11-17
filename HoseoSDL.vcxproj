@@ -178,6 +178,7 @@
     <ClCompile Include="src\manager\NoteManager.cpp" />
     <ClCompile Include="src\manager\TextureManager.cpp" />
     <ClCompile Include="src\physics\Vector2D.cpp" />
+    <ClCompile Include="src\UI\MusicPanel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Animation.h" />
@@ -186,6 +187,7 @@
     <ClInclude Include="include\Camera.h" />
     <ClInclude Include="include\DirShot.h" />
     <ClInclude Include="include\LoadingCircle.h" />
+    <ClInclude Include="include\MusicPanel.h" />
     <ClInclude Include="include\NormalButton.h" />
     <ClInclude Include="include\PowerNotePad.h" />
     <ClInclude Include="include\PowerNotePadButton.h" />

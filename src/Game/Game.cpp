@@ -40,7 +40,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 	}
 	else
 	{
-		g_pFont = TTF_OpenFont("./assets/Font/NanumGothic.ttf", 30); //font, fontSize
+		g_pFont = TTF_OpenFont("./assets/Font/small_pixel.ttf", 25); //font, fontSize
 		if (g_pFont == NULL)
 		{
 			SDL_Log("TTF_OpenFont Error: %s\n", TTF_GetError());

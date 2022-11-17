@@ -7,6 +7,7 @@
 
 using namespace std;
 class SDLGameObject;
+class MusicPanel;
 
 struct StageData
 {
@@ -27,7 +28,7 @@ struct StageInfoData
 class StageController //스테이지 데이터 / 이미지 저장 및 관리 및 변경 
 {
 public:
-	StageController(SDLGameObject* getSelectMusic, SDLGameObject* getSelectMusicPanel,
+	StageController(MusicPanel* getSelectMusic, SDLGameObject* getSelectMusicPanel,
 		SDLGameObject* getMainScore_Grade, SDLGameObject* getBack_stage1,
 		SDLGameObject* getBack_stage_back1, SDLGameObject* getBack_stage_back2, SDLGameObject* getStage_back_frame_sprite,
 		SDLGameObject* getStage_back_frame_sprite1, SDLGameObject* getStage_back_frame_sprite2);
@@ -45,11 +46,26 @@ public:
 			{
 				getline(stageSheet, line); //getline(desline, buffer, '/'); 한줄씩 받아옴
 				stringData[musicIndex] = line;
-				std::cout << line << "\n";
+				std::cout << line.c_str() << "\n";
 				musicIndex++;
 			}
 			stageSheet.close();
 		}
+		dataPath = "Assets/StageInfoData.txt";
+		std::ifstream stageSheet1(dataPath, std::ifstream::in);
+
+		if (stageSheet1.is_open())
+		{
+			int index = 0;
+			while (!stageSheet1.eof())
+			{
+				getline(stageSheet1, line);
+				stringInfoData[index] = line;
+				index++;
+			}
+			stageSheet1.close();
+		}
+		ChangeSongInfo(0);
 		ChangeStageData();
 	}
 	void NextPreviousMusic(bool isUp)
@@ -78,11 +94,9 @@ public:
 				break;
 			}
 		}
-
 		string line;
 		vector<string> datas;
 		string data;
-
 		stringstream readQueue(stringData[index]);
 
 		while (getline(readQueue, line, '/')) datas.emplace_back(line);
@@ -136,11 +150,12 @@ public:
 		//std::cout << stageData.stageName << "\n" << stageData.Grade << "\n" << stageData.stage_back_sprite << "\n" << stageData.stage_sprite << "\n" << stageData.stage_back_frame_sprite << "\n";
 	}
 	void ChangeSprites();
+	void ChangeSongInfo(int i);
 private:
 	string stringData[3];
-	string stringInfoData[3]; 
+	string stringInfoData[3];
 
-	SDLGameObject* selectMusic;
+	MusicPanel* selectMusic;
 	SDLGameObject* selectMusic_music;
 
 	SDLGameObject* mainScore_Grade;
@@ -164,3 +179,20 @@ private:
 		//스테이지, 점수, 뒷 배경 3형제 
 		//점수 40미만 or 겜오버 -> F, 점수 40 -> B, 점수 75 -> A, 점수 90 -> A+
 		//점수는 0, 1, 2, 3 순서 
+/*
+string에서 wstring으로 변환하는 방법들 =>
+
+기본 문자열이 UTF-8로 인코딩 된 경우 작동하지 않습니다 
+std::wstring widestr = std::wstring(str.begin(), str.end());
+const wchar_t* widecstr = widestr.c_str();
+
+::윈도우 전용:: /
+#include <atlconv.h>
+...
+std::string str = "Hello, world!";
+CA2W pszWide(str.c_str());
+loadU(pszWide);
+
+::Linux / Unix
+mbstowcs () 및 wcstombs ()
+*/
