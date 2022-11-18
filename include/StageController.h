@@ -4,6 +4,7 @@
 #include <string>
 #include <queue>
 #include <iostream>
+#include <SDL2/SDL_mixer.h>
 
 using namespace std;
 class SDLGameObject;
@@ -44,7 +45,7 @@ public:
 			musicIndex = 0;
 			while (!stageSheet.eof())
 			{
-				getline(stageSheet, line); //getline(desline, buffer, '/'); 한줄씩 받아옴
+				getline(stageSheet, line); //getline(desline, buffer, '/');
 				stringData[musicIndex] = line;
 				std::cout << line.c_str() << "\n";
 				musicIndex++;
@@ -147,13 +148,15 @@ public:
 
 		ChangeSprites();
 		ChangeGradeSprite();
-		//std::cout << stageData.stageName << "\n" << stageData.Grade << "\n" << stageData.stage_back_sprite << "\n" << stageData.stage_sprite << "\n" << stageData.stage_back_frame_sprite << "\n";
 	}
 	void ChangeSprites();
 	void ChangeSongInfo(int i);
+	void ChangeBFX();
 private:
 	string stringData[3];
 	string stringInfoData[3];
+
+	Mix_Music* stageMusic;
 
 	MusicPanel* selectMusic;
 	SDLGameObject* selectMusic_music;

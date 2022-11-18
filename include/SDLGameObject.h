@@ -17,6 +17,7 @@ class ICLICK
 class SDLGameObject : public GameObject {
 public:
 	SDLGameObject(const LoaderParams* pParams);
+
 	virtual void draw();
 	virtual void update()
 	{

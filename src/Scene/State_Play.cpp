@@ -1,5 +1,6 @@
 #include <State_Play.h>
 #include <ScoreManager.h>
+#include <SoundEffect.h>
 
 State_Play* State_Play::instance = 0;
 
@@ -172,7 +173,7 @@ void State_Play::clean()
 //ObjectPool
 void State_Play::InitPool()
 {
-	Pool* pools[11] = { new Pool("LeftNote", 10), new Pool("UpNote", 10), new Pool("DownNote" ,10), new Pool("RightNote", 10) , new Pool("PowerNote", 10), new Pool("WinBoom", 13), new Pool("MissBoom", 13), new Pool("BoomTrashA", 15), new Pool("BoomTrashF", 15), new Pool("PowerNoteStartBoom", 10), new Pool("PlayerMiss", 10) };
+	Pool* pools[12] = { new Pool("LeftNote", 10), new Pool("UpNote", 10), new Pool("DownNote" ,10), new Pool("RightNote", 10) , new Pool("PowerNote", 10), new Pool("WinBoom", 13), new Pool("MissBoom", 13), new Pool("BoomTrashA", 15), new Pool("BoomTrashF", 15), new Pool("PowerNoteStartBoom", 10), new Pool("PlayerMiss", 10), new Pool("SoundEffect", 15) };
 	for (Pool* pool : pools) //이중 값을 가져오기 위해 포인터 형식사용
 	{
 		for (int i = 0; i < pool->m_size; i++)
@@ -217,6 +218,9 @@ GameObject* State_Play::CreateObjects(const char* name)
 	}
 	else if (name == "PlayerMiss") {
 		gameObject = new NoteBoom(new LoaderParams(0, 0, 240, 240, 0, 0, "playerMissBoom_sprite"), 1);
+	}
+	else if (name == "SoundEffect") {
+		gameObject = new SoundEffect(new LoaderParams(0, 0, 240, 240, 0, 0, "playerMissBoom_sprite"));
 	}
 	gameObject->SetName(name);
 	gameObject->SetActive(false);
@@ -298,6 +302,7 @@ void State_Play::StageStart(string getStageName)
 		hp = MAX_HP;
 		energy = MAX_ENERGY;
 
+		stageController->ChangeBFX();
 		NoteManager::GetInstance()->ReadLineToTxt(stageName);
 		SetCommand(left_NoteCommend, up_NoteCommand, down_NoteCommand, right_NoteCommand, space_NoteCommand);
 
@@ -321,6 +326,8 @@ void State_Play::GameOver()
 	stageController->SaveGrade(stageName, 0);
 	player->Dead();
 
+    Mix_HaltMusic();
+	//Mix_playing
 	isStageStart = false;
 	isKeyStop = true;
 	isGameOver = true;

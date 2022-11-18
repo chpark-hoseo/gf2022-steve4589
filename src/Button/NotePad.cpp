@@ -2,6 +2,7 @@
 #include <State_Play.h>
 #include <algorithm>
 #include <ScoreManager.h>
+#include <SoundEffect.h>
 
 NotePad::NotePad(const LoaderParams* pParams, string thisTag, string noteTag) : SDLGameObject(pParams)
 {
@@ -32,6 +33,9 @@ void NotePad::DetectCollider()
 		{
 			Shot("BoomTrashF");
 			State_Play::GetInstance()->GetObject(ExitgameObject[i]->GetPosition(), "MissBoom");
+
+			dynamic_cast<SoundEffect*>(State_Play::GetInstance()->GetObject(Vector2D(0, 0), "SoundEffect"))->SoundSFX("miss");
+
 			ExitgameObject[i]->SetActive(false);
 
 			State_Play::GetInstance()->DamagedHp(8);
@@ -44,6 +48,7 @@ void NotePad::OffNote()
 	{
 		ScoreManager::GetInstance()->AddScore();
 		Shot("BoomTrashA");
+		dynamic_cast<SoundEffect*>(State_Play::GetInstance()->GetObject(Vector2D(0, 0), "SoundEffect"))->SoundSFX("pop");
 		State_Play::GetInstance()->GetObject(EntergameObject->GetPosition(), "WinBoom");
 		EntergameObject->SetActive(false);
 

@@ -22,7 +22,10 @@ private:
 	SDL_Renderer* m_pRenderer;
 
 	TTF_Font* g_pFont;
-	/*static*/ Mix_Chunk* g_pChunk;
+	Mix_Music* stageMusic; 
+	Mix_Chunk* g_pChunk; 
+	//The Mix_Chunk structure represents a sample, or in other words a sound effect 요약::효과음
+	//The Mix_Music structure represents a piece of music, something that can be played for an extended period of time, usually repeated 요약::배경음
 
 	bool m_bRunning;
 
@@ -43,6 +46,8 @@ public:
 	SDL_Window* getWindow() const { return m_pWindow; }
 
 	TTF_Font* getFont() const { return g_pFont; }
+	Mix_Music* getBFX() { return stageMusic; }
+	Mix_Chunk* geChunk() { return g_pChunk; }
 
 	/* Main Frame */
 	bool init(const char* title, int, int, int, int, int flags);

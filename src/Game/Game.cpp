@@ -48,24 +48,18 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, in
 		}
 	}
 	// SDL Mixer
-	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) //
 	{
 		SDL_Log("Mix_OpenAudio Error: %s\n", Mix_GetError());
 		return false;
 	}
 	else
 	{
-		g_pChunk = Mix_LoadWAV("./assets/BFX/Stage1.mp3");
-		Mix_PlayChannel(-1, g_pChunk, 0);
-		if (g_pChunk == NULL)
-		{
-			SDL_Log("Mix_LoadWAV Error : %s\n", Mix_GetError());
-			return false;
-		}
-		else
-		{
-			Mix_Volume(-1, 128);
-		}
+		stageMusic = Mix_LoadMUS("./assets/BFX/Stage0.mp3"); //0은 없으므로 출력x
+		Mix_PlayMusic(stageMusic, 1);
+		//Mix_PlayChannel(-1, g_pChunk, 1);
+
+		Mix_Volume(-1, 128);
 	}
 	return true;
 }

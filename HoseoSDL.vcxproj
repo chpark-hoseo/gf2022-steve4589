@@ -158,6 +158,7 @@
     <ClCompile Include="src\Scene\State_Play.cpp" />
     <ClCompile Include="src\Scene\State_StartLogo.cpp" />
     <ClCompile Include="src\physics\CustomPhysics.cpp" />
+    <ClCompile Include="src\Sound\SoundEffect.cpp" />
     <ClCompile Include="src\UI\LerpPanel.cpp" />
     <ClCompile Include="src\UI\HealthBar.cpp" />
     <ClCompile Include="src\GameObject\Player.cpp" />
@@ -192,6 +193,7 @@
     <ClInclude Include="include\PowerNotePad.h" />
     <ClInclude Include="include\PowerNotePadButton.h" />
     <ClInclude Include="include\ScoreManager.h" />
+    <ClInclude Include="include\SoundEffect.h" />
     <ClInclude Include="include\SpaceButton.h" />
     <ClInclude Include="include\StageController.h" />
     <ClInclude Include="include\TemplateButton.h" />

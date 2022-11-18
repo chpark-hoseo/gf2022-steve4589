@@ -4,10 +4,7 @@
 #include <iostream>
 #include <State_Play.h>
 
-Note::Note(const LoaderParams* pParams, const char* name) : SDLGameObject(pParams)
-{
-	tag = "Note";
-}
+Note::Note(const LoaderParams* pParams, const char* name) : SDLGameObject(pParams) { tag = "Note"; }
 
 void Note::draw()
 {
