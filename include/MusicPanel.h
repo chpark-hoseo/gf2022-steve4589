@@ -9,10 +9,7 @@ public:
 	virtual void update() {}
 	virtual void clean() {}
 
-	void ChangeSongInfo(std::string getName)
-	{
-		songName = getName;
-	}
+	void ChangeSongInfo(std::string getName) { songName = getName; }
 private:
 	void SongInfo();
 

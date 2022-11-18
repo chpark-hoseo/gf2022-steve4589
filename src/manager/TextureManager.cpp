@@ -2,7 +2,7 @@
 #include <TextureManager.h>
 #include <Game.h>
 
-TextureManager* TextureManager::s_pInstance = 0; //정적변수를 사용할 수 있게 하기 위해서 
+TextureManager* TextureManager::s_pInstance = 0;
 
 bool TextureManager::load(string fileName, string id, SDL_Renderer* pRenderer)
 {
@@ -74,7 +74,7 @@ void TextureManager::drawFrame(string id, int x, int y, int width, int height, i
 
 	SDL_RenderCopyEx(Game::GetInstance()->getRenderer(), m_textureMap[id], &srcRect, &destRect, 0, 0, flip);
 }
-void TextureManager::drawFont(const wchar_t* pBuff, int x, int y)
+void TextureManager::drawFont(const wchar_t* pBuff, int x, int y) //나중에 texture를 미리 생성하도록 변경 필요
 {
 	SDL_Surface* dialogue;
 

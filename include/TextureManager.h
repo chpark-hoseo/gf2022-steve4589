@@ -17,6 +17,7 @@ public:
 		return s_pInstance;
 	}
 	bool load(string fileName, string id, SDL_Renderer* pRenderer);
+	bool loadFont(string fileName, string id, SDL_Renderer* pRenderer);
 
 	void drawFrame(string id, int x, int y, int width, int height,
 		int currentRow, int currentFrame,

@@ -22,9 +22,6 @@ public:
 		game->ChangeState(state);
 	}
 protected:
-	TTF_Font* g_pFont;
-	Mix_Chunk* g_pChunk;
-
 	SDL_Texture* m_pTexureText;
 	SDL_Rect m_RectText;
 	SDL_Rect m_desRectText;
