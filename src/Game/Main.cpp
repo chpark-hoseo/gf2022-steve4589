@@ -24,7 +24,6 @@ int main(int argc, char* argv[])
             }
         }
     }
-
     Game::GetInstance()->quit();
 
     return 0;
