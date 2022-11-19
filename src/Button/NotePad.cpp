@@ -12,6 +12,7 @@ NotePad::NotePad(const LoaderParams* pParams, string thisTag, string noteTag) : 
 
 void NotePad::update()
 {
+	if(onOff == false) return;
 	DetectCollider();
 }
 void NotePad::SetPosition(Vector2D getPos)
@@ -46,10 +47,13 @@ void NotePad::OffNote()
 {
 	if (EntergameObject != NULL)
 	{
+		collision.EnterNotesPop();
 		ScoreManager::GetInstance()->AddScore();
+
 		Shot("BoomTrashA");
 		dynamic_cast<SoundEffect*>(State_Play::GetInstance()->GetObject(Vector2D(0, 0), "SoundEffect"))->SoundSFX("pop");
 		State_Play::GetInstance()->GetObject(EntergameObject->GetPosition(), "WinBoom");
+
 		EntergameObject->SetActive(false);
 
 		State_Play::GetInstance()->HealHp(1);
@@ -58,7 +62,7 @@ void NotePad::OffNote()
 	{
 		ScoreManager::GetInstance()->MinusScore();
 		State_Play::GetInstance()->GetObject(playerPos, "PlayerMiss");
-		State_Play::GetInstance()->DamagedHp(4);
+		State_Play::GetInstance()->DamagedHp(5);
 	}
 }
 void NotePad::PressInAct()

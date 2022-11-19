@@ -25,7 +25,7 @@ public:
 		return s_pInstance;
 	}
 	void ReadLineToTxt(string dataPath);
-	void ReadSpawnNotes();
+	bool ReadSpawnNotes();
 
 	void SetNoteShooters(NoteShooter* noteShooter) { noteShooters.emplace_back(noteShooter); }
 	void SetPowerNotePads(PowerNotePad* powerNotePad) { powerNotePads.emplace_back(powerNotePad); }

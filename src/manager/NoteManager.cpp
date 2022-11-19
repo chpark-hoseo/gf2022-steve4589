@@ -23,21 +23,27 @@ void NoteManager::ReadLineToTxt(string data) //스테이지 시트 리필 1. 게임이 시작
 	ifstream spawnSheet(dataPath.c_str(), std::ifstream::in);
 
 	allNoteNum = 0;
+	spawnQueue_test = queue<string>();
 	string line;
 	if (spawnSheet.is_open())
 	{
+		//nextSpawnDelay = 1f;
 		while (!spawnSheet.eof())
 		{
 			getline(spawnSheet, line); //getline(desline, buffer, '/');
 			spawnQueue_test.push(line);
 
+			if (allNoteNum == 0) { //첫번째 노트의 딜레이 필요 ( if (m_curTime > curSpawnDelay) 때문에 아예 작동 안하기 때문에 )
+				const char* n = &line[0];
+				nextSpawnDelay = atof(n); 
+			}
 			allNoteNum++;
 		}
 		spawnSheet.close();
 		cout << "SpawnSheet Size ==> " << spawnQueue_test.size() << "\n";
 	}
 }
-void NoteManager::ReadSpawnNotes()
+bool NoteManager::ReadSpawnNotes()
 {
 	float curSpawnDelay = nextSpawnDelay;
 	m_curTime = Timer::GetInstance()->StartTimer();
@@ -52,7 +58,9 @@ void NoteManager::ReadSpawnNotes()
 			Timer::GetInstance()->WaitTime(); //m_curTime 초기화
 			/*게임시작 누를때 Timer::GetInstance()->WaitTime(); 호출필요*/
 		}
+		return false;
 	}
+	else { return true; }
 }
 void NoteManager::ReadSpawnNote() //한줄씩 호출
 {

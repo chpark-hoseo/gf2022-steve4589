@@ -15,7 +15,7 @@ public:
 	virtual void IsPressed(bool isPress) { PressIn(isPress); }
 	//TemplateButton
 	virtual void PressInAct();
-	virtual void PressOutAct() {}
+	virtual void PressOutAct();
 
 	void ReturnSprite() { m_currentFrame = 0; }
 private:

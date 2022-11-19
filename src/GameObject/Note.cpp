@@ -8,6 +8,7 @@ Note::Note(const LoaderParams* pParams, const char* name) : SDLGameObject(pParam
 
 void Note::draw()
 {
+	if (!onOff) return;
 	SDLGameObject::draw();
 }
 void Note::update() //¾Æ·¡·Î 
@@ -24,6 +25,6 @@ void Note::move()
 }
 void Note::OnDisable()
 {
-	State_Play::GetInstance()->ReturnPool(tag.c_str(), this);
+	State_Play::GetInstance()->ReturnPool(name, this);
 	m_position.setXY(0, 0);
 }

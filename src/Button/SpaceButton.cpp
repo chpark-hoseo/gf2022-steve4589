@@ -9,3 +9,8 @@ void SpaceButton::PressInAct()
 	stageController->SelectMusic();
 	m_currentFrame = 1;
 }
+void SpaceButton::PressOutAct()
+{
+	if (onOff == false) return;
+	m_currentFrame = 0;
+}

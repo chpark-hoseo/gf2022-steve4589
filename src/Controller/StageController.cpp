@@ -18,11 +18,11 @@ StageController::StageController(MusicPanel* getSelectMusic, SDLGameObject* getS
 }
 void StageController::SelectMusic()
 {
+	Mix_HaltMusic();
 	State_Play::GetInstance()->StageStart(stageData.stageName);
 
 	int allNoteNum = NoteManager::GetInstance()->GetAllNoteNum(); //ReadLineToTxt 작동하고 호출해야 가져옴
 	ScoreManager::GetInstance()->SetScoreGrade(allNoteNum);
-	//배경음 다시 시작 
 }
 void StageController::NextMusic()
 {

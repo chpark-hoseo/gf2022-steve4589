@@ -5,7 +5,7 @@
 class BoomTrash : public SDLGameObject
 {
 public:
-	BoomTrash(const LoaderParams* pParams);
+	BoomTrash(const LoaderParams* pParams, const char* getName);
 	virtual void draw();
 	virtual void update();
 	virtual void clean() {}

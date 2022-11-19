@@ -20,5 +20,5 @@ void PowerNote::move()
 }
 void PowerNote::OnDisable()
 {
-	State_Play::GetInstance()->ReturnPool(tag.c_str(), this);
+	State_Play::GetInstance()->ReturnPool("PowerNote", this);
 }

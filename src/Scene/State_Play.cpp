@@ -145,7 +145,10 @@ void State_Play::update(Game* game)
 	//State N
 	if (isGameOver == false && isStageStart == true)
 	{
-		NoteManager::GetInstance()->ReadSpawnNotes();
+		if (NoteManager::GetInstance()->ReadSpawnNotes() == true) //true => 당신이 이겼수 
+		{
+			//fade in 코루틴과 함께 StageEnd()호출, 연출은 시간있다면 
+		}
 	}
 }
 void State_Play::render(Game* game)
@@ -202,22 +205,22 @@ GameObject* State_Play::CreateObjects(const char* name)
 		gameObject = new PowerNote(new LoaderParams(0, 0, 144, 144, 0, 0, "powerNotes_sprite"));
 	}
 	else if (name == "WinBoom") {
-		gameObject = new NoteBoom(new LoaderParams(0, 0, 192, 192, 0, 0, "notesBoom_sprite"), 5);
+		gameObject = new NoteBoom(new LoaderParams(0, 0, 192, 192, 0, 0, "notesBoom_sprite"), 5, name);
 	}
 	else if (name == "MissBoom") {
-		gameObject = new NoteBoom(new LoaderParams(0, 0, 192, 192, 0, 0, "notesBoom1_sprite"), 5);
+		gameObject = new NoteBoom(new LoaderParams(0, 0, 192, 192, 0, 0, "notesBoom1_sprite"), 5, name);
 	}
 	else if (name == "BoomTrashA") {
-		gameObject = new BoomTrash(new LoaderParams(0, 0, 48, 48, 0, 1, "BoomTrash_sprite"));
+		gameObject = new BoomTrash(new LoaderParams(0, 0, 48, 48, 0, 1, "BoomTrash_sprite"), name);
 	}
 	else if (name == "BoomTrashF") {
-		gameObject = new BoomTrash(new LoaderParams(0, 0, 48, 48, 0, 0, "BoomTrash_sprite"));
+		gameObject = new BoomTrash(new LoaderParams(0, 0, 48, 48, 0, 0, "BoomTrash_sprite"), name);
 	}
 	else if (name == "PowerNoteStartBoom") {
-		gameObject = new NoteBoom(new LoaderParams(0, 0, 144, 144, 0, 0, "powerNoteStartBoom_sprite"), 3);
+		gameObject = new NoteBoom(new LoaderParams(0, 0, 144, 144, 0, 0, "powerNoteStartBoom_sprite"), 3, name);
 	}
 	else if (name == "PlayerMiss") {
-		gameObject = new NoteBoom(new LoaderParams(0, 0, 240, 240, 0, 0, "playerMissBoom_sprite"), 1);
+		gameObject = new NoteBoom(new LoaderParams(0, 0, 240, 240, 0, 0, "playerMissBoom_sprite"), 1, name);
 	}
 	else if (name == "SoundEffect") {
 		gameObject = new SoundEffect(new LoaderParams(0, 0, 240, 240, 0, 0, "playerMissBoom_sprite"));
@@ -292,15 +295,11 @@ void State_Play::Input_Play()
 }
 //----------------------------------------------------------------------
 //StageManage
-void State_Play::StageStart(string getStageName)
+void State_Play::StageStart(string stageName)
 {
-	stageName = getStageName;
-	if (getStageName != "")
+	if (stageName != "")
 	{
 		OnOffStageSetting(true);
-
-		hp = MAX_HP;
-		energy = MAX_ENERGY;
 
 		stageController->ChangeBFX();
 		NoteManager::GetInstance()->ReadLineToTxt(stageName);
@@ -311,24 +310,37 @@ void State_Play::StageStart(string getStageName)
 }
 void State_Play::StageEnd()
 {
+	isKeyStop = false;
+	isGameOver = false;
+
+	hp = MAX_HP;
+	energy = MAX_ENERGY;
+
 	int grade = ScoreManager::GetInstance()->CaculateGrade();
 	stageController->SaveGrade(stageName, grade);
 
-	OnOffStageSetting(false);
 	SetCommand(nullCommand, upCommand, downCommand, nullCommand, spaceCommand);
+	OnOffStageSetting(false);
 }
-void State_Play::GameOver()
+void State_Play::GameOver() //코루틴으로 변경할것 
 {
+
+	isStageStart = false;
+	isKeyStop = true;
+	isGameOver = true;
+
 	OffObjects();
+	StageEnd();
+	/*OffObjects();
 	gameOverPanel->SetActive(true);
 	playScore_grade->SetActive(false);
 
 	stageController->SaveGrade(stageName, 0);
 	player->Dead();
 
-    Mix_HaltMusic();
-	//Mix_playing
+	Mix_HaltMusic();
+
 	isStageStart = false;
 	isKeyStop = true;
-	isGameOver = true;
+	isGameOver = true;*/
 }

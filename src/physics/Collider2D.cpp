@@ -35,12 +35,12 @@ GameObject* Collider2D::OnCollision2D(std::string tag)
 					collidedObjects.insert(collidedObjects.begin(), colliders[i]); //첫번째에 삽입 
 				}
 			}
-			//Enter
-			enterNote = colliders[i];
 		}
 	}
+	if (collidedObjects.size() != 0) { enterNote = collidedObjects.back(); }
 	return enterNote;
 }
+void Collider2D::EnterNotesPop() { if (collidedObjects.size() != 0) { collidedObjects.erase(collidedObjects.begin()); } }
 
 vector <GameObject*> Collider2D::OnCollisionExit2D(std::string tag)
 {
@@ -57,8 +57,6 @@ vector <GameObject*> Collider2D::OnCollisionExit2D(std::string tag)
 
 		if (CheckAABB(a, b) == false)
 		{
-			std::cout << "Exit Tag ==>  " << collidedObjects[i]->getTag() << "\n\n";
-
 			exitGameObject.emplace_back(collidedObjects[i]);
 
 			collidedObjects.pop_back();

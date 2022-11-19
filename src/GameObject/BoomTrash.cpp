@@ -1,8 +1,9 @@
 #include <BoomTrash.h>
 #include<State_Play.h>
 
-BoomTrash::BoomTrash(const LoaderParams* pParams) : SDLGameObject(pParams) 
+BoomTrash::BoomTrash(const LoaderParams* pParams, const char* getName) : SDLGameObject(pParams) 
 {
+	SetName(getName);
 	tag = "BoomTrash";
 }
 
@@ -25,5 +26,5 @@ void BoomTrash::move()
 }
 void BoomTrash::OnDisable()
 {
-	State_Play::GetInstance()->ReturnPool(tag.c_str(), this);
+	State_Play::GetInstance()->ReturnPool(name, this);
 }

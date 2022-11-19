@@ -3,7 +3,7 @@
 #include <SDL2/SDL_mixer.h>
 
 /*template <class T>*/
-class SoundEffect : public SDLGameObject
+class SoundEffect : public SDLGameObject //SFX는 빈 게임 오브젝트에서 호출합니다 (중첩해서 나오게 하기 위해)
 {
 public:
 	SoundEffect(const LoaderParams* pParams);
@@ -23,7 +23,7 @@ public:
 			return;
 		}
 		Mix_PlayChannel(-1, soundEffect, 0);
-		SetActive(false);
+		SetActive(false); //바로 비활성화 합니다
 	}
 private:
 	virtual void OnDisable();

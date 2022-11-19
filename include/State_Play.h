@@ -85,8 +85,6 @@ public:
 	void PushState(GameState*);
 	void ChangeState(GameState*);
 
-	void KeyStop(bool onOff) { isKeyStop = onOff; }
-
 	//StageStart
 	void StateStart();
 	void StateEnd();
@@ -125,7 +123,7 @@ public:
 		if (energy - damagedEnergy < 0)
 		{
 			player->PanicOn();
-			KeyStop(true);
+			isKeyStop = true;
 			energy = 0;
 		}
 		else { energy -= damagedEnergy; }
@@ -152,8 +150,6 @@ public:
 
 			player->DeadOff();
 			gameOverPanel->SetActive(false);
-			isKeyStop = false;
-			isGameOver = false;
 		}
 		player->PosTrigger(onOff);
 	}
@@ -207,8 +203,8 @@ private:
 	int energy = max_Energy;
 
 	bool isStageStart = false;
-	bool isKeyStop = false;
 	bool isGameOver = false;
+	bool isKeyStop = false;
 
 	//StateData
 	string stageName = "";
