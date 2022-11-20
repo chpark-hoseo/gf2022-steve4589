@@ -310,37 +310,37 @@ void State_Play::StageStart(string stageName)
 }
 void State_Play::StageEnd()
 {
-	isKeyStop = false;
-	isGameOver = false;
+	if (isGameOver == true)
+	{
+		int grade = ScoreManager::GetInstance()->CaculateGrade();
+		stageController->SaveGrade(stageName, grade);
+	}
+	else { stageController->SaveGrade(stageName, 0); }
 
 	hp = MAX_HP;
 	energy = MAX_ENERGY;
 
-	int grade = ScoreManager::GetInstance()->CaculateGrade();
-	stageController->SaveGrade(stageName, grade);
-
 	SetCommand(nullCommand, upCommand, downCommand, nullCommand, spaceCommand);
 	OnOffStageSetting(false);
+	player->DeadOff();
+	stageController->ChangeBFX();
+
+	isKeyStop = false;
+	isGameOver = false;
 }
 void State_Play::GameOver() //코루틴으로 변경할것 
 {
-
-	isStageStart = false;
-	isKeyStop = true;
-	isGameOver = true;
-
 	OffObjects();
-	StageEnd();
-	/*OffObjects();
 	gameOverPanel->SetActive(true);
 	playScore_grade->SetActive(false);
 
-	stageController->SaveGrade(stageName, 0);
 	player->Dead();
 
 	Mix_HaltMusic();
 
 	isStageStart = false;
 	isKeyStop = true;
-	isGameOver = true;*/
+	isGameOver = true;
+
+	StageEnd();//코루틴 끝나고 작동하게 수정
 }

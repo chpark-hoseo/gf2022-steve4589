@@ -54,6 +54,7 @@ public:
 	{
 		isDead = false;
 
+		m_position = pSetPosData.mainPos;
 		m_animation->StartAnimation();
 		m_animation->SetAnimPause(true);
 		m_animation->AnimationOnce(false);

@@ -18,6 +18,11 @@ StageController::StageController(MusicPanel* getSelectMusic, SDLGameObject* getS
 }
 void StageController::SelectMusic()
 {
+	if (stageData.stageName == "Stage0")
+	{
+		std::cout << "튜토리얼 곡입니다, 플레이하실 수 없습니다\n";
+		return;
+	}
 	Mix_HaltMusic();
 	State_Play::GetInstance()->StageStart(stageData.stageName);
 

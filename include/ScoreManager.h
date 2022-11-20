@@ -34,7 +34,10 @@ public:
 	{
 		if (playScore == NULL) { throw std::runtime_error("ScoreManager :: AddScoreSprite() 에 오브젝트를 넣었는지 확인해주세요 \n"); }
 
+		curScore = 0;
 		ALLScore = (float)(AllNoteNum * NOMAL_SCORE);
+
+		ChangeScoreSprite();
 
 		Grade_A = (int)(ALLScore * 0.9f);
 		Grade_B = (int)(ALLScore * 0.7f);

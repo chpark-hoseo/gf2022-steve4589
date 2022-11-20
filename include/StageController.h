@@ -101,7 +101,7 @@ public:
 		stringstream readQueue(stringData[index]);
 
 		while (getline(readQueue, line, '/')) datas.emplace_back(line);
-		datas[1] = std::to_string(grade);
+		datas[1] = std::to_string(grade); //성적 바꿔치기 
 
 		for (int i = 0; i < datas.size(); i++)
 		{
@@ -110,6 +110,12 @@ public:
 				data += "/";
 			}
 		}
+		if (stringData[index] > data) //매번 점수 갱신 방지 (최고점수 넘어야 가능)
+		{
+			std::cout << "재수강 실패.. : " << "\n";
+			return;
+		}
+
 		stringData[index] = data;
 		std::cout << "바뀐 성적 값 : " << stringData[index] << "\n";
 
@@ -119,7 +125,7 @@ public:
 			for (int i = 0; i < musicIndex; i++)
 			{
 				stageSheet << stringData[i];
-				if (i != musicIndex - 1) { stageSheet << "\n"; } //eof
+				if (i != musicIndex - 1) { stageSheet << "\n"; } //make eof
 			}
 			stageSheet.close();
 			std::cout << ":: 성적 수정 완료! :: \n";

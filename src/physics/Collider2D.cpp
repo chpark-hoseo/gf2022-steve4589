@@ -41,7 +41,13 @@ GameObject* Collider2D::OnCollision2D(std::string tag)
 	return enterNote;
 }
 //굳이 vector로 받은 이유 :: 오브젝트 풀의 collidedObjects를 vector로 넘겨받기에 일단 vector로 받았습니다
-void Collider2D::EnterNotesPop() { if (collidedObjects.size() != 0) { collidedObjects.erase(collidedObjects.begin()); } }
+void Collider2D::EnterNotesPop() 
+{
+	if (collidedObjects.size() != 0) { collidedObjects.erase(collidedObjects.begin()); }
+	else{
+		collidedObjects = vector<GameObject*>(); //메모리 초기화
+	}
+}
 
 vector <GameObject*> Collider2D::OnCollisionExit2D(std::string tag)
 {
