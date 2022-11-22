@@ -20,9 +20,9 @@ void PowerNotePadButton::PressInAct()
 		State_Play::GetInstance()->DamagedEnergy(17);
 		ScoreManager::GetInstance()->MinusScore();
 	}
-	else 
+	else
 	{
 		SFX->SoundSFX("pop");
-		ScoreManager::GetInstance()->AddScore(); 
+		ScoreManager::GetInstance()->AddScore();
 	}
 }

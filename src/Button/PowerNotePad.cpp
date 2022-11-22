@@ -45,6 +45,7 @@ bool PowerNotePad::OffNote()
 	{
 		State_Play::GetInstance()->HealEnergy(2);
 		State_Play::GetInstance()->GetObject(EntergameObject->GetPosition(), "WinBoom");
+		collision.EnterNotesPop();
 		EntergameObject->SetActive(false);
 
 		isDetect = true;

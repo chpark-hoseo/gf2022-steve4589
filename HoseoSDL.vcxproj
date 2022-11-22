@@ -118,6 +118,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -186,6 +187,7 @@
     <ClInclude Include="include\BackScroll.h" />
     <ClInclude Include="include\BoomTrash.h" />
     <ClInclude Include="include\Camera.h" />
+    <ClInclude Include="include\Task_Coroutine.h" />
     <ClInclude Include="include\DirShot.h" />
     <ClInclude Include="include\LoadingCircle.h" />
     <ClInclude Include="include\MusicPanel.h" />

@@ -73,7 +73,7 @@ void StageController::ChangeBFX()
 		std::cout << "stageMusic" << passMusicIndex << "is NULL\n";
 		return;
 	}
-	Mix_PlayMusic(stageMusic, 1); //Loop BGM
+	Mix_PlayMusic(stageMusic, 0); //Loop BGM
 }
 void StageController::ChangeSprites()
 {

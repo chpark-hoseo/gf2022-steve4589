@@ -10,6 +10,7 @@ public:
 			timer_instance = new Timer();
 		return timer_instance;
 	};
+	const double getTimer() { return timer; }
 	double StartTimer();
 	void WaitTime();
 
