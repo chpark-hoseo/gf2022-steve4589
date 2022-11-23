@@ -4,6 +4,7 @@
 #include "string.h"
 #include "GameObject.h"
 #include <algorithm>
+#include <InputHandler.h>
 
 Game* Game::s_pInstance = 0;
 
@@ -67,19 +68,13 @@ void Game::handleEvents()
 	SDL_Event event;
 	while (SDL_PollEvent(&event))
 	{
-		switch (event.type)
-		{
-		case SDL_MOUSEBUTTONDOWN:
-			m_bRunning = false;
-			break;
-		default:
-			break;
-		}
+		TheInputHandler::Instance()->update();
 	}
 }
 void Game::clean()
 {
 	TextureManager::GetInstance()->TextureAllClean(); //텍스쳐 모두 삭제
+	TheInputHandler::Instance()->clean();
 
 	SDL_DestroyWindow(m_pWindow);
 	SDL_DestroyRenderer(m_pRenderer);
