@@ -4,7 +4,6 @@
 GameObject* Collider2D::OnCollision2D(std::string tag)
 {
 	vector<GameObject*> Objects;
-
 	GameObject* enterNote = NULL;
 
 	for (int i = 0; i < colliders.size(); i++)

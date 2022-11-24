@@ -89,6 +89,7 @@ void State_Play::Awake()
 	m_gameObjects.push_back(energyBar);
 
 	m_gameObjects.push_back(gameOverPanel);
+	gameOverPanel->Fadeout(); //이곳에 호출했으므로 제어권은 여기에
 
 	m_gameObjects.push_back(player);
 

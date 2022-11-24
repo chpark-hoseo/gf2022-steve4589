@@ -11,6 +11,13 @@ using namespace std;
 class LerpPanel : public SDLGameObject
 {
 public:
+	// 규칙 4. 소멸자에서 std::coroutine_handle<promise_type> 타입의
+    // 코루틴 핸들러 멤버 변수의 destroy를 호출 해야 한다.
+	~LerpPanel()
+	{
+		if (m_handle != NULL) { m_handle.destroy(); }
+	}
+
 	struct promise_type;
 	using coro_handle = std::coroutine_handle<promise_type>;
 
@@ -19,15 +26,17 @@ public:
 	{
 		float value = 0;
 
-		std::suspend_always yield_value(float value)
+		//코루틴 함수에서 co_yield 호출할때 정의 :: 지금은 필요없음
+		/*std::suspend_always yield_value(float value)
 		{
 			this->value = value;
 			return {};
-			//return std::suspend_always{};
-		}
-
+		}*/
+		// suspend_always{} ==> 호출자에게 제어권을 넘김
+		// suspend_never{} ==> 넘기지 않음
+		
 		//사용자 반환 객체 정의 (반드시 정의 ==> 컴파일러가 반드시 promise_type을 선언하기 때문에 없으면 오류 => 반환값을 넘겨주겠다라고 약속해야함) 
-		auto get_return_object() { return LerpPanel{ NULL, coro_handle::from_promise(*this) }; } //미래에 여기 적힌 반환값(LerpPanel)을 넘겨주겠다고 약속
+		LerpPanel get_return_object() { return LerpPanel{ get_pParams, std::coroutine_handle<promise_type>::from_promise(*this) }; } //미래에 여기 적힌 반환값을 넘겨주겠다고 약속, 지금은 없으니까 void타입으로 봐도 무방
 		auto initial_suspend() { return suspend_never{}; } // 코루틴 최초 실행 시 호출. awaitable 객체를 반환.
 		auto return_void() noexcept {} // co_return을 사용할때 리턴값이 있다면 컴파일러에서 자동으로 호출, 반대 ==> return_value()
 		auto final_suspend() noexcept { return suspend_always{}; } // 코루틴 종료 시 호출. noexcept => 해당 함수는 예외를 호출하지 않도록 설정
@@ -52,45 +61,36 @@ public:
 		timer.getTimer();
 	}
 
-    LerpPanel Fadeout()
+	LerpPanel Fadeout()
 	{
 		promise_type promise;
 
-		promise.get_return_object();
-		promise.initial_suspend();
-
+		promise.get_return_object(); //약속한 미래에 promise_type을 반납
+		co_await promise.initial_suspend();
+		
 		SetActive(true);
 
 		alpha = 0;
 		timer.WaitTime();
 
-		while (alpha < 1)
+		while (true) //alpha < 1
 		{
 			timer.StartTimer();
 			alpha += timer.getTimer() / (F_time * 0.1f);
 			//SDL_SetAlpha(surface, SDL_RLEACCEL | SDL_SRCALPHA, (Uint8)alpha);
 			//SDL_BlitSurface(surface, NULL, screen, NULL);
-			std::cout << alpha << "\n";
-			co_await std::suspend_always{};
-			//co_yield 0/*NULL*/; //update문을 작동시키기 위해 
+			std::cout << "알파값 : " << alpha << "\n";
+			co_await std::suspend_always{}; //main 한번 돌리기 위해 제어권을 main문으로 넘겨줍니다 (update에서 재개)
 		}
 		//SDL_SetAlpha(surface, SDL_RLEACCEL | SDL_SRCALPHA, (Uint8)1);
 
-		//SetActive(false);
-		
+		SetActive(false);
 		co_return;
 	}
 private: //핸들러 요약 :: 핸들러는 꼭 생성 및 초기화하고 다쓰면 없애기
-
-// 규칙 4. 소멸자에서 std::coroutine_handle<promise_type> 타입의
-// 코루틴 핸들러 멤버 변수의 destroy를 호출 해야 한다.
-	~LerpPanel()
-	{
-		if (true == (bool)m_handle) { m_handle.destroy(); }
-	}
-
 	// 규칙 2. std::coroutine_handle<promise_type> 타입의 멤버 변수가 있어야 한다.
-	coro_handle m_handle;
+	coro_handle m_handle = NULL;
+	const LoaderParams* get_pParams;
 
 	Timer timer;
 
