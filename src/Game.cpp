@@ -65,16 +65,12 @@ bool Game::running()
 }
 void Game::handleEvents()
 {
-	SDL_Event event;
-	while (SDL_PollEvent(&event))
-	{
-		TheInputHandler::Instance()->update();
-	}
+	InputHandler::Instance()->update();
 }
 void Game::clean()
 {
 	TextureManager::GetInstance()->TextureAllClean(); //텍스쳐 모두 삭제
-	TheInputHandler::Instance()->clean();
+	InputHandler::Instance()->clean();
 
 	SDL_DestroyWindow(m_pWindow);
 	SDL_DestroyRenderer(m_pRenderer);
