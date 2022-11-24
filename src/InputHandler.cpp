@@ -27,7 +27,7 @@ bool InputHandler::isKeyOneDown(SDL_Scancode key) { //case1
             {
                 std::cout << "분노의 질주, 쿨타임 0초 : 미친개로 각성합니다\n";
                 return false; //누르고 있을땐 2가됨
-            }
+            }  //test
             else
                 return ++push; //한번 눌렀을 때 1이되어 한번만 처리가 된다.
         }
