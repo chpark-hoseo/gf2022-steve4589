@@ -4,7 +4,7 @@
 class Note : public SDLGameObject, public INoteType
 {
 public:
-	Note(const LoaderParams* pParams, const char* name);
+	explicit Note(const LoaderParams* pParams, const char* name);
 	virtual void draw();
 	virtual void update();
 	virtual void clean() {}

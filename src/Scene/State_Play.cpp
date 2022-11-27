@@ -45,7 +45,6 @@ void State_Play::Awake()
 	//노트 슈터 애니메이션
 	TextureManager::GetInstance()->load("need for A+_noteShooter_stage1_idle", "noteShooter_stage1_idle_sprite", m_pRenderer);
 	TextureManager::GetInstance()->load("need for A+_noteShooter_stage1_pop", "noteShooter_stage1_pop_sprite", m_pRenderer);
-	//TextureManager::GetInstance()->load("need for A+_noteShooter_stage2", "noteShooter_stage2_sprite", m_pRenderer);
 
 	//UI 
 	TextureManager::GetInstance()->load("need for A+_selectMenu_music", "selectMenu_music_sprite", m_pRenderer);
@@ -89,7 +88,6 @@ void State_Play::Awake()
 	m_gameObjects.push_back(energyBar);
 
 	m_gameObjects.push_back(gameOverPanel);
-	gameOverPanel->Fadeout(); //이곳에 호출했으므로 제어권은 여기에
 
 	m_gameObjects.push_back(player);
 
@@ -99,7 +97,7 @@ void State_Play::Awake()
 	m_gameObjects.push_back(playScore_grade);
 
 	m_gameObjects.push_back(spaceButton1);
-	//m_gameObjects.push_back(lerpPanel);
+	m_gameObjects.push_back(lerpPanel);
 	//ObjectPool
 	InitPool();
 	std::cout << "ObjectSize => " << m_gameObjects.size() << "\n\n";
@@ -261,7 +259,7 @@ void State_Play::Input_Play()
 	}
 	if (isKeyStop) return;
 	//KeyUp
-	if (!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_LEFT)) {
+	if (!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_LEFT)) { 
 		leftButton->UnPressed();
 	}
 	if (!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_UP)) {

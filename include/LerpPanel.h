@@ -2,8 +2,10 @@
 #include <SDLGameObject.h>
 #include <Timer.h>
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include <coroutine>
 #include <exception>
+#include <vector>
 
 using namespace std;
 
@@ -11,92 +13,98 @@ using namespace std;
 class LerpPanel : public SDLGameObject
 {
 public:
-	// 규칙 4. 소멸자에서 std::coroutine_handle<promise_type> 타입의
-    // 코루틴 핸들러 멤버 변수의 destroy를 호출 해야 한다.
-	~LerpPanel()
-	{
-		if (m_handle != NULL) { m_handle.destroy(); }
-	}
-
 	struct promise_type;
-	using coro_handle = std::coroutine_handle<promise_type>;
-
 	//coroutine_trait으로도 약속 가능, 참고자료::https://en.cppreference.com/w/cpp/language/coroutines
-	struct promise_type //반환형, 컴파일러가 해당 코루틴을 작동 시킬때 여기서 정의한 해당 커스텀 코루틴 함수를 작동시킴
+	struct Coroutine;
+	struct Coroutine
 	{
-		float value = 0;
-
-		//코루틴 함수에서 co_yield 호출할때 정의 :: 지금은 필요없음
-		/*std::suspend_always yield_value(float value)
+		struct promise_type;
+		using coro_handle = std::coroutine_handle<promise_type>;
+		struct promise_type //반환형, 컴파일러가 해당 코루틴을 작동 시킬때 여기서 정의한 해당 커스텀 코루틴 함수를 작동시킴
 		{
-			this->value = value;
-			return {};
-		}*/
-		// suspend_always{} ==> 호출자에게 제어권을 넘김
-		// suspend_never{} ==> 넘기지 않음
-		
-		//사용자 반환 객체 정의 (반드시 정의 ==> 컴파일러가 반드시 promise_type을 선언하기 때문에 없으면 오류 => 반환값을 넘겨주겠다라고 약속해야함) 
-		LerpPanel get_return_object() { return LerpPanel{ get_pParams, std::coroutine_handle<promise_type>::from_promise(*this) }; } //미래에 여기 적힌 반환값을 넘겨주겠다고 약속, 지금은 없으니까 void타입으로 봐도 무방
-		auto initial_suspend() { return suspend_never{}; } // 코루틴 최초 실행 시 호출. awaitable 객체를 반환.
-		auto return_void() noexcept {} // co_return을 사용할때 리턴값이 있다면 컴파일러에서 자동으로 호출, 반대 ==> return_value()
-		auto final_suspend() noexcept { return suspend_always{}; } // 코루틴 종료 시 호출. noexcept => 해당 함수는 예외를 호출하지 않도록 설정
-		void unhandled_exception() { std::terminate(); } // 코루틴 실행 중 예외 발생 시 호출, 여기선 사용안했습니다
+			//코루틴 함수에서 co_yield 호출할때 정의 :: 지금은 필요없음
+			/*std::suspend_always yield_value(float value)*/
+			// suspend_always{} ==> 호출자에게 제어권을 넘김
+			// suspend_never{} ==> 넘기지 않음
+			//사용자 반환 객체 정의 (반드시 정의 ==> 컴파일러가 반드시 promise_type을 선언하기 때문에 없으면 오류 => 반환값을 넘겨주겠다라고 약속해야함) 
+			Coroutine get_return_object() { return Coroutine{ std::coroutine_handle<promise_type>::from_promise(*this)}; } //미래에 여기 적힌 반환값을 넘겨주겠다고 약속, 지금은 없으니까 void타입으로 봐도 무방
+			auto initial_suspend() { std::cout << "Coroutine_Start\n"; return suspend_never{}; } // 코루틴 최초 실행 시 호출. awaitable 객체를 반환.
+			auto return_void() noexcept {} // co_return을 사용할때 리턴값이 있다면 컴파일러에서 자동으로 호출, 반대 ==> return_value()
+			auto final_suspend() noexcept { std::cout << "Coroutine_Done\n"; return suspend_never{}; } // 코루틴 종료 시 호출. noexcept => 해당 함수는 예외를 호출하지 않도록 설정
+			void unhandled_exception() { std::terminate(); } // 코루틴 실행 중 예외 발생 시 호출, 여기선 사용안했습니다
 
-		// std::coroutine_handle<Promise>::done ==> 코루틴의 수행이 완료 되면 true, 아니면 false 리턴
-		// ex )) if (true == range.coroutine.done()) 
+			// std::coroutine_handle<Promise>::done ==> 코루틴의 수행이 완료 되면 true, 아니면 false 리턴
+			// ex )) if (true == range.coroutine.done()) 
+		};
+	public:
+		explicit Coroutine(std::coroutine_handle<promise_type> get) { std::cout << " -------------------- 코루틴 생성자 호출 ---------------------\n";  m_handle = get; }
+		~Coroutine() { /*if (m_handle != NULL) { m_handle.destroy(); }  std::cout << ":::Coroutine Destroy:::\n";*/ }
+		std::coroutine_handle<promise_type> m_handle;
+
+		bool Done() 
+		{
+			std::cout << "주소 : " << m_handle.address() << "\n";
+			return m_handle.done();
+		}
+		void Resume() 
+		{
+			std::cout << "코루틴 재개\n";
+			m_handle.resume();
+		} 
 	};
 	// 규칙 3. std::coroutine_handle<promise_type> 을 인자로 받아
 	// 멤버 변수를 초기화 하는 생성자가 있어야 한다.
-	explicit LerpPanel(const LoaderParams* pParams, coro_handle handle); //explicit => 원하지 않는 형변환이 안되게 제어
+	explicit LerpPanel(const LoaderParams* pParams, float getFadeInTime, float getMiddleTime, float getFateOutTime); //explicit => 원하지 않는 형변환이 안되게 제어
+	~LerpPanel() {}
 
 	virtual void draw();
 	virtual void update();
 	virtual void clean() {}
 
-	void FadeIn()
+	Coroutine FadeOutIn(float inTime, float middleTime, float outTime) //time default ==> 0.01f
 	{
-		SetActive(true);
-
-		timer.WaitTime();
-		timer.getTimer();
-	}
-
-	LerpPanel Fadeout()
-	{
-		promise_type promise;
-
-		promise.get_return_object(); //약속한 미래에 promise_type을 반납
-		co_await promise.initial_suspend();
-		
-		SetActive(true);
-
-		alpha = 0;
-		timer.WaitTime();
-
-		while (true) //alpha < 1
+		//FadeIn
+		alpha = 256;
+		while (alpha > 0)
 		{
 			timer.StartTimer();
-			alpha += timer.getTimer() / (F_time * 0.1f);
-			//SDL_SetAlpha(surface, SDL_RLEACCEL | SDL_SRCALPHA, (Uint8)alpha);
-			//SDL_BlitSurface(surface, NULL, screen, NULL);
-			std::cout << "알파값 : " << alpha << "\n";
+			alpha -= timer.getTimer() / (F_time * inTime) * 0.5f;
+
 			co_await std::suspend_always{}; //main 한번 돌리기 위해 제어권을 main문으로 넘겨줍니다 (update에서 재개)
 		}
-		//SDL_SetAlpha(surface, SDL_RLEACCEL | SDL_SRCALPHA, (Uint8)1);
+		//BreakTime
+		/*
+		while (alpha)
+		{
+			timer.StartTimer();
+			alpha -= timer.getTimer() / (F_time * inTime) * 0.5f;
 
+			co_await std::suspend_always{}; 
+		}*/
+		//FadeOut
+		while (alpha < 256)
+		{
+			timer.StartTimer();
+			alpha += timer.getTimer() / (F_time * outTime) * 0.5f;
+
+			co_await std::suspend_always{}; 
+		}
 		SetActive(false);
-		co_return;
 	}
-private: //핸들러 요약 :: 핸들러는 꼭 생성 및 초기화하고 다쓰면 없애기
-	// 규칙 2. std::coroutine_handle<promise_type> 타입의 멤버 변수가 있어야 한다.
-	coro_handle m_handle = NULL;
-	const LoaderParams* get_pParams;
+private:
+	float fadeInTime = 0;
+	float middleTime = 0;
+	float fadeOutTime = 0;
+	double alpha = 0;
+	double F_time = 100;
 
 	Timer timer;
+	Coroutine lerp = FadeOutIn(fadeInTime, middleTime, fadeOutTime);
+	SDL_Texture* texture;
 
-	double alpha;
-	double F_time = 10; //기본값 : 10
-	//LerpPanel::promise_type promise;
+	//test
+	void LerpTextureLoad();
+	void drawImg();
 };
 //코루틴 참고 자료 :: https://luncliff.github.io/coroutine/ppt/[Kor]ExploringTheCppCoroutine.pdf
 //https://kukuta.tistory.com/222

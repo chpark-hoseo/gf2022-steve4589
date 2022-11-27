@@ -12,7 +12,7 @@ private:
 
 	Vector2D playerPos = Vector2D(635.5f, 750);
 public:
-	PowerNotePad(const LoaderParams* pParams, string thisTag, string noteTag);
+	explicit PowerNotePad(const LoaderParams* pParams, string thisTag, string noteTag);
 	virtual void draw() { SDLGameObject::draw(); }
 	virtual void update();
 	virtual void clean() {}

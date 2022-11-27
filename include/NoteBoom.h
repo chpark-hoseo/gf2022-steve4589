@@ -6,7 +6,7 @@
 class NoteBoom : public SDLGameObject
 {
 public :
-	NoteBoom(const LoaderParams* pParams, int frame, const char* getName);
+	explicit NoteBoom(const LoaderParams* pParams, int frame, const char* getName);
 	virtual void draw();
 	virtual void update();
 	virtual void clean() {}

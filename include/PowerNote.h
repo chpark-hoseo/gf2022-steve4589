@@ -4,7 +4,7 @@
 class PowerNote : public SDLGameObject, public INoteType
 {
 public:
-	PowerNote(const LoaderParams* pParams);
+	explicit PowerNote(const LoaderParams* pParams);
 	virtual void draw();
 	virtual void update();
 	virtual void clean() {}

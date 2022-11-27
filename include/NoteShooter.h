@@ -7,7 +7,7 @@
 class NoteShooter : public SDLGameObject, public DirShot
 {
 public:
-	NoteShooter(const LoaderParams* pParams, vector<NoteShooter*> noteShooters);
+	explicit NoteShooter(const LoaderParams* pParams, vector<NoteShooter*> noteShooters);
 
 	virtual void draw();
 	virtual void update();

@@ -15,7 +15,7 @@ typedef struct PlayerSetPosData //1 ~ 4 -> 기본 루트, 5, 6 -> 에너지루트
 class Player : public SDLGameObject
 {
 public:
-	Player(const LoaderParams* pParams);
+	explicit Player(const LoaderParams* pParams);
 	virtual void draw();
 	virtual void update();
 	virtual void clean() {}

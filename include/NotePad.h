@@ -17,7 +17,7 @@ private:
 	void Shot(const char * objectName) { dirShot(3, m_position, Vector2D(1300, 50), objectName); }
 	void OffNote();
 public:
-	NotePad(const LoaderParams* pParams, string thisTag, string noteTag);
+	explicit NotePad(const LoaderParams* pParams, string thisTag, string noteTag);
 	virtual void draw() { SDLGameObject::draw(); }
 	virtual void update();
 	virtual void clean() {}

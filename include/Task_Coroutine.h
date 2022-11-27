@@ -1,43 +1,121 @@
-#pragma once
+/*#include <iostream>
+#include <optional>
+#include <utility>
+#include <vector>
+#include <concepts>
 #include <coroutine>
+#include <exception>
 #include <iostream>
-//참고 자료 : https://zapary.blogspot.com/2020/10/cpp20-coroutine.html
-//https://kukuta.tistory.com/222#footnote_link_222_1
-using namespace std;
+#include <vector>
 
-//c++에서의 코루틴은 커스터마이징이 가능하며, 이는 강제됨
-class Task_Coroutine // 분석용 코드
-{
-public:
-	struct promise_type;
-	using coro_handle = coroutine_handle<promise_type>;
-	struct promise_type
-	{
-		auto initial_suspend() { return suspend_always{}; }
+template <typename T>
+struct myTask {
+    struct promise_type {
+        T value_;
+        ~promise_type() {}
 
-		//사용자 반환 객체 정의 (반드시 정의해야함 :: 컴파일러가 반드시 promise_type을 선언하기 때문에 없으면 반환 못함)
-		auto get_return_object() { return Task_Coroutine{ std::coroutine_handle<promise_type>::from_promise(*this) }; } 
-		auto initial_suspend() { return suspend_never{}; } // 코루틴 최초 실행 시 호출. awaitable 객체를 반환 한다.
-		auto return_void() { return suspend_never{}; } // co_return을 사용하는 경우 구현. 나중에 코루틴 종료를 설명 할 때 같이 설명
-		auto final_suspend() { return suspend_always{}; } // 코루틴 종료 시 호출. 나중에 코루틴 종료를 설명 할 때 같이 설명
-		void unhandled_exception() { std::terminate(); } // 코루틴 수행 중 예외 발생 시 호출
-	};
+        myTask<T> get_return_object() {
+            return myTask<T> {
+                .h_ = std::coroutine_handle<promise_type>::from_promise(*this)
+            };
+        }
 
-private: //핸들러 요약 :: 핸들러는 꼭 생성 및 초기화하고 다쓰면 없애기
+        std::suspend_never initial_suspend() { return {}; }
+        std::suspend_always final_suspend()
+        {
+            boolIsDone = true;
+            return {};
+        }
 
-	// 규칙 4. 소멸자에서 std::coroutine_handle<promise_type> 타입의
-	// 코루틴 핸들러 멤버 변수의 destroy를 호출 해야 한다.
-	~Task_Coroutine()
-	{
-		if (true == (bool)m_handle) { m_handle.destroy(); }
-	}
+        void unhandled_exception() { std::terminate(); }
 
-	// 규칙 2. std::coroutine_handle<promise_type> 타입의 멤버 변수가 있어야 한다.
-	coro_handle m_handle;
+        std::suspend_always return_value(auto value) {
+            value_ = value;
+            return {};
+        }
 
-	// 규칙 3. std::coroutine_handle<promise_type> 을 인자로 받아
-	// 멤버 변수를 초기화 하는 생성자가 있어야 한다.
-	explicit Task_Coroutine(coro_handle handle) : m_handle(handle) {}
+        bool boolIsDone = false;
+        auto isDone() { return boolIsDone; }
+    };
+
+    bool await_ready() const noexcept { return false; }
+    void await_suspend(std::coroutine_handle<promise_type> coro) const noexcept { coro.promise().boolIsDone = true; }
+    void await_resume() const noexcept {}
+
+    std::coroutine_handle<promise_type> h_;
+    operator std::coroutine_handle<promise_type>() const { return h_; }
 };
 
-//co_yield -> 호출자로 돌아갈때 반환
+myTask<int> suspendableLocateValue(int key, std::vector<int>& array, bool interleave)
+{
+    int currentInt = 0;
+    if (interleave = true)
+    {
+        //do something here
+        co_await std::suspend_always{};
+    }
+    currentInt = array.at(key);
+    co_return currentInt;
+}
+
+myTask<std::optional<int>> getValue(std::vector<int>& array, int key, bool interleave)
+{
+    //int result = array.at(key);
+    int leaf;
+
+    if (interleave = true)
+    {
+        leaf = co_await suspendableLocateValue(key, array, true);
+    }
+
+    co_return std::make_optional(leaf);
+}
+
+void minimalInterleavedExecution(std::vector<int>& lookup,
+    std::vector<int>& keys,
+    std::vector<std::optional<int>>& results,
+    int groupsize)
+{
+    std::vector<std::coroutine_handle<myTask<std::optional<int>>::promise_type>> handles;
+
+    for (int i = 0; i < groupsize; ++i)
+    {
+        handles.push_back(getValue(lookup, keys.at(i), true));
+    }
+    int notDone = groupsize;
+    int i = groupsize;
+    while (notDone > 0)
+    {
+        for (int handleIndex = 0; handleIndex < handles.size(); ++handleIndex)
+        {
+            if (!handles.at(handleIndex).promise().isDone())
+            {
+                handles.at(handleIndex).resume();
+            }
+            else
+            {
+                results.push_back(handles.at(handleIndex).promise().value_);
+                if (i < keys.size())
+                {
+                    handles.at(handleIndex) = getValue(lookup, keys.at(i), true);
+                    ++i;
+                }
+                else
+                {
+                    --notDone;
+                    handles.erase(handles.begin() + handleIndex);
+                    --handleIndex;
+                }
+            }
+        }
+    }
+}
+
+int main()
+{
+    std::vector<int> lookup = { 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 };
+    std::vector<int> keys = { 4, 2, 0, 6, 9, 0 };
+    std::vector<std::optional<int>> results;
+
+    minimalInterleavedExecution(lookup, keys, results, 4);
+}*/

@@ -12,6 +12,7 @@ bool TextureManager::load(string fileName, string id, SDL_Renderer* pRenderer)
 		return false;
 	}
 	SDL_Texture* pTexture = SDL_CreateTextureFromSurface(pRenderer, pTempSurface);
+
 	SDL_FreeSurface(pTempSurface);
 	if (pTexture != 0) {
 		m_textureMap[id] = pTexture;

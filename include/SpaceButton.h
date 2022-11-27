@@ -7,7 +7,7 @@ class StageController;
 class SpaceButton : public SDLGameObject, public TemplateButton
 {
 public:
-	SpaceButton(const LoaderParams* pParams, StageController* controller);
+	explicit SpaceButton(const LoaderParams* pParams, StageController* controller);
 	virtual void draw() { SDLGameObject::draw(); }
 	virtual void update() {}
 	virtual void clean() {}

@@ -6,7 +6,7 @@
 class SoundEffect : public SDLGameObject //SFX는 빈 게임 오브젝트에서 호출합니다 (중첩해서 나오게 하기 위해)
 {
 public:
-	SoundEffect(const LoaderParams* pParams);
+	explicit SoundEffect(const LoaderParams* pParams);
 	virtual void draw() {}
 	virtual void update() {}
 	virtual void clean() {}

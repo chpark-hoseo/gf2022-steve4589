@@ -16,7 +16,7 @@ class ICLICK
 
 class SDLGameObject : public GameObject {
 public:
-	SDLGameObject(const LoaderParams* pParams);
+	explicit SDLGameObject(const LoaderParams* pParams);
 
 	virtual void draw();
 	virtual void update()
@@ -32,6 +32,7 @@ public:
 
 	const char* GetName() { return name; }
 	float GetSpeed() { return speed; }
+	string GetSpriteId() { return m_textureID; }
 
 	void SetSpeed(float getSpeed) { speed = getSpeed; }
 	void SetSpriteId(string getId) { m_textureID = getId; }

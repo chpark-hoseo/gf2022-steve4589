@@ -182,6 +182,29 @@ public:
 
 	void StageStart(string stageName);
 	void StageEnd();
+
+	//::작동 방식::Fade패널은 생성될때 코루틴 함수를 작동시킵니다, Fade패널을 삭제하고 다시 생성해 FadeOutIn 합니다
+	//함수내 코루틴 함수를 작동시키고자 했지만, 호출된 함수 외부에서 코루틴을 재개할 방법을 못찾았습니다
+	//c++ 코루틴 관련해서 자료를 더 찾아봤지만 전부 main문 내에서 호출하는 코드밖에 못봐서 
+	//어쩔 수 없이 삭제하고 생성해서 재작동하게 만들었습니다 
+
+	//Notice : 코루틴 함수내의 m_handle을 삭제해야 하는데 무슨 이유에선지 삭제되지 않아서
+	//시간상 이번 게임에서는 초기화하지 않았습니다
+	void FadeOutIn(float fadeIn, float middleTime, float fadeOut /*, float fadeIn*/) 
+	{
+		for (int i = 0; i < m_gameObjects.size(); i++)
+		{
+			if (m_gameObjects[i]->getTag() == "FadeOut")
+			{
+				m_gameObjects.erase(m_gameObjects.begin() + i);
+				std::cout << "FadeOut 삭제\n";
+				break;
+			}
+		}
+		delete lerpPanel;
+		lerpPanel = new LerpPanel(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "fadePanel_sprite"), fadeIn, middleTime, fadeOut);
+		m_gameObjects.emplace_back(lerpPanel);
+	}
 private:
 	SDL_Renderer* m_pRenderer = Game::GetInstance()->getRenderer();
 	SDL_Window* m_pWindow = Game::GetInstance()->getWindow();
@@ -194,7 +217,7 @@ private:
 
 	int m_curFrame = 0;
 	double m_curTime = 0;
-	int startTimer;
+	int startTimer; 
 	bool isTimer = true;
 
 	const int max_Hp = MAX_HP;
@@ -226,8 +249,6 @@ private:
 	PowerNotePadButton* powerNotePadButton = new PowerNotePadButton(2, powerNotePad1, powerNotePad1, powerNotePad2);
 	//NoteShooter
 	NoteShooter* NoteShooter1 = new NoteShooter(new LoaderParams(0, 0, 192, 192, 0, 0, "noteShooter_stage1_idle_sprite"), noteShooters);
-	//NoteShooter* NoteShooter2 = new NoteShooter(new LoaderParams(0, 0, 144, 144, 0, 3, "notesPad_sprite"));
-	//NoteShooter* NoteShooter3 = new NoteShooter(new LoaderParams(0, 0, 144, 144, 0, 3, "notesPad_sprite"));
 	//Backs  selectMenu_music_sprite
 	SDLGameObject* back_stage1 = new SDLGameObject(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "stage1_sprite"));
 	SDLGameObject* back_stage_back1 = new SDLGameObject(new LoaderParams(0, 0, 384, SCREEN_HEIGHT, 0, 0, "stage1_back_sprite"));
@@ -238,8 +259,9 @@ private:
 	SDLGameObject* back_stage_back_frame2 = new SDLGameObject(new LoaderParams(0, 0, 1152, 432, 0, 2, "stage1_back_frame_sprite"));
 	SDLGameObject* musicSelect_music = new SDLGameObject(new LoaderParams(0, 0, 672, 384, 0, 0, "selectMenu_music_sprite"));
 
-	LerpPanel* lerpPanel = new LerpPanel(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "fadePanel_sprite"), NULL);
-	LerpPanel* gameOverPanel = new LerpPanel(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "fadePanel_sprite"), NULL);
+	LerpPanel* lerpPanel = new LerpPanel(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "fadePanel_sprite"), 0.01f, 10, 0.01f);
+	SDLGameObject* gameOverPanel = new SDLGameObject(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "fadePanel_sprite"));
+
 	MusicPanel* musicSelect = new MusicPanel(new LoaderParams(0, 0, 720, 720, 0, 0, "selectMenu_sprite"));
 	BackScroll* backScroll = new BackScroll(new LoaderParams(0, 0, 0, 0, 0, 0, ""), back_stage_back_frame, back_stage_back_frame1, back_stage_back_frame2);
 	//StageControl

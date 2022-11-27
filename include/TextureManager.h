@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include <SDL2/SDL.h> 
 #include <SDL2/SDL_image.h>
 #include <string>
@@ -17,7 +18,6 @@ public:
 		return s_pInstance;
 	}
 	bool load(string fileName, string id, SDL_Renderer* pRenderer);
-	bool loadFont(string fileName, string id, SDL_Renderer* pRenderer);
 
 	void drawFrame(string id, int x, int y, int width, int height,
 		int currentRow, int currentFrame,
@@ -30,6 +30,7 @@ public:
 
 	void TextureAllClean();
 	void TextureClean(string id);
+
 private:
 	TextureManager() {}
 	map<string, SDL_Texture*> m_textureMap;
