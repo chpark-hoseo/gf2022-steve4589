@@ -3,7 +3,7 @@
 #include <TextureManager.h>
 #include <Game.h>
 
-LerpPanel::LerpPanel(const LoaderParams* pParams, float getFadeInTime, float getMiddleTime, float getFadeOutTime) : SDLGameObject(pParams), fadeInTime(getFadeInTime), middleTime(getMiddleTime), fadeOutTime(getFadeOutTime)
+LerpPanel::LerpPanel(const LoaderParams* pParams, float getFadeOutTime, float getFadeInTime) : SDLGameObject(pParams), fadeOutTime(getFadeOutTime), fadeInTime(getFadeInTime)
 { 
 	LerpTextureLoad();
 	tag = "FadeOut";
@@ -38,7 +38,6 @@ void LerpPanel::drawImg()
 	SDL_Rect srcRect;
 	SDL_Rect destRect;
 
-	std::cout << (Uint32)alpha << "\n";
 	SDL_SetTextureAlphaMod(texture, (Uint32)alpha);
 	SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
 

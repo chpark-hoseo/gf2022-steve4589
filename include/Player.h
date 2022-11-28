@@ -2,8 +2,11 @@
 #include <SDLGameObject.h>
 #include <Animation.h>
 #include <Timer.h>
+#include <iostream>
 
 #define Minimum 0.005f
+#define POWERX 4
+#define POWERY 10
 
 typedef struct PlayerSetPosData //1 ~ 4 -> 기본 루트, 5, 6 -> 에너지루트 
 {
@@ -52,9 +55,13 @@ public:
 	void Dead();
 	void DeadOff() 
 	{
-		isDead = false;
+		//초깃값
+		powerX = POWERX;
+		powerY = POWERY;
 
-		m_position = pSetPosData.mainPos;
+		isDead = false;
+		isKnockBack = false;
+
 		m_animation->StartAnimation();
 		m_animation->SetAnimPause(true);
 		m_animation->AnimationOnce(false);
@@ -75,9 +82,9 @@ private:
 
 	void PopLife();
 
-	void Gravity(); //어차피 중력은 여기서밖에 안쓰므로 따로 클래스로 만들진 않았습니다 
+	void Gravity(); //어차피 중력은 여기서밖에 안쓰므로 따로 클래스로 빼두진 않았습니다 
 
-	float powerX = 3.5f;
+	float powerX = 3;
 	float powerY = 10;
 	float gravityPower = 4;
 	bool isGrounded = false;

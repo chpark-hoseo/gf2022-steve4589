@@ -98,12 +98,15 @@ void State_Play::Awake()
 
 	m_gameObjects.push_back(spaceButton1);
 	m_gameObjects.push_back(lerpPanel);
+
+	m_gameObjects.push_back(stageController);
 	//ObjectPool
 	InitPool();
 	std::cout << "ObjectSize => " << m_gameObjects.size() << "\n\n";
 	//:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	//Setting
 	OnOffStageSetting(false);
+	gameOverPanel->SetActive(false);
 	ScoreManager::GetInstance()->AddScoreSprite(playScore_grade);
 	//Position
 	notePad->SetPosition(Vector2D(1536 * 0.5f - 250, 550));
@@ -136,19 +139,34 @@ void State_Play::Awake()
 }
 void State_Play::update(Game* game)
 {
+	//::::::::::update GameObjects::::::::::
 	for (int i = 0; i < m_gameObjects.size(); i++) {
 		m_gameObjects[i]->update();
 	}
+	//::::::::::update State_Play::::::::::
 	//GameOver;
-	if (hp <= 0 && !isGameOver) { GameOver(); }
+	if (hp <= 0) { GameOver(); }
 	//State N
-	if (isGameOver == false && isStageStart == true)
+	if (isStageStart == true)
 	{
 		if (NoteManager::GetInstance()->ReadSpawnNotes() == true) //true => 당신이 이겼수 
 		{
-			//fade in 코루틴과 함께 StageEnd()호출, 연출은 시간있다면 
+			if (isStageEnd && timer.getTimer() > 3)
+			{
+				//이겼을 때 효과음
+				StageEnd();
+			}
+			if (isStageEnd == false)
+			{
+				std::cout << "Congratulations, Clear Stage\n";
+				FadeOutIn(0.01f, 0.01f);
+				timer.WaitTime();
+				isStageEnd = true;
+			}
 		}
 	}
+	//Timer
+	timer.StartTimer();
 }
 void State_Play::render(Game* game)
 {
@@ -259,7 +277,7 @@ void State_Play::Input_Play()
 	}
 	if (isKeyStop) return;
 	//KeyUp
-	if (!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_LEFT)) { 
+	if (!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_LEFT)) {
 		leftButton->UnPressed();
 	}
 	if (!TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_UP)) {
@@ -275,7 +293,7 @@ void State_Play::Input_Play()
 		spaceButton->UnPressed();
 	}
 	//KeyDown
-	if (isGameOver) return;
+	if (hp <= 0) return;
 	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_LEFT)) {
 		leftButton->Pressed();
 	}
@@ -304,42 +322,54 @@ void State_Play::StageStart(string stageName)
 		NoteManager::GetInstance()->ReadLineToTxt(stageName);
 		SetCommand(left_NoteCommend, up_NoteCommand, down_NoteCommand, right_NoteCommand, space_NoteCommand);
 
+		isKeyStop = false;
 		isStageStart = true;
+		isStageEnd = false;
 	}
 }
 void State_Play::StageEnd()
 {
-	if (isGameOver == true)
+	if (hp <= 0)
 	{
 		int grade = ScoreManager::GetInstance()->CaculateGrade();
 		stageController->SaveGrade(stageName, grade);
 	}
 	else { stageController->SaveGrade(stageName, 0); }
 
+	SetCommand(nullCommand, upCommand, downCommand, nullCommand, spaceCommand);
+
+	OnOffStageSetting(false);
+
 	hp = MAX_HP;
 	energy = MAX_ENERGY;
 
-	SetCommand(nullCommand, upCommand, downCommand, nullCommand, spaceCommand);
-	OnOffStageSetting(false);
-	player->DeadOff();
 	stageController->ChangeBFX();
 
 	isKeyStop = false;
-	isGameOver = false;
-}
-void State_Play::GameOver() //코루틴으로 변경할것 
-{
-	OffObjects();
-	gameOverPanel->SetActive(true);
-	playScore_grade->SetActive(false);
-
-	player->Dead();
-
-	Mix_HaltMusic();
-
 	isStageStart = false;
-	isKeyStop = true;
-	isGameOver = true;
+}
+void State_Play::GameOver()
+{
+	if (isStageStart == false && timer.getTimer() > 3.3f)
+	{
+		StageEnd();
+		gameOverPanel->SetActive(false);
+		player->DeadOff();
+	}
+	if (isStageStart == true)
+	{
+		FadeOutIn(0.01f, 0.01f);
+		timer.WaitTime();
 
-	StageEnd();//코루틴 끝나고 작동하게 수정
+		OffObjects();
+		gameOverPanel->SetActive(true);
+		playScore_grade->SetActive(false);
+
+		Mix_HaltMusic();
+
+		player->Dead();
+
+		isStageStart = false;
+		isKeyStop = true;
+	}
 }

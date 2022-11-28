@@ -27,7 +27,7 @@ public:
 			// suspend_always{} ==> 호출자에게 제어권을 넘김
 			// suspend_never{} ==> 넘기지 않음
 			//사용자 반환 객체 정의 (반드시 정의 ==> 컴파일러가 반드시 promise_type을 선언하기 때문에 없으면 오류 => 반환값을 넘겨주겠다라고 약속해야함) 
-			Coroutine get_return_object() { return Coroutine{ std::coroutine_handle<promise_type>::from_promise(*this)}; } //미래에 여기 적힌 반환값을 넘겨주겠다고 약속, 지금은 없으니까 void타입으로 봐도 무방
+			Coroutine get_return_object() { return Coroutine{ std::coroutine_handle<promise_type>::from_promise(*this) }; } //미래에 여기 적힌 반환값을 넘겨주겠다고 약속, 지금은 없으니까 void타입으로 봐도 무방
 			auto initial_suspend() { std::cout << "Coroutine_Start\n"; return suspend_never{}; } // 코루틴 최초 실행 시 호출. awaitable 객체를 반환.
 			auto return_void() noexcept {} // co_return을 사용할때 리턴값이 있다면 컴파일러에서 자동으로 호출, 반대 ==> return_value()
 			auto final_suspend() noexcept { std::cout << "Coroutine_Done\n"; return suspend_never{}; } // 코루틴 종료 시 호출. noexcept => 해당 함수는 예외를 호출하지 않도록 설정
@@ -41,65 +41,58 @@ public:
 		~Coroutine() { /*if (m_handle != NULL) { m_handle.destroy(); }  std::cout << ":::Coroutine Destroy:::\n";*/ }
 		std::coroutine_handle<promise_type> m_handle;
 
-		bool Done() 
+		bool Done()
 		{
 			std::cout << "주소 : " << m_handle.address() << "\n";
 			return m_handle.done();
 		}
-		void Resume() 
+		void Resume()
 		{
 			std::cout << "코루틴 재개\n";
 			m_handle.resume();
-		} 
+		}
 	};
 	// 규칙 3. std::coroutine_handle<promise_type> 을 인자로 받아
 	// 멤버 변수를 초기화 하는 생성자가 있어야 한다.
-	explicit LerpPanel(const LoaderParams* pParams, float getFadeInTime, float getMiddleTime, float getFateOutTime); //explicit => 원하지 않는 형변환이 안되게 제어
+	explicit LerpPanel(const LoaderParams* pParams, float getFadeInTime, float getFateOutTime); //explicit => 원하지 않는 형변환이 안되게 제어
 	~LerpPanel() {}
 
 	virtual void draw();
 	virtual void update();
 	virtual void clean() {}
 
-	Coroutine FadeOutIn(float inTime, float middleTime, float outTime) //time default ==> 0.01f
+	Coroutine FadeOutIn(float outTime, float inTime) //time default ==> 0.01f
 	{
+		//FadeOut
+		if (outTime != 0)
+		{
+			while (alpha < 256)
+			{
+				timer.StartTimer();
+				alpha += (Uint32)(timer.getTimer() / (F_time * outTime) * 0.5f);
+
+				co_await std::suspend_always{}; //제어권을 main문으로 넘겨줍니다 (draw가 작동되야 보여지므로)
+			}
+		}
 		//FadeIn
 		alpha = 256;
 		while (alpha > 0)
 		{
 			timer.StartTimer();
-			alpha -= timer.getTimer() / (F_time * inTime) * 0.5f;
+			alpha -= (Uint32)(timer.getTimer() / (F_time * inTime) * 0.5f);
 
-			co_await std::suspend_always{}; //main 한번 돌리기 위해 제어권을 main문으로 넘겨줍니다 (update에서 재개)
-		}
-		//BreakTime
-		/*
-		while (alpha)
-		{
-			timer.StartTimer();
-			alpha -= timer.getTimer() / (F_time * inTime) * 0.5f;
-
-			co_await std::suspend_always{}; 
-		}*/
-		//FadeOut
-		while (alpha < 256)
-		{
-			timer.StartTimer();
-			alpha += timer.getTimer() / (F_time * outTime) * 0.5f;
-
-			co_await std::suspend_always{}; 
+			co_await std::suspend_always{};
 		}
 		SetActive(false);
 	}
 private:
 	float fadeInTime = 0;
-	float middleTime = 0;
 	float fadeOutTime = 0;
 	double alpha = 0;
 	double F_time = 100;
 
 	Timer timer;
-	Coroutine lerp = FadeOutIn(fadeInTime, middleTime, fadeOutTime);
+	Coroutine lerp = FadeOutIn(fadeOutTime, fadeInTime);
 	SDL_Texture* texture;
 
 	//test

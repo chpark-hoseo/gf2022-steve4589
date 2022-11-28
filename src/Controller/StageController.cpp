@@ -1,18 +1,17 @@
 #include <StageController.h>
-#include <SDLGameObject.h>
 #include <State_Play.h>
 #include <ScoreManager.h>
 #include <NoteManager.h>
 #include <MusicPanel.h>
 
-StageController::StageController(MusicPanel* getSelectMusic, SDLGameObject* getSelectMusicPanel,
+StageController::StageController(const LoaderParams* pParams, MusicPanel* getSelectMusic, SDLGameObject* getSelectMusicPanel,
 	SDLGameObject* getMainScore_Grade, SDLGameObject* getBack_stage1,
 	SDLGameObject* getBack_stage_back1, SDLGameObject* getBack_stage_back2, SDLGameObject* getStage_back_frame1,
 	SDLGameObject* getStage_back_frame2, SDLGameObject* getStage_back_frame3)
 	: selectMusic(getSelectMusic), selectMusic_music(getSelectMusicPanel), mainScore_Grade(getMainScore_Grade),
 	back_stage1(getBack_stage1), back_stage_back1(getBack_stage_back1), back_stage_back2(getBack_stage_back2),
 	back_stage_back_frame(getStage_back_frame1), back_stage_back_frame1(getStage_back_frame2), back_stage_back_frame2(getStage_back_frame3),
-	stageMusic(Game::GetInstance()->getBFX())
+	stageMusic(Game::GetInstance()->getBFX()), SDLGameObject(pParams)
 {
 	StageDataInit();
 }
@@ -20,14 +19,31 @@ void StageController::SelectMusic()
 {
 	if (stageData.stageName == "Stage0")
 	{
-		std::cout << "튜토리얼 곡입니다, 플레이하실 수 없습니다\n";
+		std::cout << "Tutorial Music, can't play\n";
 		return;
 	}
 	Mix_HaltMusic();
-	State_Play::GetInstance()->StageStart(stageData.stageName);
 
-	int allNoteNum = NoteManager::GetInstance()->GetAllNoteNum(); //ReadLineToTxt 작동하고 호출해야 가져옴
-	ScoreManager::GetInstance()->SetScoreGrade(allNoteNum);
+	State_Play::GetInstance()->FadeOutIn(0.01f, 0.01f);
+
+	timer.WaitTime();
+	musicStart = true;
+	//키 작동 안되게 추가할것 + 시간나면 효과음도 
+	State_Play::GetInstance()->SetKeyStop(true);
+}
+
+void StageController::StartMusic()
+{
+	if (musicStart == false) { return; }
+
+	if (timer.getTimer() > 3.05f) {
+		std::cout << "뮤직 스타또\n";
+
+		State_Play::GetInstance()->StageStart(stageData.stageName);
+		int allNoteNum = NoteManager::GetInstance()->GetAllNoteNum(); //ReadLineToTxt 작동하고 호출해야 가져옴
+		ScoreManager::GetInstance()->SetScoreGrade(allNoteNum);
+		musicStart = false;
+	}
 }
 void StageController::NextMusic()
 {
@@ -53,14 +69,8 @@ void StageController::PreviousMusic()
 	selectMusic_music->SetSpriteRow(passMusicIndex);
 	//배경음 lower
 }
-void StageController::ChangeGradeSprite()
-{
-	mainScore_Grade->SetSpriteFrame(stageData.Grade);
-}
-void StageController::ChangeSongInfo(int i)
-{
-	selectMusic->ChangeSongInfo(stringInfoData[i]);
-}
+void StageController::ChangeGradeSprite() { mainScore_Grade->SetSpriteFrame(stageData.Grade); }
+void StageController::ChangeSongInfo(int i) { selectMusic->ChangeSongInfo(stringInfoData[i]); }
 void StageController::ChangeBFX()
 {
 	string songData = "./assets/BFX/Stage" + to_string(passMusicIndex) + ".mp3";

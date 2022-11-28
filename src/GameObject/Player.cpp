@@ -1,10 +1,7 @@
 #include <Player.h>
 #include <InputHandler.h>
 
-Player::Player(const LoaderParams* pParams) : SDLGameObject(pParams)
-{
-	Idle_Play();
-}
+Player::Player(const LoaderParams* pParams) : SDLGameObject(pParams) { Idle_Play(); }
 
 void Player::draw()
 {
@@ -17,7 +14,8 @@ void Player::update()
 	m_animation->Update();
 	SDLGameObject::update();
 
-	if (isKnockBack == true) { Gravity(); }
+	if (isDead == true) { Gravity(); }
+	else { m_position = pSetPosData.playerPos; } // <== 비효율적
 
 	if (isDead == true || isPanic == true) return;
 	SetState();
@@ -47,9 +45,7 @@ void Player::SetState()
 void Player::Idle_Play()
 {
 	isidle = false;
-	std::cout << "isidle_Play ==>" << isidle_Play << "\n";
 	m_animation->SetProp(m_textureID, 0.005f, isidle_Play, 12);
-
 	m_animation->SetAnimPause(true);
 }
 void Player::LeftPop()
@@ -109,6 +105,8 @@ void Player::PanicOff()
 }
 void Player::Dead()
 {
+	std::cout << "Dead\n";
+
 	isDead = true;
 	isKnockBack = true;
 	isPanic = false;
@@ -200,7 +198,6 @@ void Player::Gravity()
 		m_velocity.setX(0);
 		m_velocity.setY(0);
 		m_position.setY(pSetPosData.playerPos.getY());
-		//isGrounded = true;
 		return;
 	}
 	float gravityX = powerX;
@@ -214,7 +211,7 @@ void Player::Gravity()
 //0.10
 void Player::KnockBack()
 {
-	if (powerX > 0) powerX = powerX - (Minimum * 2); //
+	if (powerX > 0) powerX = powerX - (Minimum * 2); 
 	else powerX = 0;
 
 	if (powerY > 0) powerY = powerY - (Minimum * 10 * 2); //0.1f * dirPowerY

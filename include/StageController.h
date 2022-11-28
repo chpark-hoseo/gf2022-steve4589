@@ -5,6 +5,8 @@
 #include <queue>
 #include <iostream>
 #include <SDL2/SDL_mixer.h>
+#include <Timer.h>
+#include <SDLGameObject.h>
 
 using namespace std;
 class SDLGameObject;
@@ -26,13 +28,22 @@ struct StageInfoData
 	string Info_Explan;
 }typedef stageInfoData;
 
-class StageController //스테이지 데이터 / 이미지 저장 및 관리 및 변경 
+class StageController : public SDLGameObject //스테이지 데이터 / 이미지 저장 및 관리 및 변경 
 {
 public:
-	StageController(MusicPanel* getSelectMusic, SDLGameObject* getSelectMusicPanel,
+	StageController(const LoaderParams* pParams, MusicPanel* getSelectMusic, SDLGameObject* getSelectMusicPanel,
 		SDLGameObject* getMainScore_Grade, SDLGameObject* getBack_stage1,
 		SDLGameObject* getBack_stage_back1, SDLGameObject* getBack_stage_back2, SDLGameObject* getStage_back_frame_sprite,
 		SDLGameObject* getStage_back_frame_sprite1, SDLGameObject* getStage_back_frame_sprite2);
+
+	virtual void draw() {}
+	virtual void update() 
+	{
+		timer.StartTimer(); 
+		StartMusic();
+	}
+
+	virtual void clean() {}
 
 	void StageDataInit()
 	{
@@ -176,13 +187,18 @@ private:
 	SDLGameObject* back_stage_back_frame1;
 	SDLGameObject* back_stage_back_frame2;
 
+	Timer timer;
+
 	stageData stageData;
 	stageInfoData stageInfoData;
 
 	int musicIndex = 0;
 	int passMusicIndex = 0;
 
+	bool musicStart = false;
+
 	void ChangeGradeSprite();
+	void StartMusic();
 };
 // ex) Stage0 / 0 / stage0_back_sprite / stage0_sprite / stage0_back_frame_sprite
 		//스테이지, 점수, 뒷 배경 3형제 

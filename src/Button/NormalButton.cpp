@@ -11,7 +11,6 @@ NormalButton::NormalButton(const LoaderParams* pParams, StageController* control
 void NormalButton::PressInAct()
 {
 	if (onOff == false) return;
-	State_Play::GetInstance()->FadeOutIn(0.02f, 10, 0.02f);
 	dynamic_cast<SoundEffect*>(State_Play::GetInstance()->GetObject(Vector2D(0, 0), "SoundEffect"))->SoundSFX("pop");
 	stageController->NextPreviousMusic(isUpDown);
 	m_currentRow = 1;

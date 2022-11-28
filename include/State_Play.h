@@ -34,6 +34,8 @@
 #include <NoteBoom.h>
 //StageData
 #include <StageController.h>
+//Timer
+#include <Timer.h>
 
 #define MAX_HP 50;
 #define MAX_ENERGY 50;
@@ -147,9 +149,6 @@ public:
 			OnOffStage_Play_Objects(false);
 
 			//for (NoteShooter* noteShooter : noteShooters) { noteShooter->SetIdle(); }
-
-			player->DeadOff();
-			gameOverPanel->SetActive(false);
 		}
 		player->PosTrigger(onOff);
 	}
@@ -190,7 +189,7 @@ public:
 
 	//Notice : 코루틴 함수내의 m_handle을 삭제해야 하는데 무슨 이유에선지 삭제되지 않아서
 	//시간상 이번 게임에서는 초기화하지 않았습니다
-	void FadeOutIn(float fadeIn, float middleTime, float fadeOut /*, float fadeIn*/) 
+	void FadeOutIn(float fadeOut, float fadeIn /*, float fadeIn*/) 
 	{
 		for (int i = 0; i < m_gameObjects.size(); i++)
 		{
@@ -202,9 +201,11 @@ public:
 			}
 		}
 		delete lerpPanel;
-		lerpPanel = new LerpPanel(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "fadePanel_sprite"), fadeIn, middleTime, fadeOut);
+		lerpPanel = new LerpPanel(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "fadePanel_sprite"), fadeOut, fadeIn);
 		m_gameObjects.emplace_back(lerpPanel);
 	}
+
+	void SetKeyStop(bool onOff) { isKeyStop = onOff; }
 private:
 	SDL_Renderer* m_pRenderer = Game::GetInstance()->getRenderer();
 	SDL_Window* m_pWindow = Game::GetInstance()->getWindow();
@@ -226,7 +227,7 @@ private:
 	int energy = max_Energy;
 
 	bool isStageStart = false;
-	bool isGameOver = false;
+	bool isStageEnd = false;
 	bool isKeyStop = false;
 
 	//StateData
@@ -259,7 +260,7 @@ private:
 	SDLGameObject* back_stage_back_frame2 = new SDLGameObject(new LoaderParams(0, 0, 1152, 432, 0, 2, "stage1_back_frame_sprite"));
 	SDLGameObject* musicSelect_music = new SDLGameObject(new LoaderParams(0, 0, 672, 384, 0, 0, "selectMenu_music_sprite"));
 
-	LerpPanel* lerpPanel = new LerpPanel(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "fadePanel_sprite"), 0.01f, 10, 0.01f);
+	LerpPanel* lerpPanel = new LerpPanel(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "fadePanel_sprite"), 0, 0);
 	SDLGameObject* gameOverPanel = new SDLGameObject(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "fadePanel_sprite"));
 
 	MusicPanel* musicSelect = new MusicPanel(new LoaderParams(0, 0, 720, 720, 0, 0, "selectMenu_sprite"));
@@ -267,7 +268,7 @@ private:
 	//StageControl
 	SDLGameObject* mainScore_grade = new SDLGameObject(new LoaderParams(0, 0, 240, 240, 0, 0, "grade_sprite"));
 	SDLGameObject* playScore_grade = new SDLGameObject(new LoaderParams(0, 0, 144, 192, 0, 0, "play_grade_sprite"));
-	StageController* stageController = new StageController(musicSelect, musicSelect_music, mainScore_grade, back_stage1, back_stage_back1, back_stage_back2,
+	StageController* stageController = new StageController(new LoaderParams(0, 0, 0, 0, 0, 0, ""), musicSelect, musicSelect_music, mainScore_grade, back_stage1, back_stage_back1, back_stage_back2,
 		back_stage_back_frame, back_stage_back_frame1, back_stage_back_frame2);
 	//Button
 	NormalButton* normalButton1 = new NormalButton(new LoaderParams(0, 0, 96, 96, 0, 0, "nomalButton_sprite"), stageController, true);
@@ -292,20 +293,8 @@ private:
 	Button* leftButton = new Button(nullCommand);
 	Button* spaceButton = new Button(spaceCommand);
 
-	void SetCommand(Command* left, Command* up, Command* down, Command* right, Command* space)
-	{
-		delete leftButton;
-		delete upButton;
-		delete downButton;
-		delete rightButton;
-		delete spaceButton;
-
-		leftButton = new Button(left);
-		upButton = new Button(up);
-		downButton = new Button(down);
-		rightButton = new Button(right);
-		spaceButton = new Button(space);
-	}
+	//Timer
+	Timer timer;
 
 	vector<GameObject*> m_gameObjects;
 	//object Manager SetIdle();
@@ -314,5 +303,13 @@ private:
 	vector<GameObject*> allObjects;
 	map<const char*, vector<GameObject* >> objects; //모든 오브젝트
 
-	void GameOver();
+	void SetCommand(Command* left, Command* up, Command* down, Command* right, Command* space)
+	{
+		leftButton = new Button(left);
+		upButton = new Button(up);
+		downButton = new Button(down);
+		rightButton = new Button(right);
+		spaceButton = new Button(space);
+	}
+	void GameOver();	
 };

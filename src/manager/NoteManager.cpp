@@ -128,9 +128,10 @@ void NoteManager::SpawnPowerNote(int getPoint)
 	int point = getPoint / 10;
 	int disPoint = getPoint % 10;
 
-	switch (point) //한 스테이지당 노트슈터는 총 2개 (증가도 가능)
+	switch (point) 
 	{
 	default:
+		std::cout << "NoteTrigger\n"; //구별용 더미(스테이지 시작할때 / 끝날때)로 사용합니다
 		return;
 	case 4:
 		notePad = powerNotePads[disPoint];
@@ -140,6 +141,14 @@ void NoteManager::SpawnPowerNote(int getPoint)
 		notePad = powerNotePads[disPoint];
 		noteShooter = noteShooters[1];
 		break;
+	/*case 6:
+		notePad = powerNotePads[disPoint];
+		noteShooter = noteShooters[0];
+		break;
+	case 7:
+		notePad = powerNotePads[disPoint];
+		noteShooter = noteShooters[1];
+		break;*/
 	}
 	disPos = notePad->GetPosition();
 	noteShooter->Shot(speed, disPos);
