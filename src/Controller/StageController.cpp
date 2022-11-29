@@ -75,7 +75,6 @@ void StageController::ChangeBFX()
 {
 	string songData = "./assets/BFX/Stage" + to_string(passMusicIndex) + ".mp3";
 	const char* SongdataPath = songData.c_str();
-	//Mix_HaltMusic(); ∏ÿ√ﬂ±‚
 
 	stageMusic = Mix_LoadMUS(SongdataPath);
 	if (stageMusic == NULL)
