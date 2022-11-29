@@ -312,24 +312,24 @@ void State_Play::Input_Play()
 }
 //----------------------------------------------------------------------
 //StageManage
-void State_Play::StageStart(string getStageName)
+void State_Play::StageStart(string stageName)
 {
-	if (getStageName != "")
+	if (stageName != "")
 	{
 		OnOffStageSetting(true);
-		stageName = getStageName;
 
 		stageController->ChangeBFX();
 		NoteManager::GetInstance()->ReadLineToTxt(stageName);
-		ScoreManager::GetInstance()->InitializeScore();
 		SetCommand(left_NoteCommend, up_NoteCommand, down_NoteCommand, right_NoteCommand, space_NoteCommand);
 
 		isKeyStop = false;
+		isStageStart = true;
+		isStageEnd = false;
 	}
 }
 void State_Play::StageEnd()
 {
-	if (hp > 0)
+	if (hp <= 0)
 	{
 		int grade = ScoreManager::GetInstance()->CaculateGrade();
 		stageController->SaveGrade(stageName, grade);

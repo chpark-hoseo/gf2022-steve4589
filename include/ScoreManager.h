@@ -30,13 +30,6 @@ public:
 		grade = CaculateGrade();
 		ChangeScoreSprite();
 	}
-	void InitializeScore()
-	{
-		curScore = 0;
-
-		grade = CaculateGrade();
-		ChangeScoreSprite();
-	}
 	void SetScoreGrade(int AllNoteNum)
 	{
 		if (playScore == NULL) { throw std::runtime_error("ScoreManager :: AddScoreSprite() 에 오브젝트를 넣었는지 확인해주세요 \n"); }

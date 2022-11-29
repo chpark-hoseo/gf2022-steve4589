@@ -141,7 +141,6 @@ public:
 			stageSheet.close();
 			std::cout << ":: 성적 수정 완료! :: \n";
 		}
-		ChangeGradeSprite();
 	}
 	void ChangeStageData()
 	{
