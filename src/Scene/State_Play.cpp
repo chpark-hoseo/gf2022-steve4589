@@ -312,16 +312,14 @@ void State_Play::Input_Play()
 }
 //----------------------------------------------------------------------
 //StageManage
-void State_Play::StageStart(string getStageName)
+void State_Play::StageStart(string stageName)
 {
-	if (getStageName != "")
+	if (stageName != "")
 	{
 		OnOffStageSetting(true);
-		stageName = getStageName;
 
 		stageController->ChangeBFX();
 		NoteManager::GetInstance()->ReadLineToTxt(stageName);
-		ScoreManager::GetInstance()->InitializeScore();
 		SetCommand(left_NoteCommend, up_NoteCommand, down_NoteCommand, right_NoteCommand, space_NoteCommand);
 
 		isKeyStop = false;
@@ -331,10 +329,9 @@ void State_Play::StageStart(string getStageName)
 }
 void State_Play::StageEnd()
 {
-	if (hp > 0)
+	if (hp <= 0)
 	{
 		int grade = ScoreManager::GetInstance()->CaculateGrade();
-		std::cout << "asdfasdfsdf     " << stageName << "\n";
 		stageController->SaveGrade(stageName, grade);
 	}
 	else { stageController->SaveGrade(stageName, 0); }
@@ -359,7 +356,7 @@ void State_Play::GameOver()
 		gameOverPanel->SetActive(false);
 		player->DeadOff();
 	}
-	if (isStageStart == true) //초기화 역할, 1번만 작동
+	if (isStageStart == true)
 	{
 		FadeOutIn(0.01f, 0.01f);
 		timer.WaitTime();
