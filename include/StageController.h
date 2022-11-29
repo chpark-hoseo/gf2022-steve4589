@@ -168,7 +168,6 @@ public:
 		ChangeGradeSprite();
 	}
 	void ChangeSprites();
-	void ChangeGradeSprite();
 	void ChangeSongInfo(int i);
 	void ChangeBFX();
 private:
@@ -199,6 +198,7 @@ private:
 
 	bool musicStart = false;
 
+	void ChangeGradeSprite();
 	void StartMusic();
 };
 // ex) Stage0 / 0 / stage0_back_sprite / stage0_sprite / stage0_back_frame_sprite
