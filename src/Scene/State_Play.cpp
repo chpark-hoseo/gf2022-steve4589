@@ -334,7 +334,6 @@ void State_Play::StageEnd()
 	if (hp > 0)
 	{
 		int grade = ScoreManager::GetInstance()->CaculateGrade();
-		std::cout << "asdfasdfsdf     " << stageName << "\n";
 		stageController->SaveGrade(stageName, grade);
 	}
 	else { stageController->SaveGrade(stageName, 0); }
