@@ -16,6 +16,33 @@ void InputHandler::update()
         if (event.type == SDL_KEYDOWN) {
             m_keystates = SDL_GetKeyboardState(0);
         }
+        //Mouse Input
+        if (event.type == SDL_MOUSEMOTION) {
+            m_mousePosition->setX(event.motion.x);
+            m_mousePosition->setY(event.motion.y);
+        }
+        else if (event.type == SDL_MOUSEBUTTONDOWN) {
+            if (event.button.button == SDL_BUTTON_LEFT) {
+                m_mouseButtonStates[LEFT] = true;
+            }
+            if (event.button.button == SDL_BUTTON_MIDDLE) {
+                m_mouseButtonStates[MIDDLE] = true;
+            }
+            if (event.button.button == SDL_BUTTON_RIGHT) {
+                m_mouseButtonStates[RIGHT] = true;
+            }
+        }
+        else if (event.type == SDL_MOUSEBUTTONUP) {
+            if (event.button.button == SDL_BUTTON_LEFT) {
+                m_mouseButtonStates[LEFT] = false;
+            }
+            if (event.button.button == SDL_BUTTON_MIDDLE) {
+                m_mouseButtonStates[MIDDLE] = false;
+            }
+            if (event.button.button == SDL_BUTTON_RIGHT) {
+                m_mouseButtonStates[RIGHT] = false;
+            }
+        }
     }
 }
 bool InputHandler::isKeyOneDown(SDL_Scancode key) { //case1
@@ -25,7 +52,6 @@ bool InputHandler::isKeyOneDown(SDL_Scancode key) { //case1
         {
             if (push == 2)
             {
-                std::cout << "분노의 질주, 쿨타임 0초 : 미친개로 각성합니다\n";
                 return false; //누르고 있을땐 2가됨
             }  //test
             else
@@ -49,4 +75,13 @@ bool InputHandler::isKeyDown(SDL_Scancode key)
         }
     }
     return false;
+}
+//Mouse Input
+bool InputHandler::getMouseButtonState(int buttonNumber) 
+{
+    return m_mouseButtonStates[buttonNumber];
+}
+Vector2D* InputHandler::getMousePosition() //포지션 push, pop
+{
+    return m_mousePosition;
 }
