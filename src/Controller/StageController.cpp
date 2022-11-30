@@ -3,6 +3,7 @@
 #include <ScoreManager.h>
 #include <NoteManager.h>
 #include <MusicPanel.h>
+#include <SoundEffect.h>
 
 StageController::StageController(const LoaderParams* pParams, MusicPanel* getSelectMusic, SDLGameObject* getSelectMusicPanel,
 	SDLGameObject* getMainScore_Grade, SDLGameObject* getBack_stage1,
@@ -19,6 +20,7 @@ void StageController::SelectMusic()
 {
 	if (stageData.stageName == "Stage0")
 	{
+		dynamic_cast<SoundEffect*>(State_Play::GetInstance()->GetObject(Vector2D(0, 0), "SoundEffect"))->SoundSFX("miss");
 		std::cout << "Tutorial Music, can't play\n";
 		return;
 	}
@@ -37,7 +39,7 @@ void StageController::StartMusic()
 	if (musicStart == false) { return; }
 
 	if (timer.getTimer() > 3.05f) {
-		std::cout << "뮤직 스타또\n";
+		std::cout << "Music Start\n";
 
 		State_Play::GetInstance()->StageStart(stageData.stageName);
 		int allNoteNum = NoteManager::GetInstance()->GetAllNoteNum(); //ReadLineToTxt 작동하고 호출해야 가져옴

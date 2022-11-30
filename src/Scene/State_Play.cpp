@@ -17,8 +17,9 @@ void State_Play::Awake()
 	TextureManager::GetInstance()->load("need for A+_stage1_back_frame", "stage1_back_frame_sprite", m_pRenderer);
 	TextureManager::GetInstance()->load("need for A+_stage1_back", "stage1_back_sprite", m_pRenderer);
 
-	//TextureManager::GetInstance()->load("need for A+_stage2", "stage2_sprite", m_pRenderer);
-	//TextureManager::GetInstance()->load("need for A+_stage2_back", "stage2back_sprite", m_pRenderer);
+	TextureManager::GetInstance()->load("need for A+_stage2", "stage2_sprite", m_pRenderer);
+	TextureManager::GetInstance()->load("need for A+_stage2_back_frame", "stage2_back_frame_sprite", m_pRenderer);
+	TextureManager::GetInstance()->load("need for A+_stage2_back", "stage2back_sprite", m_pRenderer);
 
 	//메인캐릭터 
 	TextureManager::GetInstance()->load("need for A+_main", "mainCharacter_sprite", m_pRenderer); //need for A+_main_dead
