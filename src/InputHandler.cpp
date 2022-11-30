@@ -90,7 +90,7 @@ void InputHandler::onMouseButtonDown(SDL_Event event)
 	if (event.button.button == SDL_BUTTON_RIGHT) {
 		m_mouseButtonStates[RIGHT] = true;
 	}
-}
+}//
 
 void InputHandler::onMouseButtonUp(SDL_Event event)
 {
