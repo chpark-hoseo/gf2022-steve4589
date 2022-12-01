@@ -30,13 +30,6 @@ public:
 		grade = CaculateGrade();
 		ChangeScoreSprite();
 	}
-	void InitializeScore()
-	{
-		curScore = 0;
-
-		grade = CaculateGrade();
-		ChangeScoreSprite();
-	}
 	void SetScoreGrade(int AllNoteNum)
 	{
 		if (playScore == NULL) { throw std::runtime_error("ScoreManager :: AddScoreSprite() 에 오브젝트를 넣었는지 확인해주세요 \n"); }
@@ -44,13 +37,12 @@ public:
 		curScore = 0;
 		ALLScore = (float)(AllNoteNum * NOMAL_SCORE);
 
-		ChangeScoreSprite();
-
 		Grade_A = (int)(ALLScore * 0.9f);
 		Grade_B = (int)(ALLScore * 0.7f);
 		Grade_C = (int)(ALLScore * 0.5f);
 		Grade_D = (int)(ALLScore * 0.4f);
 		grade = CaculateGrade();
+		ChangeScoreSprite();
 	}
 	//게임 오버하지 않고 스테이지가 끝에 도달할때 호출 
 	int CaculateGrade()

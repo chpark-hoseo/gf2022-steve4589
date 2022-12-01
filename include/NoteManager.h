@@ -12,6 +12,7 @@
 #include <NoteShooter.h>
 #include <PowerNotePad.h>
 #include <Spawn.h>
+#include <Vector2D.h>
 
 using namespace std;
 
@@ -33,7 +34,7 @@ public:
 	queue<string> GetSpawnQueue();
 	map<int, string*> GetSpawnQueue_; //int -> n번째 스테이지
 
-	int GetAllNoteNum() { return allNoteNum; }
+	int GetAllNoteNum() { return allNoteNum - 2; }
 private:
 	NoteManager() { }
 	~NoteManager() { }

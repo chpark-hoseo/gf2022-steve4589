@@ -92,7 +92,7 @@ void Player::PanicOn()
 	m_animation->SetProp(m_textureID, 0.008f, 5, 3);
 
 	m_animation->StartAnimation();
-	m_animation->AnimationOnce(true); //이거 끝나면 다시 false로 바꾸기 
+	//m_animation->AnimationOnce(true); //이거 끝나면 다시 false로 바꾸기 
 }
 void Player::PanicOff()
 {
@@ -113,8 +113,9 @@ void Player::Dead()
 
 	m_animation->SetProp(m_textureID, 0.008f, 4, 9);
 
-	m_animation->StartAnimation();
+	m_animation->SetAnimPause(true);
 	m_animation->AnimationOnce(true);
+	m_animation->StartAnimation();
 }
 
 void Player::PressIn_Left()

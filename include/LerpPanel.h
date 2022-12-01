@@ -66,6 +66,9 @@ public:
 		//FadeOut
 		if (outTime != 0)
 		{
+			alpha = 0;
+			co_await std::suspend_always{};
+
 			while (alpha < 256)
 			{
 				timer.StartTimer();
@@ -84,6 +87,7 @@ public:
 			co_await std::suspend_always{};
 		}
 		SetActive(false);
+		co_return; //더이상 코루틴 중단 / 재개 불가
 	}
 private:
 	float fadeInTime = 0;

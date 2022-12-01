@@ -19,7 +19,7 @@ void State_Play::Awake()
 
 	TextureManager::GetInstance()->load("need for A+_stage2", "stage2_sprite", m_pRenderer);
 	TextureManager::GetInstance()->load("need for A+_stage2_back_frame", "stage2_back_frame_sprite", m_pRenderer);
-	TextureManager::GetInstance()->load("need for A+_stage2_back", "stage2back_sprite", m_pRenderer);
+	TextureManager::GetInstance()->load("need for A+_stage2_back", "stage2_back_sprite", m_pRenderer);
 
 	//메인캐릭터 
 	TextureManager::GetInstance()->load("need for A+_main", "mainCharacter_sprite", m_pRenderer); //need for A+_main_dead
@@ -322,7 +322,6 @@ void State_Play::StageStart(string getStageName)
 
 		stageController->ChangeBFX();
 		NoteManager::GetInstance()->ReadLineToTxt(stageName);
-		ScoreManager::GetInstance()->InitializeScore();
 		SetCommand(left_NoteCommend, up_NoteCommand, down_NoteCommand, right_NoteCommand, space_NoteCommand);
 
 		isKeyStop = false;
@@ -336,6 +335,7 @@ void State_Play::StageEnd()
 	{
 		int grade = ScoreManager::GetInstance()->CaculateGrade();
 		stageController->SaveGrade(stageName, grade);
+		dynamic_cast<SoundEffect*>(GetObject(Vector2D(0, 0), "SoundEffect"))->SoundSFX("wow");
 	}
 	else { stageController->SaveGrade(stageName, 0); }
 
@@ -369,6 +369,8 @@ void State_Play::GameOver()
 		playScore_grade->SetActive(false);
 
 		Mix_HaltMusic();
+		dynamic_cast<SoundEffect*>(GetObject(Vector2D(0, 0), "SoundEffect"))->SoundSFX("Boo");
+		dynamic_cast<SoundEffect*>(GetObject(Vector2D(0, 0), "SoundEffect"))->SoundSFX("FUCK!");
 
 		player->Dead();
 

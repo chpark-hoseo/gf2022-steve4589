@@ -16,12 +16,14 @@ public:
 		const char* SongdataPath = songData.c_str();
 
 		soundEffect = Mix_LoadWAV(SongdataPath);
-		Uint32 length = soundEffect->alen;
 		if (soundEffect == NULL)
 		{
 			SDL_Log("SFX is NULL, need initialized SFX, use SoundSFX();  : %s\n", Mix_GetError());
 			return;
 		}
+
+		Uint32 length = soundEffect->alen; //wav 파일 길이
+		
 		Mix_PlayChannel(-1, soundEffect, 0);
 		SetActive(false); //바로 비활성화 합니다
 	}

@@ -88,7 +88,7 @@ public:
 	void NextMusic();
 	void PreviousMusic();
 	void SelectMusic(); //음악, 사진 바꾸기, 
-	/*
+	/* stageData 양식
 	Stage0/0/stage0_back_sprite/stage0_sprite/stage0_back_frame_sprite
 	Stage1/3/stage1_back_sprite/stage1_sprite/stage1_back_frame_sprite
 	Stage2/4/stage2_back_sprite/stage2_sprite/stage2_back_frame_sprite
@@ -141,7 +141,7 @@ public:
 			stageSheet.close();
 			std::cout << ":: 성적 수정 완료! :: \n";
 		}
-		ChangeGradeSprite();
+		ChangeGradeSprite(grade);
 	}
 	void ChangeStageData()
 	{
@@ -164,11 +164,11 @@ public:
 		stageData.stage_back_frame_sprite = datas.front();
 		datas.pop();
 
-		ChangeSprites();
-		ChangeGradeSprite();
+		ChangeBackSprites();
+		ChangeGradeSprite(NULL);
 	}
-	void ChangeSprites();
-	void ChangeGradeSprite();
+	void ChangeBackSprites();
+	void ChangeGradeSprite(int getGrade);
 	void ChangeSongInfo(int i);
 	void ChangeBFX();
 private:

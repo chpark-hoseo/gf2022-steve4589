@@ -17,6 +17,4 @@ private:
 	float middle = 0;
 public:
 	BackScroll(const LoaderParams* pParams, SDLGameObject* backFrame, SDLGameObject* backFrame1, SDLGameObject* backFrame2);
-
-	//InItBacks();
 };

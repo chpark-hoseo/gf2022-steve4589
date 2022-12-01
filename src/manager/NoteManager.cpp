@@ -1,6 +1,5 @@
 #pragma once
 #include "NoteManager.h"
-#include "Vector2D.h"
 #include <State_Play.h>
 #include <Timer.h>
 

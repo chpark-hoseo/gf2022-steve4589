@@ -21,9 +21,11 @@ void StageController::SelectMusic()
 	if (stageData.stageName == "Stage0")
 	{
 		dynamic_cast<SoundEffect*>(State_Play::GetInstance()->GetObject(Vector2D(0, 0), "SoundEffect"))->SoundSFX("miss");
+		
 		std::cout << "Tutorial Music, can't play\n";
 		return;
 	}
+	dynamic_cast<SoundEffect*>(State_Play::GetInstance()->GetObject(Vector2D(0, 0), "SoundEffect"))->SoundSFX("start");
 	Mix_HaltMusic();
 
 	State_Play::GetInstance()->FadeOutIn(0.01f, 0.01f);
@@ -71,7 +73,11 @@ void StageController::PreviousMusic()
 	selectMusic_music->SetSpriteRow(passMusicIndex);
 	//¹è°æÀ½ lower
 }
-void StageController::ChangeGradeSprite() { mainScore_Grade->SetSpriteFrame(stageData.Grade); }
+void StageController::ChangeGradeSprite(int getGrade) 
+{
+	if (getGrade == NULL) { mainScore_Grade->SetSpriteFrame(stageData.Grade); }
+	else { mainScore_Grade->SetSpriteFrame(getGrade); }
+}
 void StageController::ChangeSongInfo(int i) { selectMusic->ChangeSongInfo(stringInfoData[i]); }
 void StageController::ChangeBFX()
 {
@@ -86,7 +92,7 @@ void StageController::ChangeBFX()
 	}
 	Mix_PlayMusic(stageMusic, 0); //Loop BGM
 }
-void StageController::ChangeSprites()
+void StageController::ChangeBackSprites()
 {
 	back_stage1->SetSpriteId(stageData.stage_sprite);
 	back_stage_back1->SetSpriteId(stageData.stage_back_sprite);
