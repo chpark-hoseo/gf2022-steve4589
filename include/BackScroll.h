@@ -16,5 +16,5 @@ private:
 	float speed[3] = { 0.25f, 0.2f, 0.15f };
 	float middle = 0;
 public:
-	BackScroll(const LoaderParams* pParams, SDLGameObject* backFrame, SDLGameObject* backFrame1, SDLGameObject* backFrame2);
+	explicit BackScroll(const LoaderParams* pParams, SDLGameObject* backFrame, SDLGameObject* backFrame1, SDLGameObject* backFrame2);
 };

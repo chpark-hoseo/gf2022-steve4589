@@ -145,20 +145,16 @@
   <ItemGroup>
     <ClCompile Include="src\Animation\Animation.cpp" />
     <ClCompile Include="src\Button\SpaceButton.cpp" />
-    <ClCompile Include="src\Camera\Camera.cpp" />
     <ClCompile Include="src\Controller\BackScroll.cpp" />
     <ClCompile Include="src\Button\NormalButton.cpp" />
     <ClCompile Include="src\Controller\StageController.cpp" />
     <ClCompile Include="src\GameObject\BoomTrash.cpp" />
-    <ClCompile Include="src\GameObject\LoadingCircle.cpp" />
-    <ClCompile Include="src\GameObject\MusicSelectPanel.cpp" />
     <ClCompile Include="src\Button\PowerNotePad.cpp" />
     <ClCompile Include="src\Button\PowerNotePadButton.cpp" />
     <ClCompile Include="src\manager\ScoreManager.cpp" />
     <ClCompile Include="src\Pattern\DirShot.cpp" />
     <ClCompile Include="src\Scene\State_Play.cpp" />
     <ClCompile Include="src\Scene\State_StartLogo.cpp" />
-    <ClCompile Include="src\physics\CustomPhysics.cpp" />
     <ClCompile Include="src\Sound\SoundEffect.cpp" />
     <ClCompile Include="src\UI\LerpPanel.cpp" />
     <ClCompile Include="src\UI\HealthBar.cpp" />
@@ -186,10 +182,8 @@
     <ClInclude Include="include\Animation.h" />
     <ClInclude Include="include\BackScroll.h" />
     <ClInclude Include="include\BoomTrash.h" />
-    <ClInclude Include="include\Camera.h" />
     <ClInclude Include="include\Task_Coroutine.h" />
     <ClInclude Include="include\DirShot.h" />
-    <ClInclude Include="include\LoadingCircle.h" />
     <ClInclude Include="include\MusicPanel.h" />
     <ClInclude Include="include\NormalButton.h" />
     <ClInclude Include="include\PowerNotePad.h" />
@@ -208,23 +202,17 @@
     <ClInclude Include="include\HealthBar.h" />
     <ClInclude Include="include\InputHandler.h" />
     <ClInclude Include="include\LoaderParams.h" />
-    <ClInclude Include="include\main.h" />
-    <ClInclude Include="include\MusicSelectPanel.h" />
     <ClInclude Include="include\NoteBoom.h" />
     <ClInclude Include="include\NoteManager.h" />
     <ClInclude Include="include\NotePad.h" />
     <ClInclude Include="include\NoteShooter.h" />
-    <ClInclude Include="include\ObjectManager.h" />
-    <ClInclude Include="include\PlayController.h" />
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\PowerNote.h" />
     <ClInclude Include="include\SDLGameObject.h" />
-    <ClInclude Include="include\Spawn.h" />
     <ClInclude Include="include\State_Play.h" />
     <ClInclude Include="include\State_StartLogo.h" />
     <ClInclude Include="include\TextureManager.h" />
     <ClInclude Include="include\Timer.h" />
-    <ClInclude Include="include\Transform.h" />
     <ClInclude Include="include\Vector2D.h" />
     <ClInclude Include="include\Note.h" />
   </ItemGroup>

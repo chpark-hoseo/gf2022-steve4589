@@ -17,7 +17,6 @@
 #include <PowerNotePadButton.h>
 #include <GameObject.h>
 #include <Player.h>
-#include <MusicSelectPanel.h>
 #include <SpaceButton.h>
 #include <BoomTrash.h>
 //UI

@@ -11,7 +11,6 @@
 
 #include <NoteShooter.h>
 #include <PowerNotePad.h>
-#include <Spawn.h>
 #include <Vector2D.h>
 
 using namespace std;
@@ -55,7 +54,6 @@ private:
 	vector<NoteShooter*> noteShooters;
 	vector<PowerNotePad*> powerNotePads;
 
-	queue<Spawn> spawnQueue;
 	queue<string> spawnQueue_test;
 
 	static NoteManager* s_pInstance; //정적 멤버변수 선언
