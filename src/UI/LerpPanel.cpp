@@ -1,5 +1,4 @@
 #include <LerpPanel.h>
-#include <CustomPhysics.h>
 #include <TextureManager.h>
 #include <Game.h>
 
@@ -19,7 +18,7 @@ void LerpPanel::draw()
 
 void LerpPanel::update()
 {
-	if (!onOff) return;
+	if (!onOff || (fadeOutTime == 0 && fadeInTime == 0)) return;
 	if (lerp.m_handle.done() == false) { lerp.m_handle.resume(); }
 }
 

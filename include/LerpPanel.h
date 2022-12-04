@@ -63,6 +63,7 @@ public:
 
 	Coroutine FadeOutIn(float outTime, float inTime) //time default ==> 0.01f
 	{
+		std::cout << "FadeOutIn\n";
 		//FadeOut
 		if (outTime != 0)
 		{
