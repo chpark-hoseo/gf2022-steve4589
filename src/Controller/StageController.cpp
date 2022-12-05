@@ -142,7 +142,7 @@ vector<Vector2D> StageController::SetPowerNotesPadPos()
 	{
 		pad = padsDatas.front();
 		padsDatas.pop();
-		std::cout << pad << "\n";
+		
 		int index = 0;
 		stringstream readQueue(pad);
 		while (getline(readQueue, line, ','))

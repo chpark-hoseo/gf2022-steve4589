@@ -14,7 +14,7 @@ typedef struct PlayerSetPosData //1 ~ 4 -> 기본 루트, 5, 6 -> 에너지루트
 	Vector2D playerPos = Vector2D(0.5f + 635, 750);
 
 }pSetPosData;
-
+       
 class Player : public SDLGameObject
 {
 public:

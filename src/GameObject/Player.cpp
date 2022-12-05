@@ -87,12 +87,10 @@ void Player::PanicOn()
 	if (isPanic) return;
 	isPanic = true;
 
-	//수초후 HealEnergy(50);
-
 	m_animation->SetProp(m_textureID, 0.008f, 5, 3);
 
 	m_animation->StartAnimation();
-	//m_animation->AnimationOnce(true); //이거 끝나면 다시 false로 바꾸기 
+	m_animation->AnimationOnce(true); 
 }
 void Player::PanicOff()
 {

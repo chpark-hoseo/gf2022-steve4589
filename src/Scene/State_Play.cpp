@@ -132,7 +132,7 @@ void State_Play::Awake()
 	playScore_grade->SetPosition(Vector2D(1200, 10));
 
 	NoteManager::GetInstance()->SetPowerNotePads(powerNotePad1);
-	NoteManager::GetInstance()->SetPowerNotePads(powerNotePad1);
+	NoteManager::GetInstance()->SetPowerNotePads(powerNotePad2);
 	//해당 스테이지가 시작할때 추가 하도록 변경
 	NoteManager::GetInstance()->SetNoteShooters(NoteShooter1);
 }
@@ -330,8 +330,6 @@ void State_Play::StageStart(string getStageName)
 		{
 			vector<Vector2D> pos = stageController->SetPowerNotesPadPos();
 
-			std::cout << pos[0].getX() << "  :::  " << pos[0].getY() << "\n";
-			std::cout << pos[1].getX() << "  :::  " << pos[1].getY() << "\n";
 			powerNotePad1->SetPosition(pos[0]);
 			powerNotePad2->SetPosition(pos[1]);
 		}

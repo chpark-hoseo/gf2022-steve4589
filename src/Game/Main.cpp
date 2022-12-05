@@ -7,7 +7,7 @@ const float DELAY_TIME = 1000.0f / FPS;
 int main(int argc, char* argv[])
 {
     Uint32 frameStart, frameTime;
-    if (Game::GetInstance()->init("Need For Grade", 0, 10, SCREEN_WIDTH, SCREEN_HEIGHT, 0))
+    if (Game::GetInstance()->init("Need For Grade", 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0))
     {
         frameStart = SDL_GetTicks(); 
         Game::GetInstance()->ChangeState(State_Play::GetInstance()); //StartLogo로 바꾸기

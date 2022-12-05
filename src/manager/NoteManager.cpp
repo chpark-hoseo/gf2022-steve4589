@@ -125,6 +125,7 @@ void NoteManager::SpawnPowerNote(int getPoint)
 	//10으로 나눈 값 => 포인트, 나머지 => 쏘아보낼 위치
 	int point = getPoint / 10;
 	int disPoint = getPoint % 10;
+	std::cout << "disPoint ==> " << disPoint << "\n";
 
 	switch (point) 
 	{
@@ -139,14 +140,6 @@ void NoteManager::SpawnPowerNote(int getPoint)
 		notePad = powerNotePads[disPoint];
 		noteShooter = noteShooters[1];
 		break;
-	/*case 6:
-		notePad = powerNotePads[disPoint];
-		noteShooter = noteShooters[0];
-		break;
-	case 7:
-		notePad = powerNotePads[disPoint];
-		noteShooter = noteShooters[1];
-		break;*/
 	}
 	disPos = notePad->GetPosition();
 	noteShooter->Shot(speed, disPos);
