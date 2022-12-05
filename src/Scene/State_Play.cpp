@@ -115,8 +115,6 @@ void State_Play::Awake()
 	notePad2->SetPosition(Vector2D(1536 * 0.5f + 50, 550));
 	notePad3->SetPosition(Vector2D(1536 * 0.5f + 200, 550));
 
-	powerNotePad1->SetPosition(Vector2D(1536 * 0.5f - 550, 550));
-	powerNotePad2->SetPosition(Vector2D(1536 * 0.5f - 400, 400));
 	NoteShooter1->SetPosition(Vector2D(1300, 800));
 
 	normalButton1->SetPosition(Vector2D(1100, 50));
@@ -327,6 +325,16 @@ void State_Play::StageStart(string getStageName)
 		isKeyStop = false;
 		isStageStart = true;
 		isStageEnd = false;
+
+		if (stageName != "Stage0")
+		{
+			vector<Vector2D> pos = stageController->SetPowerNotesPadPos();
+
+			std::cout << pos[0].getX() << "  :::  " << pos[0].getY() << "\n";
+			std::cout << pos[1].getX() << "  :::  " << pos[1].getY() << "\n";
+			powerNotePad1->SetPosition(pos[0]);
+			powerNotePad2->SetPosition(pos[1]);
+		}
 	}
 }
 void State_Play::StageEnd()

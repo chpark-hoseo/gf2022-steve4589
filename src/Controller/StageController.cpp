@@ -1,8 +1,6 @@
 #include <StageController.h>
 #include <State_Play.h>
 #include <ScoreManager.h>
-#include <NoteManager.h>
-#include <MusicPanel.h>
 #include <SoundEffect.h>
 
 StageController::StageController(const LoaderParams* pParams, MusicPanel* getSelectMusic, SDLGameObject* getSelectMusicPanel,
@@ -21,7 +19,7 @@ void StageController::SelectMusic()
 	if (stageData.stageName == "Stage0")
 	{
 		dynamic_cast<SoundEffect*>(State_Play::GetInstance()->GetObject(Vector2D(0, 0), "SoundEffect"))->SoundSFX("miss");
-		
+
 		std::cout << "Tutorial Music, can't play\n";
 		return;
 	}
@@ -73,7 +71,7 @@ void StageController::PreviousMusic()
 	selectMusic_music->SetSpriteRow(passMusicIndex);
 	//배경음 lower
 }
-void StageController::ChangeGradeSprite(int getGrade) 
+void StageController::ChangeGradeSprite(int getGrade)
 {
 	if (getGrade == NULL) { mainScore_Grade->SetSpriteFrame(stageData.Grade); }
 	else { mainScore_Grade->SetSpriteFrame(getGrade); }
@@ -100,4 +98,62 @@ void StageController::ChangeBackSprites()
 	back_stage_back_frame->SetSpriteId(stageData.stage_back_frame_sprite);
 	back_stage_back_frame1->SetSpriteId(stageData.stage_back_frame_sprite);
 	back_stage_back_frame2->SetSpriteId(stageData.stage_back_frame_sprite);
+}
+void StageController::GetPowerNotesPadPos()
+{
+	const char* dataPath = "Assets/PowerNotePadPosData.txt";
+	std::ifstream dataSheet(dataPath, std::ifstream::in);
+
+	string line;
+	if (dataSheet.is_open())
+	{
+		std::cout << "::PowerNotePadPosData::\n";
+		int Index = 0;
+		while (!dataSheet.eof())
+		{
+			getline(dataSheet, line);
+			stringPowerNotePadPosData[Index] = line;
+			std::cout << line.c_str() << "\n";
+			Index++;
+		}
+		dataSheet.close();
+	}
+}
+
+vector<Vector2D> StageController::SetPowerNotesPadPos()
+{
+	string line;
+	queue<string> padsDatas;
+	queue<string> padDatas;
+
+	stringstream readQueue(stringPowerNotePadPosData[passMusicIndex]);
+	while (getline(readQueue, line, '/'))
+	{
+		padsDatas.push(line);
+	}
+
+	vector<Vector2D> pads;
+	string pad;
+
+	float x = 0;
+	float y = 0;
+
+	while (padsDatas.size() != 0)
+	{
+		pad = padsDatas.front();
+		padsDatas.pop();
+		std::cout << pad << "\n";
+		int index = 0;
+		stringstream readQueue(pad);
+		while (getline(readQueue, line, ','))
+		{
+			//x, y값 가져오기 (2번 작동)
+			if (index == 0) { x = stof(line); }
+			else { y = stof(line); } //가독성 죄송합니다
+			index++;
+		}
+		Vector2D padPos = Vector2D(x, y);
+		pads.emplace_back(padPos);
+	}
+	return pads;
 }

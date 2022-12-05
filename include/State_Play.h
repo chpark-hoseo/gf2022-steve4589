@@ -203,8 +203,8 @@ public:
 		lerpPanel = new LerpPanel(new LoaderParams(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, "fadePanel_sprite"), fadeOut, fadeIn);
 		m_gameObjects.emplace_back(lerpPanel);
 	}
-
 	void SetKeyStop(bool onOff) { isKeyStop = onOff; }
+
 private:
 	SDL_Renderer* m_pRenderer = Game::GetInstance()->getRenderer();
 	SDL_Window* m_pWindow = Game::GetInstance()->getWindow();

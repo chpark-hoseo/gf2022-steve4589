@@ -1,7 +1,6 @@
 #pragma once
-#include "NoteManager.h"
+#include <NoteManager.h>
 #include <State_Play.h>
-#include <Timer.h>
 
 using namespace std;
 

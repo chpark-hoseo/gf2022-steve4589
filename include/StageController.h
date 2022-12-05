@@ -7,6 +7,9 @@
 #include <SDL2/SDL_mixer.h>
 #include <Timer.h>
 #include <SDLGameObject.h>
+#include <PowerNotePad.h>
+
+#define MAX_MUSIC 20 //MAX_MUSIC ==> Match or exceed to max number of songs
 
 using namespace std;
 class SDLGameObject;
@@ -79,6 +82,8 @@ public:
 		}
 		ChangeSongInfo(0);
 		ChangeStageData();
+
+		GetPowerNotesPadPos();
 	}
 	void NextPreviousMusic(bool isUp)
 	{
@@ -171,9 +176,13 @@ public:
 	void ChangeGradeSprite(int getGrade);
 	void ChangeSongInfo(int i);
 	void ChangeBFX();
+
+	void GetPowerNotesPadPos();
+	vector<Vector2D> SetPowerNotesPadPos();
 private:
-	string stringData[3];
-	string stringInfoData[3];
+	string stringData[MAX_MUSIC];
+	string stringInfoData[MAX_MUSIC];
+	string stringPowerNotePadPosData[MAX_MUSIC];
 
 	Mix_Music* stageMusic;
 

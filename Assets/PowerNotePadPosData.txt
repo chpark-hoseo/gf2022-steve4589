@@ -1,0 +1,3 @@
+//powerNotePad1.SetPosition(x, y) / powerNotePad2.SetPosition(x, y) // !!Caution!! x must not be zero ==> change the y value to 0
+216,550/366,400
+116,250/1100,250
